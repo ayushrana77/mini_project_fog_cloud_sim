@@ -86,7 +86,7 @@ CLOUD_SERVICES = [
 ]
 
 TRANSMISSION_LATENCY = 0.5  # ms
-BATCH_SIZE = 5000
+BATCH_SIZE = 5000  # Not used in sequential processing; kept for legacy reference
 
 @dataclass
 class Task:
@@ -151,15 +151,16 @@ class GlobalGateway:
         self.metrics = defaultdict(list)
 
     def select_fog(self, task, cooperation=True):
-        # Check storage capacity first
+        # Check storage capacity and resource availability first
         suitable = [f for f in self.fog_nodes 
-                   if f.ram >= task.ram and 
-                   f.mips >= task.mips and 
-                   (f.total_storage - f.used_storage) >= task.size]
+                    if f.ram >= task.ram and 
+                    f.mips >= task.mips and 
+                    (f.total_storage - f.used_storage) >= task.size]
         
         if suitable:
             return min(suitable, key=lambda x: x.utilization)
             
+        # If cooperation is allowed, try alternate selection
         if cooperation:
             for fog in reversed(self.fog_nodes):
                 if (fog.ram >= task.ram and 
@@ -169,13 +170,14 @@ class GlobalGateway:
         return None
 
     def offload_task(self, task, policy):
+        # Offload to cloud service if Global Gateway is enabled and the data type is large
         if policy['gg_enabled'] and task.data_type in ['Bulk', 'Large']:
-            service = next(s for s in self.cloud_services 
-                          if s.ram >= task.ram and s.mips >= task.mips)
+            service = next(s for s in self.cloud_services if s.ram >= task.ram and s.mips >= task.mips)
             time = service.process(task)
             self.metrics['cloud_times'].append(time)
             return time
             
+        # Try to select a suitable fog node
         fog = self.select_fog(task, policy['cooperation'])
         if fog:
             fog.queue.append(task)
@@ -185,16 +187,14 @@ class GlobalGateway:
             self.metrics['queue_delays'].append(len(fog.queue) * 10)
             return processing_time
             
-        service = next(s for s in self.cloud_services 
-                      if s.ram >= task.ram and s.mips >= task.mips)
+        # If no fog node is suitable, offload to cloud service
+        service = next(s for s in self.cloud_services if s.ram >= task.ram and s.mips >= task.mips)
         time = service.process(task)
         self.metrics['cloud_times'].append(time)
         return time
 
-
-
 def validate_json(filepath):
-    """Validate JSON file structure"""
+    """Validate JSON file structure."""
     try:
         with open(filepath, 'r', encoding='utf-8-sig') as f:
             data = json.load(f)
@@ -203,7 +203,7 @@ def validate_json(filepath):
             raise ValueError("Root element should be an array")
             
         required_fields = {'ID', 'Size', 'MIPS', 'RAM', 'DataType', 
-                         'GeoLocation', 'DeviceType'}
+                           'GeoLocation', 'DeviceType'}
         for i, item in enumerate(data):
             missing = required_fields - set(item.keys())
             if missing:
@@ -223,7 +223,7 @@ def validate_json(filepath):
         return False
 
 def load_tasks(filepath):
-    """Load tasks with comprehensive error handling"""
+    """Load tasks with comprehensive error handling."""
     if not validate_json(filepath):
         exit(1)
         
@@ -247,15 +247,17 @@ def load_tasks(filepath):
     return tasks
 
 def analyze_results(metrics, fog_nodes):
+    """Print and plot the simulation results."""
     print("\n=== Simulation Results ===")
-    print(f"Total tasks processed: {len(metrics['fog_times']) + len(metrics['cloud_times']):,}")
+    total_tasks = len(metrics['fog_times']) + len(metrics['cloud_times'])
+    print(f"Total tasks processed: {total_tasks:,}")
     print(f"Average fog time: {np.mean(metrics['fog_times']):.2f}ms")
     print(f"Average cloud time: {np.mean(metrics['cloud_times']):.2f}ms")
     print(f"Maximum queue delay: {np.max(metrics['queue_delays'])}ms")
     
     plt.figure(figsize=(15, 5))
     
-    # Processing times
+    # Processing times distribution
     plt.subplot(1, 3, 1)
     plt.hist(metrics['fog_times'], bins=50, alpha=0.5, label='Fog')
     plt.hist(metrics['cloud_times'], bins=50, alpha=0.5, label='Cloud')
@@ -263,7 +265,7 @@ def analyze_results(metrics, fog_nodes):
     plt.xlabel('Time (ms)')
     plt.legend()
     
-    # Power consumption
+    # Fog nodes power consumption
     plt.subplot(1, 3, 2)
     for fog in fog_nodes:
         plt.plot(fog.power_log, label=fog.name)
@@ -272,7 +274,7 @@ def analyze_results(metrics, fog_nodes):
     plt.ylabel('Power (W)')
     plt.legend()
     
-    # Queue delays
+    # Queue delay progression
     plt.subplot(1, 3, 3)
     plt.plot(metrics['queue_delays'], alpha=0.7)
     plt.title('Queue Delay Progression')
@@ -288,7 +290,7 @@ def main():
     cloud_services = [CloudService(cfg) for cfg in CLOUD_SERVICES]
     gateway = GlobalGateway(fog_nodes, cloud_services)
     
-    # Load and validate tasks
+    # Load and validate tasks from JSON file
     filepath = os.path.join(os.getcwd(), 'tuples.json')
     print(f"Loading tasks from: {filepath}")
     
@@ -305,21 +307,19 @@ def main():
         'queue_policy': 'FCFS'
     }
     
-    # Process tasks
+    # Process tasks sequentially (or in batches if desired)
     progress = tqdm(total=len(tasks), desc="Processing tasks", unit="task")
-    for i in range(0, len(tasks), BATCH_SIZE):
-        batch = tasks[i:i+BATCH_SIZE]
-        for task in batch:
-            gateway.offload_task(task, policy)
-        progress.update(len(batch))
+    for task in tasks:
+        gateway.offload_task(task, policy)
+        progress.update(1)
     progress.close()
     
-    # Add power metrics
+    # Add power metrics from each fog node
     gateway.metrics['power'] = []
     for fog in fog_nodes:
         gateway.metrics['power'].extend(fog.power_log)
     
-    # Show results
+    # Analyze and display simulation results
     analyze_results(gateway.metrics, fog_nodes)
 
 if __name__ == '__main__':
