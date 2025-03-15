@@ -70,7 +70,7 @@ CLOUD_SERVICES = [
     }
 ]
 
-TRANSMISSION_LATENCY = 0.5  # ms
+TRANSMISSION_LATENCY = 0.2  # ms
 
 @dataclass
 class Task:
@@ -123,10 +123,9 @@ class FogNode:
     def process(self, task):
         transmission_time = (task.size / self.down_bw) * 1000
         processing_time = (task.mips / self.mips) * 1000
-        queue_delay = len(self.queue) * 10
+        queue_delay = len(self.queue) * 10  # Includes current task
         
         self.utilization = min(100, self.utilization + (processing_time / 1000))
-        self.used_storage += task.size
         self.power_log.append(self.calculate_power())
         
         return transmission_time + processing_time + queue_delay
@@ -181,9 +180,7 @@ class BaseGateway:
         time = service.process(task)
         self.metrics['cloud_times'].append(time)
         return time
-
-# Policy Implementations (same as previous)
-
+    
 def validate_json(filepath):
     """Validate JSON file structure with all required fields."""
     try:
@@ -262,9 +259,6 @@ def load_tasks(filepath):
         ))
     return tasks
 
-import numpy as np
-import matplotlib.pyplot as plt
-
 def analyze_results(results):
     """Enhanced analysis with comparative metrics using results data."""
     print("\n=== Comparative Analysis ===")
@@ -275,7 +269,7 @@ def analyze_results(results):
     # Metric 1: Average Processing Times
     avg_times = {
         policy: [
-            np.mean(metrics['fog_times']) + np.mean(metrics['cloud_times']),
+            np.mean(metrics['fog_times'] + metrics['cloud_times']),
             np.mean(metrics['fog_times']) if metrics['fog_times'] else 0,
             np.mean(metrics['cloud_times']) if metrics['cloud_times'] else 0
         ]
@@ -317,7 +311,7 @@ def analyze_results(results):
     for policy in policy_names:
         print(f"{policy}: Fog = {task_dist[policy][0]}, Cloud = {task_dist[policy][1]}")
     
-    # Prepare data for visualizations
+    # Visualization
     fig = plt.figure(figsize=(18, 10))
     axs = fig.subplots(2, 2)
     
@@ -333,7 +327,7 @@ def analyze_results(results):
     axs[0,0].set_xticklabels(policy_names)
     axs[0,0].legend()
     
-    # Plot 2: Power Consumption (Average per Node)
+    # Plot 2: Power Consumption
     for policy, avg_powers in utilizations.items():
         axs[0,1].bar([f"{policy} Node {i+1}" for i in range(len(avg_powers))], avg_powers, label=policy)
     axs[0,1].set_title('Average Power Consumption per Node')
@@ -360,31 +354,31 @@ def analyze_results(results):
 class FCFSCooperationGateway(BaseGateway):
     """Policy 1: FCFS with Cooperation"""
     def offload_task(self, task):
-        # First check for Bulk/Large data types
         if task.data_type in ['Bulk', 'Large']:
             return self.process_cloud(task)
         
-        # Try primary fog node
         fog = self.select_fog(task)
         if fog:
             fog.queue.append(task)
+            fog.used_storage += task.size  # Reserve storage
             processing_time = fog.process(task)
             fog.queue.remove(task)
+            fog.used_storage -= task.size  # Release storage
             self.metrics['fog_times'].append(processing_time)
             self.metrics['queue_delays'].append(len(fog.queue) * 10)
             return processing_time
         
-        # Try cooperation
         alt_fog = self.find_alternate_fog(task, None)
         if alt_fog:
             alt_fog.queue.append(task)
+            alt_fog.used_storage += task.size
             processing_time = alt_fog.process(task)
             alt_fog.queue.remove(task)
+            alt_fog.used_storage -= task.size
             self.metrics['fog_times'].append(processing_time)
             self.metrics['queue_delays'].append(len(alt_fog.queue) * 10)
             return processing_time
         
-        # Fallback to cloud
         return self.process_cloud(task)
 
 class FCFSNoCooperationGateway(BaseGateway):
@@ -396,8 +390,10 @@ class FCFSNoCooperationGateway(BaseGateway):
         fog = self.select_fog(task)
         if fog:
             fog.queue.append(task)
+            fog.used_storage += task.size
             processing_time = fog.process(task)
             fog.queue.remove(task)
+            fog.used_storage -= task.size
             self.metrics['fog_times'].append(processing_time)
             self.metrics['queue_delays'].append(len(fog.queue) * 10)
             return processing_time
@@ -418,8 +414,10 @@ class RandomCooperationGateway(BaseGateway):
         if suitable_nodes:
             fog = random.choice(suitable_nodes)
             fog.queue.append(task)
+            fog.used_storage += task.size
             processing_time = fog.process(task)
             fog.queue.remove(task)
+            fog.used_storage -= task.size
             self.metrics['fog_times'].append(processing_time)
             self.metrics['queue_delays'].append(len(fog.queue) * 10)
             return processing_time
@@ -440,8 +438,10 @@ class RandomNoCooperationGateway(BaseGateway):
         if suitable_nodes:
             fog = random.choice(suitable_nodes)
             fog.queue.append(task)
+            fog.used_storage += task.size
             processing_time = fog.process(task)
             fog.queue.remove(task)
+            fog.used_storage -= task.size
             self.metrics['fog_times'].append(processing_time)
             self.metrics['queue_delays'].append(len(fog.queue) * 10)
             return processing_time
@@ -454,13 +454,12 @@ def run_policy(gateway_class, tasks, fog_configs):
     cloud_services = [CloudService(cfg) for cfg in CLOUD_SERVICES]
     gateway = gateway_class(fog_nodes, cloud_services)
     
-    progress = tqdm(total=len(tasks), desc="Processing tasks", unit="task")
+    progress = tqdm(total=len(tasks), desc=f"Processing {gateway_class.__name__}")
     for task in tasks:
         gateway.offload_task(task)
         progress.update(1)
     progress.close()
     
-    # Collect metrics
     return {
         'fog_times': gateway.metrics['fog_times'],
         'cloud_times': gateway.metrics['cloud_times'],
@@ -469,42 +468,36 @@ def run_policy(gateway_class, tasks, fog_configs):
     }
 
 def main():
-    # User input handling
     print("Available Policies:")
     for key, value in POLICIES.items():
         print(f"{key}. {value}")
-        
-    choice = int(input("\nSelect policy (1-5): "))
     
-    # Load and validate tasks
+    while True:
+        try:
+            choice = int(input("\nSelect policy (1-5): "))
+            if 1 <= choice <= 5:
+                break
+            print("Invalid choice. Please enter a number between 1-5.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+    
     filepath = os.path.join(os.getcwd(), 'tuple100k.json')
     if not os.path.exists(filepath):
         print(f"Error: File {filepath} not found")
         exit(1)
         
     tasks = load_tasks(filepath)
-    
-    # Run selected policies
     results = {}
-    fog_node_configs = FOG_NODES  # Preserve original config
     
     if choice in [1, 5]:
-        print("\nRunning FCFS Cooperation Policy...")
-        results['GGFC'] = run_policy(FCFSCooperationGateway, tasks.copy(), fog_node_configs)
-        
+        results['GGFC'] = run_policy(FCFSCooperationGateway, tasks.copy(), FOG_NODES)
     if choice in [2, 5]:
-        print("\nRunning FCFS No Cooperation Policy...")
-        results['GGFNC'] = run_policy(FCFSNoCooperationGateway, tasks.copy(), fog_node_configs)
-        
+        results['GGFNC'] = run_policy(FCFSNoCooperationGateway, tasks.copy(), FOG_NODES)
     if choice in [3, 5]:
-        print("\nRunning Random Cooperation Policy...")
-        results['GGRC'] = run_policy(RandomCooperationGateway, tasks.copy(), fog_node_configs)
-        
+        results['GGRC'] = run_policy(RandomCooperationGateway, tasks.copy(), FOG_NODES)
     if choice in [4, 5]:
-        print("\nRunning Random No Cooperation Policy...")
-        results['GGRNC'] = run_policy(RandomNoCooperationGateway, tasks.copy(), fog_node_configs)
+        results['GGRNC'] = run_policy(RandomNoCooperationGateway, tasks.copy(), FOG_NODES)
     
-    # Analyze results
     if results:
         analyze_results(results)
     else:
