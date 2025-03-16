@@ -747,12 +747,6 @@ def main():
     
     if results:
         analyze_results(results)
-        try:
-            from plotting import plot_all
-            print("\nGenerating visualization graphs...")
-            plot_all(results)
-        except ImportError:
-            print("\nVisualization module not found. To generate graphs, create plotting.py with the provided code.")
     else:
         print("No valid policy selected!")
 
