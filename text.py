@@ -709,7 +709,7 @@ def load_tasks(filepath):
         
         if not isinstance(data, list):
             raise ValueError("Root element should be an array")
-            
+        
     tasks = []
     for item in data:
             # Set initial fog_candidate to True

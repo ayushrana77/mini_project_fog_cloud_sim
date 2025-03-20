@@ -133,10 +133,6 @@ class FogNode:
         # Add cumulative tracking variables
         self.cumulative_processed = 0
         self.cumulative_utilization = 0
-        self.peak_utilization = 0  # Track peak utilization
-        self.total_ram_hours = 0   # Track total RAM usage over time
-        self.total_mips_hours = 0  # Track total MIPS usage over time
-        self.total_storage_hours = 0  # Track total storage usage over time
 
     def calculate_power(self):
         """Calculate power consumption based on utilization"""
@@ -181,26 +177,16 @@ class FogNode:
         utilization_increase = min(20, (processing_time / 1000) * (allocated_mips / self.mips) * 100)
         self.utilization = min(100, self.utilization + utilization_increase)
         
-        # Calculate current resource utilization percentages
+        # Calculate a more meaningful cumulative utilization based on percentage of total capacity used
+        # Use weighted average of RAM, MIPS, and storage utilization
         ram_util = (self.ram - self.available_ram) / self.ram * 100
         mips_util = (self.mips - self.available_mips) / self.mips * 100
         storage_util = self.used_storage / self.total_storage * 100
+        resource_utilization = (ram_util + mips_util + storage_util) / 3
         
-        # Update total resource-hours (converted from ms to hours)
-        process_hours = processing_time / (1000 * 60 * 60)  # Convert ms to hours
-        self.total_ram_hours += allocated_ram * process_hours
-        self.total_mips_hours += allocated_mips * process_hours
-        self.total_storage_hours += allocated_storage * process_hours
-        
-        # Calculate weighted resource utilization (prioritize constrained resources)
-        resource_utilization = (ram_util * 0.35 + mips_util * 0.35 + storage_util * 0.3)
-        
-        # Apply exponential moving average with higher alpha for more recent data impact
-        alpha = 0.5  # Increased from 0.3 to give more weight to recent utilization
+        # Apply exponential moving average to smooth utilization over time
+        alpha = 0.3  # Smoothing factor (higher = more weight to new values)
         self.cumulative_utilization = alpha * resource_utilization + (1 - alpha) * self.cumulative_utilization
-        
-        # Track peak utilization
-        self.peak_utilization = max(self.peak_utilization, resource_utilization)
         
         self.power_log.append(self.calculate_power())
         
@@ -567,23 +553,23 @@ class FCFSCooperationGateway(BaseGateway):
                 print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, Lifetime: {processing_time:.2f}ms")
             return processing_time
         
-        # Step 2: Search for a valid fog node with load balancing
+        # Step 2: Search for a valid fog node (FCFS order)
         fog_processed = False
         
-        # Sort fog nodes by workload (prioritize less-loaded nodes)
-        # Calculate workload as a combination of:
-        # 1. Cumulative processed tasks
-        # 2. Current utilization (available resources)
-        # 3. Queue length
-        sorted_nodes = sorted(self.fog_nodes, 
-                             key=lambda f: (
-                                 f.cumulative_processed, 
-                                 (f.ram - f.available_ram) / f.ram,
-                                 (f.mips - f.available_mips) / f.mips,
-                                 f.used_storage / f.total_storage
-                             ))
+        # For Medium-size tasks, prioritize nodes with more availability
+        if (task.data_type in ['Large', 'Bulk'] and task.size > 200) or \
+           (task.data_type in ['Abrupt', 'LocationBased', 'Medical', 'SmallTextual', 'Multimedia'] and task.size > 190):
+            # Sort fog nodes by available resources (most available first)
+            sorted_nodes = sorted(self.fog_nodes, 
+                                 key=lambda f: (f.available_ram / f.ram + 
+                                              f.available_mips / f.mips + 
+                                              (f.total_storage - f.used_storage) / f.total_storage) / 3,
+                                 reverse=True)
+        else:
+            # For smaller tasks, use default order
+            sorted_nodes = self.fog_nodes
         
-        # Try each node in workload-balanced order
+        # Try each node in the determined order
         for fog in sorted_nodes:
                 self.sim_clock += NODE_CHECK_DELAY
                 selection_time += NODE_CHECK_DELAY
@@ -704,8 +690,7 @@ class FCFSCooperationGateway(BaseGateway):
             print(f"  - {fog.name}: Processed: {fog.cumulative_processed}, "
                   f"Available Devices: {node_availability}/{fog.num_devices}, "
                   f"Storage: {fog.used_storage}/{fog.total_storage}, "
-                  f"Avg Util: {fog.cumulative_utilization:.1f}%, "
-                  f"Peak Util: {fog.peak_utilization:.1f}%")
+                  f"Utilization: {fog.cumulative_utilization:.1f}%")
         
         # Print data type distribution metrics for batches
         if hasattr(self, 'data_type_counts'):
@@ -925,27 +910,9 @@ def main():
         
         # Print fog node statistics
         print("\nFog Node Processing Statistics:")
-        total_fog_processed = sum(fog.cumulative_processed for fog in fog_nodes)
         for fog in fog_nodes:
-            # Calculate percentage of fog workload handled by this node
-            if total_fog_processed > 0:
-                workload_percentage = (fog.cumulative_processed / total_fog_processed) * 100
-    else:
-                workload_percentage = 0
+            print(f"{fog.name}: Processed {fog.cumulative_processed} tasks, Final Utilization: {fog.cumulative_utilization:.2f}%")
             
-            print(f"{fog.name}: Processed {fog.cumulative_processed} tasks ({workload_percentage:.1f}% of fog workload), "
-                  f"Avg Utilization: {fog.cumulative_utilization:.2f}%, "
-                  f"Peak Utilization: {fog.peak_utilization:.2f}%")
-            
-            # Additional utilization details
-            if fog.cumulative_processed > 0:
-                avg_ram_usage = fog.total_ram_hours / (fog.cumulative_processed * 1e-6)  # Adjusted for scale
-                avg_mips_usage = fog.total_mips_hours / (fog.cumulative_processed * 1e-6)
-                avg_storage_usage = fog.total_storage_hours / (fog.cumulative_processed * 1e-6)
-                
-                print(f"  Resource usage per task: RAM: {avg_ram_usage:.2f} units, "
-                      f"MIPS: {avg_mips_usage:.2f} units, Storage: {avg_storage_usage:.2f} units")
-        
         # Print overall performance metrics
         total_time = __import__('time').time() - start_time
         print(f"\nTotal processing time: {total_time:.2f}s ({total_processed/total_time:.2f} tasks/second)")
