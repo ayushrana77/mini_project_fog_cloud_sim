@@ -581,15 +581,15 @@ class FCFSCooperationGateway(BaseGateway):
                     self.metrics['node_selection_time'].append(selection_time)
                     self.commit_fog_resources(fog, task, self.current_batch)
                     fog_processed = True
-                allocation = f"Fog ({fog.name})"
-                # Track fog allocation for this data type
-                if task_type in self.data_type_counts:
-                    self.data_type_counts[task_type]['fog'] += 1
-                # Print task information only if verbose mode is on
-                if self.verbose_output:
-                    print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, Lifetime: {p_time:.2f}ms")
-                    # Print fog resource status
-                    self.print_fog_status()
+                    allocation = f"Fog ({fog.name})"
+                    # Track fog allocation for this data type
+                    if task_type in self.data_type_counts:
+                        self.data_type_counts[task_type]['fog'] += 1
+                    # Print task information only if verbose mode is on
+                    if self.verbose_output:
+                        print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, Lifetime: {p_time:.2f}ms")
+                        # Print fog resource status
+                        self.print_fog_status()
                     return 0
         
         # Step 3: If no valid fog node, try cooperation with another random shuffle
@@ -610,16 +610,16 @@ class FCFSCooperationGateway(BaseGateway):
                 self.metrics['node_selection_time'].append(selection_time)
                 self.commit_fog_resources(fog, task, self.current_batch)
                 fog_processed = True
-                    allocation = f"Fog ({fog.name})"
-                    reassigned = True
-                    # Track fog allocation for this data type
-                    if task_type in self.data_type_counts:
-                        self.data_type_counts[task_type]['fog'] += 1
-                    # Print task information only if verbose mode is on
-                    if self.verbose_output:
-                        print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, Reassigned: Yes, Lifetime: {p_time:.2f}ms")
-                        # Print fog resource status
-                        self.print_fog_status()
+                allocation = f"Fog ({fog.name})"
+                reassigned = True
+                # Track fog allocation for this data type
+                if task_type in self.data_type_counts:
+                    self.data_type_counts[task_type]['fog'] += 1
+                # Print task information only if verbose mode is on
+                if self.verbose_output:
+                    print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, Reassigned: Yes, Lifetime: {p_time:.2f}ms")
+                    # Print fog resource status
+                    self.print_fog_status()
                 return 0
         
         # Step 4: If still no fog node available, try one more time with relaxed constraints
@@ -787,7 +787,7 @@ def main():
         
         # Create gateway directly to have more control
         fog_nodes = [FogNode(cfg) for cfg in FOG_NODES]
-    cloud_services = [CloudService(cfg) for cfg in CLOUD_SERVICES]
+        cloud_services = [CloudService(cfg) for cfg in CLOUD_SERVICES]
         gateway = FCFSCooperationGateway(fog_nodes, cloud_services)
         
         # Turn off verbose output for large datasets
@@ -795,21 +795,21 @@ def main():
         
         # Initialize result tracking
         results[policy_name] = {
-        'fog_times': [],
-        'cloud_times': [],
-        'queue_delays': [],
-        'batch_completion_times': [],
-            'fog_nodes': fog_nodes,
-        'node_selection_time': [],
-        'cloud_selection_time': [],
-        'batch_metrics': {
             'fog_times': [],
             'cloud_times': [],
             'queue_delays': [],
-            'fog_utilization': [],
-            'cloud_utilization': []
+            'batch_completion_times': [],
+            'fog_nodes': fog_nodes,
+            'node_selection_time': [],
+            'cloud_selection_time': [],
+            'batch_metrics': {
+                'fog_times': [],
+                'cloud_times': [],
+                'queue_delays': [],
+                'fog_utilization': [],
+                'cloud_utilization': []
+            }
         }
-    }
     
         # Process tasks in batches
         remaining_tasks = tasks.copy()
