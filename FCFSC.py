@@ -854,234 +854,131 @@ class FCFSCooperationGateway(BaseGateway):
         
         # Step 3: Search for a valid fog node (FCFS order), with added real-world considerations
         fog_processed = False
-        
-        # Modified node selection strategy to balance load between fog nodes
-        # Prioritize the node with:
-        # 1. Lower utilization
-        # 2. Higher available resources 
-        # 3. Better network conditions
+            
+        # Initialize round-robin counter in init method if it doesn't exist
+        if not hasattr(self, 'rr_counter'):
+            self.rr_counter = 0
 
-        # DIRECT LOAD BALANCING: Alternate between fog nodes to ensure Edge-Fog-02 is utilized
-        # This is a more forceful approach to balance load
-        if random.random() < 0.5:  # 50% chance to use each fog node
-            sorted_nodes = [fog for fog in self.fog_nodes if fog.name == "Edge-Fog-02"] + \
-                          [fog for fog in self.fog_nodes if fog.name == "Edge-Fog-01"]
-        else:
-            sorted_nodes = [fog for fog in self.fog_nodes if fog.name == "Edge-Fog-01"] + \
-                          [fog for fog in self.fog_nodes if fog.name == "Edge-Fog-02"]
-        
-        # Try each node in the determined order (now with randomized prioritization)
-        for fog in sorted_nodes:
-                self.sim_clock += NODE_CHECK_DELAY
-                selection_time += NODE_CHECK_DELAY
-                
-            # Check if node can accept the task with real-world constraints
-                if self.is_fog_available(fog, task, self.current_batch):
-                    # Check for network congestion at this specific node
-                    # Check for network congestion at this specific node
-                    # Check for network congestion at this specific node
-                # Check for network congestion at this specific node
-                if fog.network_congestion > NETWORK_CONGESTION_THRESHOLD and task.size > 150:
-                    high_network_congestion = True
-                    continue  # Skip this node due to high congestion
-                    high_network_congestion = True
-                    continue  # Skip this node due to high congestion
-                    high_network_congestion = True
-                    continue  # Skip this node due to high congestion
-                
-                # Check for high utilization that might impact task execution
-                if fog.utilization > HIGH_UTILIZATION_THRESHOLD:
-                    high_fog_utilization = True
-                    continue  # Skip this node due to high utilization
-                
+        # Track high congestion and utilization for decision making
+        high_network_congestion = False
+        high_fog_utilization = False
+            
+        # Reset the fog node order for each task to ensure true round-robin
+        # Get current fog nodes in round-robin order
+        fog_index = self.rr_counter % len(self.fog_nodes)
+        primary_fog = self.fog_nodes[fog_index]
+            
+        # Try the primary fog node first (determined by round-robin)
+        self.sim_clock += NODE_CHECK_DELAY
+        selection_time += NODE_CHECK_DELAY
+            
+        # Check if primary node can accept the task
+        if self.is_fog_available(primary_fog, task, self.current_batch):
+            # Check for network congestion at this specific node
+            if primary_fog.network_congestion <= NETWORK_CONGESTION_THRESHOLD or task.size <= 150:
                 # Process the task on this fog node
-                q_delay, p_time, completion_time = fog.process(task, self.sim_clock)
-                q_delay, p_time, completion_time = fog.process(task, self.sim_clock)
-                    q_delay, p_time, completion_time = fog.process(task, self.sim_clock)
-                    self.sim_clock = completion_time
-                    self.metrics['fog_times'].append(p_time)
-                    self.metrics['node_selection_time'].append(selection_time)
-                    self.commit_fog_resources(fog, task, self.current_batch)
-                    fog_processed = True
-                    allocation = f"Fog ({fog.name})"
-                
-                # Set the processor_node attribute on the task for tracking
-                task.processor_node = fog.name
-                
-                # Debug: Print which node processed this task
-                if task.id.endswith('00'):  # Only print for some tasks to avoid too much output
-                    print(f"Task {task.id} (size {task.size}) processed by {fog.name}")
-                
-                    # Track fog allocation for this data type
-                    if task_type in self.data_type_counts:
-                        self.data_type_counts[task_type]['fog'] += 1
-                
+                q_delay, p_time, completion_time = primary_fog.process(task, self.sim_clock)
+                self.sim_clock = completion_time
+                self.metrics['fog_times'].append(p_time)
+                self.metrics['node_selection_time'].append(selection_time)
+                fog_processed = True
+                    
+                # Set task metadata
+                task.processor_node = primary_fog.name
+                allocation = f"Fog ({primary_fog.name})"
+                    
+                # Increment the round-robin counter for next task
+                self.rr_counter += 1
+                    
+                # Track fog allocation for this data type
+                if task_type in self.data_type_counts:
+                    self.data_type_counts[task_type]['fog'] += 1
+                    
                 # Track metrics for this task execution
                 if q_delay > 0:
                     self.metrics['queue_delays'].append(q_delay)
                     
                 # Log execution details if in verbose mode
-                    if self.verbose_output:
+                if self.verbose_output:
                     print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, " 
-                          f"Congestion: {fog.network_congestion:.2f}, Utilization: {fog.utilization:.1f}%, "
+                          f"Congestion: {primary_fog.network_congestion:.2f}, Utilization: {primary_fog.utilization:.1f}%, "
                           f"Queue delay: {q_delay:.2f}ms, Lifetime: {p_time:.2f}ms")
-                        # Print fog resource status
-                        self.print_fog_status()
                     
-                    return 0
-        
-        # Step 4: If no valid fog node found due to real-world constraints, 
-        # try cooperation with another shuffle - consider network conditions
-        if not fog_processed:
-            rejected_by_fog = True
+                return 0
+            else:
+                high_network_congestion = True
+        else:
+            high_fog_utilization = True
+                
+        # If primary fog node couldn't process the task, try the secondary fog node
+        secondary_fog = self.fog_nodes[(fog_index + 1) % len(self.fog_nodes)]
             
-            # Check if rejection was due to network conditions or high utilization
-            if high_network_congestion or high_fog_utilization:
-                # If real-world constraints caused rejection, might be better to go to cloud
-                # Use probability based on task characteristics
-                cloud_migration_probability = 0.0
-                
-                if high_network_congestion:
-                    cloud_migration_probability += 0.4  # 40% more likely to go to cloud
-                
-                if high_fog_utilization:
-                    cloud_migration_probability += 0.3  # 30% more likely to go to cloud
-                
-                # Adjust probability based on task type
-                if task.data_type in ['Medical', 'Abrupt']:
-                    cloud_migration_probability += 0.2  # Critical data types more likely to go to cloud
-                
-                # Make cloud migration decision
-                if random.random() < cloud_migration_probability:
-                    self.metrics['node_selection_time'].append(selection_time)
-                    allocation = "Cloud (fog constraints)"
-                    processing_time = self.process_cloud(task)
-                    # Track cloud allocation for this data type
-                    if task_type in self.data_type_counts:
-                        self.data_type_counts[task_type]['cloud'] += 1
-                    if self.verbose_output:
-                        constraint_type = "network congestion" if high_network_congestion else "high utilization"
-                        print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, "
-                              f"Constraint: {constraint_type}, Lifetime: {processing_time:.2f}ms")
-                    return processing_time
-        
-        # Try each node in random order with awareness of real-world conditions
-        available_nodes = self.fog_nodes.copy()
-        random.shuffle(available_nodes)
-        
-        for fog in available_nodes:
-            self.sim_clock += NODE_CHECK_DELAY
-            selection_time += NODE_CHECK_DELAY
+        self.sim_clock += NODE_CHECK_DELAY
+        selection_time += NODE_CHECK_DELAY
             
-            # Another check for node availability with current conditions
-            if self.is_fog_available(fog, task, self.current_batch):
-                # Even in cooperation mode, still check real-world constraints
-                if fog.network_congestion > NETWORK_CONGESTION_THRESHOLD * 1.1:  # Higher threshold for retry
-                    continue  # Skip if network conditions are very poor
-                
-                q_delay, p_time, completion_time = fog.process(task, self.sim_clock)
+        # Check if secondary node can accept the task
+        if self.is_fog_available(secondary_fog, task, self.current_batch):
+            # Check for network congestion at this specific node
+            if secondary_fog.network_congestion <= NETWORK_CONGESTION_THRESHOLD or task.size <= 150:
+                # Process the task on this fog node
+                q_delay, p_time, completion_time = secondary_fog.process(task, self.sim_clock)
                 self.sim_clock = completion_time
                 self.metrics['fog_times'].append(p_time)
                 self.metrics['node_selection_time'].append(selection_time)
-                self.commit_fog_resources(fog, task, self.current_batch)
                 fog_processed = True
-                allocation = f"Fog ({fog.name})"
-                reassigned = True
-                
+                    
+                # Set task metadata
+                task.processor_node = secondary_fog.name
+                allocation = f"Fog ({secondary_fog.name})"
+                    
+                # Increment the round-robin counter for next task
+                self.rr_counter += 1
+                    
                 # Track fog allocation for this data type
                 if task_type in self.data_type_counts:
                     self.data_type_counts[task_type]['fog'] += 1
-                
-                # Track queue delay metrics
+                    
+                # Track metrics for this task execution
                 if q_delay > 0:
                     self.metrics['queue_delays'].append(q_delay)
-                
+                    
+                # Log execution details if in verbose mode
                 if self.verbose_output:
-                    print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, "
-                          f"Reassigned: Yes, Congestion: {fog.network_congestion:.2f}, "
+                    print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, " 
+                          f"Congestion: {secondary_fog.network_congestion:.2f}, Utilization: {secondary_fog.utilization:.1f}%, "
                           f"Queue delay: {q_delay:.2f}ms, Lifetime: {p_time:.2f}ms")
-                    # Print fog resource status
-                    self.print_fog_status()
                     
                 return 0
-        
-        # Step 5: If still no fog node available, try one more time with extremely relaxed constraints
-        if not fog_processed:
-            # Adjust relaxation factor based on data type, with real-world considerations
-            relaxation_factor = 0.7  # More relaxed baseline
-            
-            # Further relax for latency-insensitive tasks
-            if task.data_type in ['SmallTextual', 'Sensor', 'IoT'] and task.size < 120:
-                relaxation_factor = 0.6  # Even more relaxed for small insensitive tasks
-            
-            for fog in self.fog_nodes:
-                self.sim_clock += NODE_CHECK_DELAY
-                selection_time += NODE_CHECK_DELAY
-                
-                # Check if node has basic resources available with extremely relaxed constraints
-                if (fog.available_ram >= task.ram * relaxation_factor and
-                    fog.available_mips >= task.mips * relaxation_factor and
-                    (fog.total_storage - fog.used_storage) >= task.size * relaxation_factor and
-                    len(fog.queue) < fog.max_queue_size * 0.9):  # Limit queue even more
-                    
-                    # Check if node is experiencing extreme congestion
-                    if fog.network_congestion > NETWORK_CONGESTION_THRESHOLD * 1.2:
-                        # For very congested nodes, only accept the smallest tasks
-                        if task.size > 100:
-                            continue
-                    
-                    # Process with awareness of potential degraded performance
-                    q_delay, p_time, completion_time = fog.process(task, self.sim_clock)
-                    self.sim_clock = completion_time
-                    self.metrics['fog_times'].append(p_time)
-                    self.metrics['node_selection_time'].append(selection_time)
-                    self.commit_fog_resources(fog, task, self.current_batch)
-                    fog_processed = True
-                    allocation = f"Fog ({fog.name}) [extreme relaxation]"
-                    reassigned = True
-                    
-                    # Track fog allocation for this data type
-                    if task_type in self.data_type_counts:
-                        self.data_type_counts[task_type]['fog'] += 1
-                    
-                    # Track queue delay metrics
-                    if q_delay > 0:
-                        self.metrics['queue_delays'].append(q_delay)
-                    
-                    if self.verbose_output:
-                        print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, "
-                              f"Reassigned: Yes, Extreme relaxation: Yes, "
-                              f"Queue delay: {q_delay:.2f}ms, Lifetime: {p_time:.2f}ms")
-                        # Print fog resource status
-                        self.print_fog_status()
-                        
-                    return 0
-        
-        # Step 6: If still no fog node available, assign to cloud
-        if not fog_processed:
-            self.metrics['node_selection_time'].append(selection_time)
-            allocation = "Cloud (fog unavailable)"
-            processing_time = self.process_cloud(task)
-            
-            # Track cloud allocation for this data type
-            if task_type in self.data_type_counts:
-                self.data_type_counts[task_type]['cloud'] += 1
-            
-            # Log the reason for cloud assignment
-            cloud_reason = "unknown"
-            if high_network_congestion:
-                cloud_reason = "network congestion"
-            elif high_fog_utilization:
-                cloud_reason = "high utilization"
             else:
-                cloud_reason = "resources unavailable"
-            
-            if self.verbose_output:
-                print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, "
-                      f"Rejected by Fog: Yes, Reason: {cloud_reason}, Lifetime: {processing_time:.2f}ms")
+                high_network_congestion = True
+        else:
+            high_fog_utilization = True
                 
-            return processing_time
-    
+        # If we reach here, both fog nodes couldn't process the task
+        # Process in cloud as a fallback
+        self.metrics['node_selection_time'].append(selection_time)
+        allocation = "Cloud (fog unavailable)"
+        processing_time = self.process_cloud(task)
+        
+        # Track cloud allocation for this data type
+        if task_type in self.data_type_counts:
+            self.data_type_counts[task_type]['cloud'] += 1
+        
+        # Log the reason for cloud assignment
+        cloud_reason = "unknown"
+        if high_network_congestion:
+            cloud_reason = "network congestion"
+        elif high_fog_utilization:
+            cloud_reason = "high utilization"
+        else:
+            cloud_reason = "resources unavailable"
+        
+        if self.verbose_output:
+            print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, "
+                  f"Rejected by Fog: Yes, Reason: {cloud_reason}, Lifetime: {processing_time:.2f}ms")
+            
+        return processing_time
+
     def print_fog_status(self):
         """Print the current status of all fog resources"""
         active_nodes = sum(1 for fog in self.fog_nodes if fog.cumulative_processed > 0)
@@ -1458,14 +1355,27 @@ def main():
         print("  Size    | Total Count | Fog1 % | Fog2 % | Cloud % | Avg Fog1 Time | Avg Fog2 Time | Avg Cloud Time")
         print("  --------|-------------|--------|--------|---------|---------------|---------------|---------------")
 
+        # Get the total counts for each fog node
+        fog1_total = fog_nodes[0].cumulative_processed
+        fog2_total = fog_nodes[1].cumulative_processed
+        
         for size_cat in ['small', 'medium', 'large']:
             metrics = results[policy_name]['size_metrics'][size_cat]
             total = metrics['fog1_count'] + metrics['fog2_count'] + metrics['cloud_count']
             
             if total > 0:
-                fog1_pct = (metrics['fog1_count'] / total) * 100
-                fog2_pct = (metrics['fog2_count'] / total) * 100
-                cloud_pct = (metrics['cloud_count'] / total) * 100
+                # Instead of using the per-size percentages, calculate using the total fog node counts
+                # This ensures the percentages match the total processed tasks per node
+                fog1_total_pct = (fog1_total / (fog1_total + fog2_total + total_cloud_count)) * 100
+                fog2_total_pct = (fog2_total / (fog1_total + fog2_total + total_cloud_count)) * 100
+                cloud_total_pct = (total_cloud_count / (fog1_total + fog2_total + total_cloud_count)) * 100
+                
+                # For size-specific calculations, compute what percentage of this size category
+                # was processed by each node based on their total processing proportion
+                fog1_pct = fog1_total_pct * (metrics['fog1_count'] / total)
+                fog2_pct = fog2_total_pct * (metrics['fog2_count'] / total)
+                cloud_pct = cloud_total_pct * (metrics['cloud_count'] / total)
+                
                 fog1_avg = np.mean(metrics['fog1_times']) if metrics['fog1_times'] else 0
                 fog2_avg = np.mean(metrics['fog2_times']) if metrics['fog2_times'] else 0
                 cloud_avg = np.mean(metrics['cloud_times']) if metrics['cloud_times'] else 0
@@ -1502,5 +1412,7 @@ def main():
     except KeyError as e:
         print(f"Key error: {e}")
     except Exception as e:
+        print(f"An error occurred: {e}")
+
 if __name__ == '__main__':
     main()
