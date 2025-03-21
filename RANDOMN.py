@@ -1288,6 +1288,42 @@ def main():
             if total > 0:
                 fog_pct = (fog_count / total) * 100
                 print(f"  {data_type:<15}: Fog: {fog_count} ({fog_pct:.1f}%), Cloud: {cloud_count} ({100-fog_pct:.1f}%)")
+        
+        # Standardized performance metrics output
+        print("\n=== Performance Metrics ===")
+        
+        # Processing times
+        print("=== Average Processing Times (ms) ===")
+        print(f"RandomNoCooperation: Total = {avg_fog_time + avg_cloud_time:.2f}, Fog = {avg_fog_time:.2f}, Cloud = {avg_cloud_time:.2f}")
+        
+        # Power consumption
+        print("\n=== Average Power Consumption per Node (W) ===")
+        power_values = []
+        for node in fog_nodes:
+            power_values.append(f'{node.power_log[-1]:.2f}')
+        print(f"RandomNoCooperation: {power_values}")
+        
+        # Queue delays
+        queue_delays = gateway.metrics.get('queue_delays', [])
+        avg_delay = sum(queue_delays) / len(queue_delays) if queue_delays else 0
+        print("\n=== Average Queue Delays (ms) ===")
+        print(f"RandomNoCooperation: {avg_delay:.2f}")
+        
+        # Task distribution
+        print("\n=== Task Distribution ===")
+        print(f"RandomNoCooperation: Fog = {total_fog_count} ({total_fog_count/total_processed*100:.1f}%), Cloud = {total_cloud_count} ({total_cloud_count/total_processed*100:.1f}%)")
+        
+        # Data type distribution
+        print("\n=== Data Type Distribution ===")
+        print(f"{'Data Type':<15} | {'Fog Count':<10} | {'Cloud Count':<10} | {'Total':<10} | {'Fog %':<10}")
+        print("-" * 70)
+        for data_type, counts in sorted(gateway.data_type_counts.items()):
+            fog_type_count = counts.get('fog', 0)
+            cloud_type_count = counts.get('cloud', 0)
+            type_total = fog_type_count + cloud_type_count
+            if type_total > 0:
+                fog_type_pct = (fog_type_count / type_total) * 100
+                print(f"{data_type:<15} | {fog_type_count:<10} | {cloud_type_count:<10} | {type_total:<10} | {fog_type_pct:<10.1f}%")
     
     except FileNotFoundError as e:
         print(f"File not found error: {e}")

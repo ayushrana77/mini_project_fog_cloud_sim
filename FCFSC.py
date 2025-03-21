@@ -1037,20 +1037,15 @@ class FCFSCooperationGateway(BaseGateway):
             
             # Calculate resource commitment duration
             if size < 100:  # Small tasks
-                batch_commitment = max(5, int(BATCHES_BEFORE_RESET * 0.6))
-                commitment_str = f"{batch_commitment} batches (60%)"
+                batch_commitment = max(5, int(BATCHES_BEFORE_RESET * 0.6))  # 60% of normal duration, minimum 5
             elif size < 150:  # Medium-small tasks
-                batch_commitment = max(7, int(BATCHES_BEFORE_RESET * 0.8))
-                commitment_str = f"{batch_commitment} batches (80%)"
+                batch_commitment = max(7, int(BATCHES_BEFORE_RESET * 0.8))  # 80% of normal duration
             elif size < 200:  # Medium tasks
-                batch_commitment = BATCHES_BEFORE_RESET
-                commitment_str = f"{batch_commitment} batches (100%)"
+                batch_commitment = BATCHES_BEFORE_RESET  # Normal duration
             elif size < 250:  # Medium-large tasks
-                batch_commitment = int(BATCHES_BEFORE_RESET * 1.3)
-                commitment_str = f"{batch_commitment} batches (130%)"
+                batch_commitment = int(BATCHES_BEFORE_RESET * 1.3)  # 130% of normal duration
             else:  # Large tasks
-                batch_commitment = int(BATCHES_BEFORE_RESET * 1.6)
-                commitment_str = f"{batch_commitment} batches (160%)"
+                batch_commitment = int(BATCHES_BEFORE_RESET * 1.6)  # 160% of normal duration
             
             # Calculate estimates based on first fog node
             if self.fog_nodes:
@@ -1074,7 +1069,7 @@ class FCFSCooperationGateway(BaseGateway):
                 else:
                     migration_prob = "Very Low (<10%)"
                 
-                print(f"  {size:<10}| {fog_min:.1f}-{fog_max:.1f} ms           | {trans_min:.1f}-{trans_max:.1f} ms        | {cloud_min:.1f}-{cloud_max:.1f} ms            | {migration_prob:<20} | {commitment_str}")
+                print(f"  {size:<10}| {fog_min:.1f}-{fog_max:.1f} ms           | {trans_min:.1f}-{trans_max:.1f} ms        | {cloud_min:.1f}-{cloud_max:.1f} ms            | {migration_prob:<20} | {batch_commitment} batches")
         
         print("")
 
@@ -1404,6 +1399,30 @@ def main():
             if total > 0:
                 fog_pct = (fog_count / total) * 100
                 print(f"  {data_type:<15}: Fog: {fog_count} ({fog_pct:.1f}%), Cloud: {cloud_count} ({100-fog_pct:.1f}%)")
+        
+        # Standardized performance metrics output
+        print("\n=== Performance Metrics ===")
+        print("=== Average Processing Times (ms) ===")
+        print(f"FCFSCooperation: Total = {avg_fog_time + avg_cloud_time:.2f}, Fog = {avg_fog_time:.2f}, Cloud = {avg_cloud_time:.2f}")
+        print("\n=== Average Power Consumption per Node (W) ===")
+        power_values = []
+        for node in fog_nodes:
+            power_values.append(f'{node.power_log[-1]:.2f}')
+        print(f"FCFSCooperation: {power_values}")
+        print("\n=== Average Queue Delays (ms) ===")
+        avg_delay = np.mean(gateway.metrics['queue_delays']) if gateway.metrics['queue_delays'] else 0
+        print(f"FCFSCooperation: {avg_delay:.2f}")
+        print("\n=== Task Distribution ===")
+        print(f"FCFSCooperation: Fog = {total_fog_count} ({total_fog_count/total_processed*100:.1f}%), Cloud = {total_cloud_count} ({total_cloud_count/total_processed*100:.1f}%)")
+        print("\n=== Data Type Distribution ===")
+        print(f"{'Data Type':<15} | {'Fog Count':<10} | {'Cloud Count':<10} | {'Total':<10} | {'Fog %':<10}")
+        print("-" * 70)
+        for data_type, counts in sorted(gateway.data_type_counts.items()):
+            fog_count = counts.get('fog', 0)
+            cloud_count = counts.get('cloud', 0)
+            type_total = fog_count + cloud_count
+            type_fog_percent = (fog_count / type_total) * 100 if type_total > 0 else 0
+            print(f"{data_type:<15} | {fog_count:<10} | {cloud_count:<10} | {type_total:<10} | {type_fog_percent:<10.1f}%")
     
     except FileNotFoundError as e:
         print(f"File not found error: {e}")
