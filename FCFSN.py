@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from tqdm import tqdm
 from math import radians, sin, cos, sqrt, atan2
 from typing import Dict, List, Optional, Any
+import time
 
 # ==========================================================
 # Real-world Factors Simulation Implementation
@@ -64,17 +65,6 @@ FOG_NODES = [
         "num_pes": 2400,
         "ram": 327680,
         "storage": 800000,
-        "num_devices": 3500
-    },
-    {
-        "name": "Edge-Fog-02",
-        "location": (34.12, 73.25),
-        "down_bw": 60000,
-        "up_bw": 40000,
-        "mips": 250000,
-        "num_pes": 3200,
-        "ram": 491520,
-        "storage": 1000000,
         "num_devices": 3500
     }
 ]
@@ -534,9 +524,17 @@ class BaseGateway:
         self.metrics = {
             'fog_times': [],
             'cloud_times': [],
+            'queue_delays': [],
             'node_selection_time': [],
-            'cloud_selection_time': [],
-            'queue_delays': []
+            'fog_first_count': 0,
+            'cloud_direct_count': 0,
+            'batch_metrics': {
+                'fog_batch_counts': [],
+                'cloud_batch_counts': [],
+                'batch_times': [],
+                'fog_utilization': [],
+                'cloud_utilization': []
+            },
         }
         
         # Initialize device commitments for each fog node
@@ -659,13 +657,9 @@ class BaseGateway:
         self.batch_assignments[current_batch][fog.name].append(task.id)
 
     def is_bulk_data(self, task):
-        """Determine if a task involves bulk data processing."""
-        # Send all Large and Bulk tasks directly to cloud
-        if task.data_type in ['Large', 'Bulk']:
-            return True  # All Large and Bulk tasks go to cloud
-        elif task.data_type in ['Abrupt', 'LocationBased', 'Medical', 'SmallTextual', 'Multimedia']:
-            return task.size > 230  # Higher than avg (194)
-        return False
+        """Check if the task involves bulk data to go directly to cloud."""
+        return (task.data_type in ['Large', 'Bulk'] or 
+                (task.size > 180 and task.data_type in ['Multimedia', 'Large']))
 
     def get_next_batch(self, all_tasks):
         """Get next batch of tasks based on FCFS scheduling policy"""
@@ -806,155 +800,87 @@ class FCFSCooperationGateway(BaseGateway):
         self.verbose_output = False  # Control detailed task-level output
 
     def offload_task(self, task):
-        """Algorithm 1: Global Gateway With FCFS Tuples and Cooperation Policy with Real-world Factors"""
-        selection_time = 0
+        """
+        Global Gateway with FCFS tuples and no cooperation policy
+        """
+        # Get task type and start measuring selection time
+        task_type = task.data_type
+        t_start = time.time()
+        selection_time = 0  # Track time spent in node selection
+        allocation = "Undecided"
         rejected_by_fog = False
         reassigned = False
-        task_type = task.data_type
-        allocation = "Unknown"
         
-        # Track real-world factors that may cause migration
-        high_network_congestion = False
-        high_fog_utilization = False
-        
-        # Step 1: Check if task involves bulk data or should go directly to cloud
-        # Immediate cloud redirection for bulk data or large tasks
-        if self.is_bulk_data(task):
+        # Step 1: Check if the task should go to cloud directly based on data type
+        # Bulk or Large data types should go to cloud directly
+        if task.data_type in ['Large', 'Bulk']:
             self.metrics['node_selection_time'].append(selection_time)
-            allocation = "Cloud (bulk data)"
+            allocation = "Cloud (direct)"
             processing_time = self.process_cloud(task)
+            
             # Track cloud allocation for this data type
             if task_type in self.data_type_counts:
                 self.data_type_counts[task_type]['cloud'] += 1
-            # Print task information only if verbose mode is on
-            if self.verbose_output:
-                print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, Lifetime: {processing_time:.2f}ms")
-            return processing_time
-        
-        # Step 2: Check for real-time network or resource constraints that force cloud migration
-        # Simulate real-world unpredictability with network-wide factors
-        current_network_saturation = random.uniform(0.7, 1.3)  # Global network condition
-        system_wide_congestion = False
-        
-        # Simulate random network-wide congestion events (rare but impactful)
-        if random.random() < 0.05:  # 5% chance of system-wide congestion
-            system_wide_congestion = True
-            current_network_saturation = random.uniform(1.1, 1.5)  # Higher during congestion events
-        
-        # Force cloud migration for sensitive tasks during system-wide congestion
-        if system_wide_congestion and (task.data_type in ['Medical', 'Abrupt'] or task.size > 180):
-            self.metrics['node_selection_time'].append(selection_time)
-            allocation = "Cloud (network congestion)"
-            processing_time = self.process_cloud(task)
-            if task_type in self.data_type_counts:
-                self.data_type_counts[task_type]['cloud'] += 1
-            if self.verbose_output:
-                print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, System congestion: Yes, Lifetime: {processing_time:.2f}ms")
-            return processing_time
-        
-        # Step 3: Search for a valid fog node (FCFS order), with added real-world considerations
-        fog_processed = False
             
-        # Initialize round-robin counter in init method if it doesn't exist
-        if not hasattr(self, 'rr_counter'):
-            self.rr_counter = 0
-
+            if self.verbose_output:
+                print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, "
+                      f"Lifetime: {processing_time:.2f}ms")
+                
+            return processing_time
+        
+        # Step 2: If not a cloud-direct data type, set up fog-first approach
+        self.metrics['fog_first_count'] += 1
+        
+        # Step 3: Try to process with the fog node, with real-world considerations
+        fog_processed = False
+        
         # Track high congestion and utilization for decision making
         high_network_congestion = False
         high_fog_utilization = False
+        
+        # Since we only have one fog node, we'll try it directly
+        if len(self.fog_nodes) > 0:
+            fog = self.fog_nodes[0]  # Get the only fog node
             
-        # Reset the fog node order for each task to ensure true round-robin
-        # Get current fog nodes in round-robin order
-        fog_index = self.rr_counter % len(self.fog_nodes)
-        primary_fog = self.fog_nodes[fog_index]
+            self.sim_clock += NODE_CHECK_DELAY
+            selection_time += NODE_CHECK_DELAY
             
-        # Try the primary fog node first (determined by round-robin)
-        self.sim_clock += NODE_CHECK_DELAY
-        selection_time += NODE_CHECK_DELAY
-            
-        # Check if primary node can accept the task
-        if self.is_fog_available(primary_fog, task, self.current_batch):
-            # Check for network congestion at this specific node
-            if primary_fog.network_congestion <= NETWORK_CONGESTION_THRESHOLD or task.size <= 150:
-                # Process the task on this fog node
-                q_delay, p_time, completion_time = primary_fog.process(task, self.sim_clock)
-                self.sim_clock = completion_time
-                self.metrics['fog_times'].append(p_time)
-                self.metrics['node_selection_time'].append(selection_time)
-                fog_processed = True
+            # Check if fog node can accept the task
+            if self.is_fog_available(fog, task, self.current_batch):
+                # Check for network congestion
+                if fog.network_congestion <= NETWORK_CONGESTION_THRESHOLD or task.size <= 150:
+                    # Process the task on this fog node
+                    q_delay, p_time, completion_time = fog.process(task, self.sim_clock)
+                    self.sim_clock = completion_time
+                    self.metrics['fog_times'].append(p_time)
+                    self.metrics['node_selection_time'].append(selection_time)
+                    fog_processed = True
                     
-                # Set task metadata
-                task.processor_node = primary_fog.name
-                allocation = f"Fog ({primary_fog.name})"
+                    # Set task metadata
+                    task.processor_node = fog.name
+                    allocation = f"Fog ({fog.name})"
                     
-                # Increment the round-robin counter for next task
-                self.rr_counter += 1
+                    # Track fog allocation for this data type
+                    if task_type in self.data_type_counts:
+                        self.data_type_counts[task_type]['fog'] += 1
                     
-                # Track fog allocation for this data type
-                if task_type in self.data_type_counts:
-                    self.data_type_counts[task_type]['fog'] += 1
+                    # Track metrics for this task execution
+                    if q_delay > 0:
+                        self.metrics['queue_delays'].append(q_delay)
                     
-                # Track metrics for this task execution
-                if q_delay > 0:
-                    self.metrics['queue_delays'].append(q_delay)
+                    # Log execution details if in verbose mode
+                    if self.verbose_output:
+                        print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, " 
+                              f"Congestion: {fog.network_congestion:.2f}, Utilization: {fog.utilization:.1f}%, "
+                              f"Queue delay: {q_delay:.2f}ms, Lifetime: {p_time:.2f}ms")
                     
-                # Log execution details if in verbose mode
-                if self.verbose_output:
-                    print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, " 
-                          f"Congestion: {primary_fog.network_congestion:.2f}, Utilization: {primary_fog.utilization:.1f}%, "
-                          f"Queue delay: {q_delay:.2f}ms, Lifetime: {p_time:.2f}ms")
-                    
-                return 0
+                    return 0
+                else:
+                    high_network_congestion = True
             else:
-                high_network_congestion = True
-        else:
-            high_fog_utilization = True
-                
-        # If primary fog node couldn't process the task, try the secondary fog node
-        secondary_fog = self.fog_nodes[(fog_index + 1) % len(self.fog_nodes)]
-            
-        self.sim_clock += NODE_CHECK_DELAY
-        selection_time += NODE_CHECK_DELAY
-            
-        # Check if secondary node can accept the task
-        if self.is_fog_available(secondary_fog, task, self.current_batch):
-            # Check for network congestion at this specific node
-            if secondary_fog.network_congestion <= NETWORK_CONGESTION_THRESHOLD or task.size <= 150:
-                # Process the task on this fog node
-                q_delay, p_time, completion_time = secondary_fog.process(task, self.sim_clock)
-                self.sim_clock = completion_time
-                self.metrics['fog_times'].append(p_time)
-                self.metrics['node_selection_time'].append(selection_time)
-                fog_processed = True
-                    
-                # Set task metadata
-                task.processor_node = secondary_fog.name
-                allocation = f"Fog ({secondary_fog.name})"
-                    
-                # Increment the round-robin counter for next task
-                self.rr_counter += 1
-                    
-                # Track fog allocation for this data type
-                if task_type in self.data_type_counts:
-                    self.data_type_counts[task_type]['fog'] += 1
-                    
-                # Track metrics for this task execution
-                if q_delay > 0:
-                    self.metrics['queue_delays'].append(q_delay)
-                    
-                # Log execution details if in verbose mode
-                if self.verbose_output:
-                    print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, " 
-                          f"Congestion: {secondary_fog.network_congestion:.2f}, Utilization: {secondary_fog.utilization:.1f}%, "
-                          f"Queue delay: {q_delay:.2f}ms, Lifetime: {p_time:.2f}ms")
-                    
-                return 0
-            else:
-                high_network_congestion = True
-        else:
-            high_fog_utilization = True
-                
-        # If we reach here, both fog nodes couldn't process the task
+                high_fog_utilization = True
+        
+        # If we reach here, the fog node couldn't process the task
         # Process in cloud as a fallback
         self.metrics['node_selection_time'].append(selection_time)
         allocation = "Cloud (fog unavailable)"
@@ -996,7 +922,7 @@ class FCFSCooperationGateway(BaseGateway):
         for fog in self.fog_nodes:
             node_commitments = self.get_total_node_commitments(fog.name)
             node_availability = fog.num_devices - node_commitments
-            print(f"  - {fog.name}: Processed: {fog.cumulative_processed}, "
+            print(f"  - {fog.name}: Processed {fog.cumulative_processed} tasks, "
                   f"Available Devices: {node_availability}/{fog.num_devices}, "
                   f"Storage: {fog.used_storage}/{fog.total_storage}, "
                   f"Utilization: {fog.cumulative_utilization:.1f}%")
@@ -1037,20 +963,15 @@ class FCFSCooperationGateway(BaseGateway):
             
             # Calculate resource commitment duration
             if size < 100:  # Small tasks
-                batch_commitment = max(5, int(BATCHES_BEFORE_RESET * 0.6))
-                commitment_str = f"{batch_commitment} batches (60%)"
+                batch_commitment = max(5, int(BATCHES_BEFORE_RESET * 0.6))  # 60% of normal duration, minimum 5
             elif size < 150:  # Medium-small tasks
-                batch_commitment = max(7, int(BATCHES_BEFORE_RESET * 0.8))
-                commitment_str = f"{batch_commitment} batches (80%)"
+                batch_commitment = max(7, int(BATCHES_BEFORE_RESET * 0.8))  # 80% of normal duration
             elif size < 200:  # Medium tasks
-                batch_commitment = BATCHES_BEFORE_RESET
-                commitment_str = f"{batch_commitment} batches (100%)"
+                batch_commitment = BATCHES_BEFORE_RESET  # Normal duration
             elif size < 250:  # Medium-large tasks
-                batch_commitment = int(BATCHES_BEFORE_RESET * 1.3)
-                commitment_str = f"{batch_commitment} batches (130%)"
+                batch_commitment = int(BATCHES_BEFORE_RESET * 1.3)  # 130% of normal duration
             else:  # Large tasks
-                batch_commitment = int(BATCHES_BEFORE_RESET * 1.6)
-                commitment_str = f"{batch_commitment} batches (160%)"
+                batch_commitment = int(BATCHES_BEFORE_RESET * 1.6)  # 160% of normal duration
             
             # Calculate estimates based on first fog node
             if self.fog_nodes:
@@ -1074,7 +995,7 @@ class FCFSCooperationGateway(BaseGateway):
                 else:
                     migration_prob = "Very Low (<10%)"
                 
-                print(f"  {size:<10}| {fog_min:.1f}-{fog_max:.1f} ms           | {trans_min:.1f}-{trans_max:.1f} ms        | {cloud_min:.1f}-{cloud_max:.1f} ms            | {migration_prob:<20} | {commitment_str}")
+                print(f"  {size:<10}| {fog_min:.1f}-{fog_max:.1f} ms           | {trans_min:.1f}-{trans_max:.1f} ms        | {cloud_min:.1f}-{cloud_max:.1f} ms            | {migration_prob:<20} | {batch_commitment} batches")
         
         print("")
 
@@ -1168,25 +1089,34 @@ def main():
         
         # Initialize result tracking
         results[policy_name] = {
-            'fog_times': [],
-            'cloud_times': [],
-            'queue_delays': [],
-            'batch_completion_times': [],
-            'fog_nodes': fog_nodes,
-            'node_selection_time': [],
-            'cloud_selection_time': [],
-            'batch_metrics': {
+            'metrics': {
                 'fog_times': [],
                 'cloud_times': [],
                 'queue_delays': [],
+                'node_selection_time': [],
+                'fog_first_count': 0,
+                'cloud_direct_count': 0,
+                'batch_metrics': {
+                    'fog_batch_counts': [],
+                    'cloud_batch_counts': [],
+                    'batch_times': [],
+                    'fog_utilization': [],
+                    'cloud_utilization': []
+                },
+            },
+            'fog_nodes': fog_nodes,
+            'batch_metrics': {
+                'fog_batch_counts': [],
+                'cloud_batch_counts': [],
+                'batch_times': [],
                 'fog_utilization': [],
                 'cloud_utilization': []
             },
-            # Add size-based tracking to separate by fog node
+            # Update size-based tracking for single fog node
             'size_metrics': {
-                'small': {'fog1_count': 0, 'fog2_count': 0, 'cloud_count': 0, 'fog1_times': [], 'fog2_times': [], 'cloud_times': []},
-                'medium': {'fog1_count': 0, 'fog2_count': 0, 'cloud_count': 0, 'fog1_times': [], 'fog2_times': [], 'cloud_times': []},
-                'large': {'fog1_count': 0, 'fog2_count': 0, 'cloud_count': 0, 'fog1_times': [], 'fog2_times': [], 'cloud_times': []}
+                'small': {'fog1_count': 0, 'cloud_count': 0, 'fog1_times': [], 'cloud_times': []},
+                'medium': {'fog1_count': 0, 'cloud_count': 0, 'fog1_times': [], 'cloud_times': []},
+                'large': {'fog1_count': 0, 'cloud_count': 0, 'fog1_times': [], 'cloud_times': []}
             }
         }
     
@@ -1221,9 +1151,9 @@ def main():
             
             # Size-based counts for this batch
             batch_size_stats = {
-                'small': {'fog1': 0, 'fog2': 0, 'cloud': 0, 'fog1_times': [], 'fog2_times': [], 'cloud_times': []},
-                'medium': {'fog1': 0, 'fog2': 0, 'cloud': 0, 'fog1_times': [], 'fog2_times': [], 'cloud_times': []},
-                'large': {'fog1': 0, 'fog2': 0, 'cloud': 0, 'fog1_times': [], 'fog2_times': [], 'cloud_times': []}
+                'small': {'fog1': 0, 'cloud': 0, 'fog1_times': [], 'cloud_times': []},
+                'medium': {'fog1': 0, 'cloud': 0, 'fog1_times': [], 'cloud_times': []},
+                'large': {'fog1': 0, 'cloud': 0, 'fog1_times': [], 'cloud_times': []}
             }
             
             for task in tqdm(batch, desc=f"Batch {batch_counter}"):
@@ -1288,7 +1218,7 @@ def main():
             
             # Calculate batch completion time
             batch_completion_time = gateway.sim_clock - batch_start_time
-            results[policy_name]['batch_completion_times'].append(batch_completion_time)
+            results[policy_name]['batch_metrics']['batch_times'].append(batch_completion_time)
             
             # Print batch summary
             if len(batch) > 0:
@@ -1303,7 +1233,7 @@ def main():
                 print("  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time")
                 print("  --------|-----------|-------------|--------------|---------------")
                 for size_cat in ['small', 'medium', 'large']:
-                    fog_ct = batch_size_stats[size_cat]['fog1'] + batch_size_stats[size_cat]['fog2']
+                    fog_ct = batch_size_stats[size_cat]['fog1'] 
                     cloud_ct = batch_size_stats[size_cat]['cloud']
                     fog_avg = np.mean(batch_size_stats[size_cat]['fog1_times']) if batch_size_stats[size_cat]['fog1_times'] else 0
                     cloud_avg = np.mean(batch_size_stats[size_cat]['cloud_times']) if batch_size_stats[size_cat]['cloud_times'] else 0
@@ -1352,35 +1282,31 @@ def main():
             
         # Print task size-based statistics
         print("\nTask Size-Based Statistics (By Fog Node):")
-        print("  Size    | Total Count | Fog1 % | Fog2 % | Cloud % | Avg Fog1 Time | Avg Fog2 Time | Avg Cloud Time")
-        print("  --------|-------------|--------|--------|---------|---------------|---------------|---------------")
+        print("  Size    | Total Count | Fog1 % | Cloud % | Avg Fog1 Time | Avg Cloud Time")
+        print("  --------|-------------|--------|---------|---------------|---------------")
 
         # Get the total counts for each fog node
         fog1_total = fog_nodes[0].cumulative_processed
-        fog2_total = fog_nodes[1].cumulative_processed
         
         for size_cat in ['small', 'medium', 'large']:
             metrics = results[policy_name]['size_metrics'][size_cat]
-            total = metrics['fog1_count'] + metrics['fog2_count'] + metrics['cloud_count']
+            total = metrics['fog1_count'] + metrics['cloud_count']
             
             if total > 0:
                 # Instead of using the per-size percentages, calculate using the total fog node counts
                 # This ensures the percentages match the total processed tasks per node
-                fog1_total_pct = (fog1_total / (fog1_total + fog2_total + total_cloud_count)) * 100
-                fog2_total_pct = (fog2_total / (fog1_total + fog2_total + total_cloud_count)) * 100
-                cloud_total_pct = (total_cloud_count / (fog1_total + fog2_total + total_cloud_count)) * 100
+                fog1_total_pct = (fog1_total / (fog1_total + total_cloud_count)) * 100
+                cloud_total_pct = (total_cloud_count / (fog1_total + total_cloud_count)) * 100
                 
                 # For size-specific calculations, compute what percentage of this size category
                 # was processed by each node based on their total processing proportion
                 fog1_pct = fog1_total_pct * (metrics['fog1_count'] / total)
-                fog2_pct = fog2_total_pct * (metrics['fog2_count'] / total)
                 cloud_pct = cloud_total_pct * (metrics['cloud_count'] / total)
                 
                 fog1_avg = np.mean(metrics['fog1_times']) if metrics['fog1_times'] else 0
-                fog2_avg = np.mean(metrics['fog2_times']) if metrics['fog2_times'] else 0
                 cloud_avg = np.mean(metrics['cloud_times']) if metrics['cloud_times'] else 0
                 
-                print(f"  {size_cat:<8}| {total:<11}| {fog1_pct:.1f}% | {fog2_pct:.1f}% | {cloud_pct:.1f}% | {fog1_avg:.2f} ms | {fog2_avg:.2f} ms | {cloud_avg:.2f} ms")
+                print(f"  {size_cat:<8}| {total:<11}| {fog1_pct:.1f}% | {cloud_pct:.1f}% | {fog1_avg:.2f} ms | {cloud_avg:.2f} ms")
         
         # Print detailed size impact analysis
         print("\nSize Impact Analysis:")
