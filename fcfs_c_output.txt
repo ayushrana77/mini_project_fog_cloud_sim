@@ -1,0 +1,2576 @@
+Running FCFS Cooperation Policy for full dataset...
+Loading tasks from F:\sem2\mini_project\code\tuple100k.json...
+Loaded 100000 tasks
+Processing 100000 tasks
+
+Running FCFSCooperation...
+Starting processing of 100000 tasks at 12:05:11
+
+Processing Batch 1 with 1000 tasks (0/100000 processed)
+
+Batch 1 Summary:
+Tasks: Fog = 492 (49.2%), Cloud = 508 (50.8%)
+Batch Completion Time: 3556.91ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 112       | 2           | 0.83 ms     | 9684.87 ms
+  medium  | 268       | 69          | 1.97 ms     | 13407.60 ms
+  large   | 112       | 437         | 3.24 ms     | 18071.53 ms
+
+Overall Progress: 1000/100000 (1.0%)
+Elapsed Time: 0.1s, Estimated Remaining: 12.4s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 86 (63.2%), Cloud: 50 (36.8%)
+  Large          : Fog: 0 (0.0%), Cloud: 161 (100.0%)
+  LocationBased  : Fog: 108 (72.0%), Cloud: 42 (28.0%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 118 (100.0%)
+  Medical        : Fog: 85 (65.9%), Cloud: 44 (34.1%)
+  SmallTextual   : Fog: 108 (70.6%), Cloud: 45 (29.4%)
+  Multimedia     : Fog: 105 (68.6%), Cloud: 48 (31.4%)
+
+Processing Batch 2 with 1000 tasks (1000/100000 processed)
+
+Batch 2 Summary:
+Tasks: Fog = 475 (47.5%), Cloud = 525 (52.5%)
+Batch Completion Time: 3572.38ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 123       | 2           | 0.74 ms     | 9403.79 ms
+  medium  | 243       | 73          | 1.97 ms     | 12790.63 ms
+  large   | 109       | 450         | 3.71 ms     | 17492.83 ms
+
+Overall Progress: 2000/100000 (2.0%)
+Elapsed Time: 0.2s, Estimated Remaining: 7.7s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 177 (61.0%), Cloud: 113 (39.0%)
+  Large          : Fog: 0 (0.0%), Cloud: 301 (100.0%)
+  LocationBased  : Fog: 214 (69.9%), Cloud: 92 (30.1%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 248 (100.0%)
+  Medical        : Fog: 177 (64.8%), Cloud: 96 (35.2%)
+  SmallTextual   : Fog: 198 (70.7%), Cloud: 82 (29.3%)
+  Multimedia     : Fog: 201 (66.6%), Cloud: 101 (33.4%)
+
+Processing Batch 3 with 1000 tasks (2000/100000 processed)
+
+Batch 3 Summary:
+Tasks: Fog = 392 (39.2%), Cloud = 608 (60.8%)
+Batch Completion Time: 3526.02ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 117       | 4           | 0.77 ms     | 7034.29 ms
+  medium  | 188       | 112         | 2.01 ms     | 13427.31 ms
+  large   | 87        | 492         | 3.64 ms     | 17271.96 ms
+
+Overall Progress: 3000/100000 (3.0%)
+Elapsed Time: 0.2s, Estimated Remaining: 6.4s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 247 (58.0%), Cloud: 179 (42.0%)
+  Large          : Fog: 0 (0.0%), Cloud: 443 (100.0%)
+  LocationBased  : Fog: 294 (64.5%), Cloud: 162 (35.5%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 399 (100.0%)
+  Medical        : Fog: 249 (59.4%), Cloud: 170 (40.6%)
+  SmallTextual   : Fog: 274 (68.3%), Cloud: 127 (31.7%)
+  Multimedia     : Fog: 295 (64.7%), Cloud: 161 (35.3%)
+
+Processing Batch 4 with 1000 tasks (3000/100000 processed)
+
+Batch 4 Summary:
+Tasks: Fog = 379 (37.9%), Cloud = 621 (62.1%)
+Batch Completion Time: 3363.69ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 109       | 4           | 0.80 ms     | 10433.75 ms
+  medium  | 193       | 116         | 1.87 ms     | 12586.41 ms
+  large   | 77        | 501         | 4.02 ms     | 17189.19 ms
+
+Overall Progress: 4000/100000 (4.0%)
+Elapsed Time: 0.2s, Estimated Remaining: 5.7s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 327 (55.8%), Cloud: 259 (44.2%)
+  Large          : Fog: 0 (0.0%), Cloud: 576 (100.0%)
+  LocationBased  : Fog: 361 (61.3%), Cloud: 228 (38.7%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 555 (100.0%)
+  Medical        : Fog: 323 (57.4%), Cloud: 240 (42.6%)
+  SmallTextual   : Fog: 366 (66.8%), Cloud: 182 (33.2%)
+  Multimedia     : Fog: 361 (61.9%), Cloud: 222 (38.1%)
+
+Processing Batch 5 with 1000 tasks (4000/100000 processed)
+
+Batch 5 Summary:
+Tasks: Fog = 469 (46.9%), Cloud = 531 (53.1%)
+Batch Completion Time: 3578.48ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 111       | 0           | 0.89 ms     | 0.00 ms
+  medium  | 248       | 79          | 1.91 ms     | 13310.35 ms
+  large   | 110       | 452         | 3.65 ms     | 17136.92 ms
+
+Overall Progress: 5000/100000 (5.0%)
+Elapsed Time: 0.3s, Estimated Remaining: 5.1s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 423 (56.7%), Cloud: 323 (43.3%)
+  Large          : Fog: 0 (0.0%), Cloud: 700 (100.0%)
+  LocationBased  : Fog: 472 (62.8%), Cloud: 280 (37.2%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 689 (100.0%)
+  Medical        : Fog: 412 (58.4%), Cloud: 294 (41.6%)
+  SmallTextual   : Fog: 454 (66.9%), Cloud: 225 (33.1%)
+  Multimedia     : Fog: 446 (61.3%), Cloud: 282 (38.7%)
+
+Processing Batch 6 with 1000 tasks (5000/100000 processed)
+
+Batch 6 Summary:
+Tasks: Fog = 443 (44.3%), Cloud = 557 (55.7%)
+Batch Completion Time: 3625.19ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 111       | 5           | 0.68 ms     | 9329.55 ms
+  medium  | 226       | 79          | 1.89 ms     | 12586.96 ms
+  large   | 106       | 473         | 4.02 ms     | 17476.57 ms
+
+Overall Progress: 6000/100000 (6.0%)
+Elapsed Time: 0.3s, Estimated Remaining: 4.8s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 518 (57.4%), Cloud: 384 (42.6%)
+  Large          : Fog: 0 (0.0%), Cloud: 819 (100.0%)
+  LocationBased  : Fog: 563 (62.6%), Cloud: 337 (37.4%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 836 (100.0%)
+  Medical        : Fog: 498 (58.2%), Cloud: 358 (41.8%)
+  SmallTextual   : Fog: 543 (65.4%), Cloud: 287 (34.6%)
+  Multimedia     : Fog: 528 (61.6%), Cloud: 329 (38.4%)
+
+Processing Batch 7 with 1000 tasks (6000/100000 processed)
+
+Batch 7 Summary:
+Tasks: Fog = 421 (42.1%), Cloud = 579 (57.9%)
+Batch Completion Time: 3398.61ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 120       | 4           | 0.84 ms     | 8585.36 ms
+  medium  | 203       | 103         | 1.47 ms     | 13689.34 ms
+  large   | 98        | 472         | 3.46 ms     | 17767.18 ms
+
+Overall Progress: 7000/100000 (7.0%)
+Elapsed Time: 0.4s, Estimated Remaining: 5.5s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 598 (56.9%), Cloud: 453 (43.1%)
+  Large          : Fog: 0 (0.0%), Cloud: 954 (100.0%)
+  LocationBased  : Fog: 651 (61.8%), Cloud: 402 (38.2%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 971 (100.0%)
+  Medical        : Fog: 570 (57.2%), Cloud: 426 (42.8%)
+  SmallTextual   : Fog: 627 (64.5%), Cloud: 345 (35.5%)
+  Multimedia     : Fog: 625 (62.3%), Cloud: 378 (37.7%)
+
+Processing Batch 8 with 1000 tasks (7000/100000 processed)
+
+Batch 8 Summary:
+Tasks: Fog = 479 (47.9%), Cloud = 521 (52.1%)
+Batch Completion Time: 3434.18ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 134       | 4           | 0.75 ms     | 9360.29 ms
+  medium  | 241       | 71          | 1.70 ms     | 11719.32 ms
+  large   | 104       | 446         | 4.02 ms     | 17744.93 ms
+
+Overall Progress: 8000/100000 (8.0%)
+Elapsed Time: 0.5s, Estimated Remaining: 5.2s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 708 (58.2%), Cloud: 508 (41.8%)
+  Large          : Fog: 0 (0.0%), Cloud: 1097 (100.0%)
+  LocationBased  : Fog: 743 (62.4%), Cloud: 448 (37.6%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 1101 (100.0%)
+  Medical        : Fog: 667 (58.2%), Cloud: 479 (41.8%)
+  SmallTextual   : Fog: 722 (65.2%), Cloud: 385 (34.8%)
+  Multimedia     : Fog: 710 (62.2%), Cloud: 432 (37.8%)
+
+Processing Batch 9 with 1000 tasks (8000/100000 processed)
+
+Batch 9 Summary:
+Tasks: Fog = 463 (46.3%), Cloud = 537 (53.7%)
+Batch Completion Time: 3340.85ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 115       | 3           | 0.84 ms     | 7714.07 ms
+  medium  | 231       | 73          | 1.54 ms     | 12492.02 ms
+  large   | 117       | 461         | 3.74 ms     | 18248.97 ms
+
+Overall Progress: 9000/100000 (9.0%)
+Elapsed Time: 0.5s, Estimated Remaining: 4.9s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 782 (58.2%), Cloud: 562 (41.8%)
+  Large          : Fog: 0 (0.0%), Cloud: 1227 (100.0%)
+  LocationBased  : Fog: 836 (62.0%), Cloud: 512 (38.0%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 1257 (100.0%)
+  Medical        : Fog: 767 (59.5%), Cloud: 522 (40.5%)
+  SmallTextual   : Fog: 831 (66.1%), Cloud: 427 (33.9%)
+  Multimedia     : Fog: 797 (62.4%), Cloud: 480 (37.6%)
+
+Processing Batch 10 with 1000 tasks (9000/100000 processed)
+
+Batch 10 Summary:
+Tasks: Fog = 465 (46.5%), Cloud = 535 (53.5%)
+Batch Completion Time: 3466.70ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 102       | 1           | 0.81 ms     | 5098.68 ms
+  medium  | 243       | 66          | 1.72 ms     | 12337.24 ms
+  large   | 120       | 468         | 4.09 ms     | 17438.42 ms
+
+Overall Progress: 10000/100000 (10.0%)
+Elapsed Time: 0.5s, Estimated Remaining: 4.6s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 877 (58.7%), Cloud: 618 (41.3%)
+  Large          : Fog: 0 (0.0%), Cloud: 1344 (100.0%)
+  LocationBased  : Fog: 943 (62.7%), Cloud: 560 (37.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 1421 (100.0%)
+  Medical        : Fog: 862 (59.9%), Cloud: 576 (40.1%)
+  SmallTextual   : Fog: 922 (66.1%), Cloud: 473 (33.9%)
+  Multimedia     : Fog: 874 (62.3%), Cloud: 530 (37.7%)
+
+Processing Batch 11 with 1000 tasks (10000/100000 processed)
+
+Batch 11 Summary:
+Tasks: Fog = 481 (48.1%), Cloud = 519 (51.9%)
+Batch Completion Time: 3643.75ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 106       | 3           | 0.84 ms     | 11284.11 ms
+  medium  | 227       | 69          | 1.95 ms     | 13015.50 ms
+  large   | 148       | 447         | 3.92 ms     | 17581.10 ms
+
+Overall Progress: 11000/100000 (11.0%)
+Elapsed Time: 0.6s, Estimated Remaining: 4.5s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 975 (59.2%), Cloud: 672 (40.8%)
+  Large          : Fog: 0 (0.0%), Cloud: 1480 (100.0%)
+  LocationBased  : Fog: 1032 (62.9%), Cloud: 610 (37.1%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 1553 (100.0%)
+  Medical        : Fog: 964 (60.6%), Cloud: 627 (39.4%)
+  SmallTextual   : Fog: 1003 (65.6%), Cloud: 527 (34.4%)
+  Multimedia     : Fog: 985 (63.3%), Cloud: 572 (36.7%)
+
+Processing Batch 12 with 1000 tasks (11000/100000 processed)
+
+Batch 12 Summary:
+Tasks: Fog = 478 (47.8%), Cloud = 522 (52.2%)
+Batch Completion Time: 3623.89ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 137       | 4           | 0.76 ms     | 10214.15 ms
+  medium  | 229       | 65          | 2.03 ms     | 13426.13 ms
+  large   | 112       | 453         | 3.67 ms     | 17346.58 ms
+
+Overall Progress: 12000/100000 (12.0%)
+Elapsed Time: 0.6s, Estimated Remaining: 4.4s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 1077 (59.7%), Cloud: 728 (40.3%)
+  Large          : Fog: 0 (0.0%), Cloud: 1610 (100.0%)
+  LocationBased  : Fog: 1121 (63.4%), Cloud: 648 (36.6%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 1690 (100.0%)
+  Medical        : Fog: 1059 (60.8%), Cloud: 683 (39.2%)
+  SmallTextual   : Fog: 1110 (65.6%), Cloud: 581 (34.4%)
+  Multimedia     : Fog: 1070 (63.2%), Cloud: 623 (36.8%)
+
+Processing Batch 13 with 1000 tasks (12000/100000 processed)
+
+Batch 13 Summary:
+Tasks: Fog = 392 (39.2%), Cloud = 608 (60.8%)
+Batch Completion Time: 3437.03ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 110       | 2           | 0.85 ms     | 9064.42 ms
+  medium  | 208       | 135         | 1.66 ms     | 11914.69 ms
+  large   | 74        | 471         | 4.54 ms     | 16751.45 ms
+
+Overall Progress: 13000/100000 (13.0%)
+Elapsed Time: 0.6s, Estimated Remaining: 4.2s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 1170 (59.4%), Cloud: 801 (40.6%)
+  Large          : Fog: 0 (0.0%), Cloud: 1748 (100.0%)
+  LocationBased  : Fog: 1189 (62.6%), Cloud: 711 (37.4%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 1837 (100.0%)
+  Medical        : Fog: 1135 (60.6%), Cloud: 738 (39.4%)
+  SmallTextual   : Fog: 1189 (64.9%), Cloud: 644 (35.1%)
+  Multimedia     : Fog: 1146 (62.4%), Cloud: 692 (37.6%)
+
+Processing Batch 14 with 1000 tasks (13000/100000 processed)
+
+Batch 14 Summary:
+Tasks: Fog = 434 (43.4%), Cloud = 566 (56.6%)
+Batch Completion Time: 3481.56ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 127       | 1           | 0.86 ms     | 6728.09 ms
+  medium  | 198       | 75          | 1.82 ms     | 13516.69 ms
+  large   | 109       | 490         | 3.84 ms     | 17049.71 ms
+
+Overall Progress: 14000/100000 (14.0%)
+Elapsed Time: 0.7s, Estimated Remaining: 4.1s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 1248 (59.1%), Cloud: 862 (40.9%)
+  Large          : Fog: 0 (0.0%), Cloud: 1890 (100.0%)
+  LocationBased  : Fog: 1270 (62.2%), Cloud: 772 (37.8%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 1973 (100.0%)
+  Medical        : Fog: 1237 (60.7%), Cloud: 802 (39.3%)
+  SmallTextual   : Fog: 1280 (64.8%), Cloud: 694 (35.2%)
+  Multimedia     : Fog: 1228 (62.3%), Cloud: 744 (37.7%)
+
+Processing Batch 15 with 1000 tasks (14000/100000 processed)
+
+Batch 15 Summary:
+Tasks: Fog = 430 (43.0%), Cloud = 570 (57.0%)
+Batch Completion Time: 3517.47ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 129       | 3           | 0.75 ms     | 7466.52 ms
+  medium  | 187       | 88          | 1.85 ms     | 13233.54 ms
+  large   | 114       | 479         | 3.63 ms     | 17968.26 ms
+
+Overall Progress: 15000/100000 (15.0%)
+Elapsed Time: 0.7s, Estimated Remaining: 4.0s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 1332 (59.0%), Cloud: 924 (41.0%)
+  Large          : Fog: 0 (0.0%), Cloud: 2050 (100.0%)
+  LocationBased  : Fog: 1349 (61.9%), Cloud: 830 (38.1%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 2103 (100.0%)
+  Medical        : Fog: 1331 (61.1%), Cloud: 849 (38.9%)
+  SmallTextual   : Fog: 1362 (64.3%), Cloud: 756 (35.7%)
+  Multimedia     : Fog: 1319 (62.4%), Cloud: 795 (37.6%)
+
+Processing Batch 16 with 1000 tasks (15000/100000 processed)
+
+Batch 16 Summary:
+Tasks: Fog = 484 (48.4%), Cloud = 516 (51.6%)
+Batch Completion Time: 3446.95ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 119       | 1           | 0.79 ms     | 10187.67 ms
+  medium  | 242       | 88          | 1.61 ms     | 12775.79 ms
+  large   | 123       | 427         | 3.44 ms     | 16817.65 ms
+
+Overall Progress: 16000/100000 (16.0%)
+Elapsed Time: 0.7s, Estimated Remaining: 3.9s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 1429 (59.5%), Cloud: 973 (40.5%)
+  Large          : Fog: 0 (0.0%), Cloud: 2182 (100.0%)
+  LocationBased  : Fog: 1449 (62.3%), Cloud: 876 (37.7%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 2259 (100.0%)
+  Medical        : Fog: 1427 (61.3%), Cloud: 900 (38.7%)
+  SmallTextual   : Fog: 1461 (64.6%), Cloud: 800 (35.4%)
+  Multimedia     : Fog: 1411 (62.9%), Cloud: 833 (37.1%)
+
+Processing Batch 17 with 1000 tasks (16000/100000 processed)
+
+Batch 17 Summary:
+Tasks: Fog = 440 (44.0%), Cloud = 560 (56.0%)
+Batch Completion Time: 3416.59ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 109       | 3           | 0.81 ms     | 9133.90 ms
+  medium  | 222       | 88          | 1.57 ms     | 12365.52 ms
+  large   | 109       | 469         | 3.72 ms     | 17460.53 ms
+
+Overall Progress: 17000/100000 (17.0%)
+Elapsed Time: 0.8s, Estimated Remaining: 3.8s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 1524 (59.8%), Cloud: 1023 (40.2%)
+  Large          : Fog: 0 (0.0%), Cloud: 2334 (100.0%)
+  LocationBased  : Fog: 1541 (62.6%), Cloud: 922 (37.4%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 2418 (100.0%)
+  Medical        : Fog: 1500 (61.1%), Cloud: 956 (38.9%)
+  SmallTextual   : Fog: 1557 (64.7%), Cloud: 850 (35.3%)
+  Multimedia     : Fog: 1495 (62.9%), Cloud: 880 (37.1%)
+
+Processing Batch 18 with 1000 tasks (17000/100000 processed)
+
+Batch 18 Summary:
+Tasks: Fog = 451 (45.1%), Cloud = 549 (54.9%)
+Batch Completion Time: 3403.98ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 128       | 1           | 0.78 ms     | 7468.93 ms
+  medium  | 221       | 75          | 1.72 ms     | 12929.59 ms
+  large   | 102       | 473         | 3.79 ms     | 17941.84 ms
+
+Overall Progress: 18000/100000 (18.0%)
+Elapsed Time: 0.8s, Estimated Remaining: 3.7s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 1618 (59.9%), Cloud: 1083 (40.1%)
+  Large          : Fog: 0 (0.0%), Cloud: 2480 (100.0%)
+  LocationBased  : Fog: 1627 (62.8%), Cloud: 965 (37.2%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 2577 (100.0%)
+  Medical        : Fog: 1592 (61.4%), Cloud: 1002 (38.6%)
+  SmallTextual   : Fog: 1649 (64.7%), Cloud: 898 (35.3%)
+  Multimedia     : Fog: 1582 (63.1%), Cloud: 927 (36.9%)
+
+Processing Batch 19 with 1000 tasks (18000/100000 processed)
+
+Batch 19 Summary:
+Tasks: Fog = 470 (47.0%), Cloud = 530 (53.0%)
+Batch Completion Time: 3501.76ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 115       | 6           | 0.78 ms     | 8735.35 ms
+  medium  | 234       | 59          | 1.63 ms     | 12985.56 ms
+  large   | 121       | 465         | 3.76 ms     | 17260.31 ms
+
+Overall Progress: 19000/100000 (19.0%)
+Elapsed Time: 0.8s, Estimated Remaining: 3.6s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 1719 (60.1%), Cloud: 1139 (39.9%)
+  Large          : Fog: 0 (0.0%), Cloud: 2629 (100.0%)
+  LocationBased  : Fog: 1736 (63.2%), Cloud: 1012 (36.8%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 2697 (100.0%)
+  Medical        : Fog: 1690 (61.8%), Cloud: 1045 (38.2%)
+  SmallTextual   : Fog: 1729 (64.3%), Cloud: 960 (35.7%)
+  Multimedia     : Fog: 1664 (62.9%), Cloud: 980 (37.1%)
+
+Processing Batch 20 with 1000 tasks (19000/100000 processed)
+
+Batch 20 Summary:
+Tasks: Fog = 467 (46.7%), Cloud = 533 (53.3%)
+Batch Completion Time: 3425.39ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 132       | 4           | 0.83 ms     | 9917.70 ms
+  medium  | 247       | 90          | 1.90 ms     | 12361.47 ms
+  large   | 88        | 439         | 3.84 ms     | 17538.08 ms
+
+Overall Progress: 20000/100000 (20.0%)
+Elapsed Time: 0.9s, Estimated Remaining: 3.5s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 1812 (60.5%), Cloud: 1185 (39.5%)
+  Large          : Fog: 0 (0.0%), Cloud: 2766 (100.0%)
+  LocationBased  : Fog: 1820 (63.1%), Cloud: 1063 (36.9%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 2855 (100.0%)
+  Medical        : Fog: 1777 (62.0%), Cloud: 1091 (38.0%)
+  SmallTextual   : Fog: 1834 (64.5%), Cloud: 1010 (35.5%)
+  Multimedia     : Fog: 1762 (63.2%), Cloud: 1025 (36.8%)
+
+Processing Batch 21 with 1000 tasks (20000/100000 processed)
+
+Batch 21 Summary:
+Tasks: Fog = 447 (44.7%), Cloud = 553 (55.3%)
+Batch Completion Time: 3428.35ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 123       | 1           | 0.70 ms     | 7172.21 ms
+  medium  | 230       | 68          | 1.91 ms     | 13146.74 ms
+  large   | 94        | 484         | 3.67 ms     | 17165.22 ms
+
+Overall Progress: 21000/100000 (21.0%)
+Elapsed Time: 0.9s, Estimated Remaining: 3.4s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 1897 (60.6%), Cloud: 1231 (39.4%)
+  Large          : Fog: 0 (0.0%), Cloud: 2927 (100.0%)
+  LocationBased  : Fog: 1910 (63.1%), Cloud: 1116 (36.9%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 3002 (100.0%)
+  Medical        : Fog: 1851 (61.9%), Cloud: 1139 (38.1%)
+  SmallTextual   : Fog: 1936 (64.6%), Cloud: 1059 (35.4%)
+  Multimedia     : Fog: 1858 (63.4%), Cloud: 1074 (36.6%)
+
+Processing Batch 22 with 1000 tasks (21000/100000 processed)
+
+Batch 22 Summary:
+Tasks: Fog = 440 (44.0%), Cloud = 560 (56.0%)
+Batch Completion Time: 3373.95ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 109       | 1           | 0.77 ms     | 7070.88 ms
+  medium  | 223       | 84          | 1.79 ms     | 12776.26 ms
+  large   | 108       | 475         | 4.12 ms     | 18025.11 ms
+
+Overall Progress: 22000/100000 (22.0%)
+Elapsed Time: 1.0s, Estimated Remaining: 3.4s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 1974 (60.6%), Cloud: 1283 (39.4%)
+  Large          : Fog: 0 (0.0%), Cloud: 3058 (100.0%)
+  LocationBased  : Fog: 2016 (63.3%), Cloud: 1170 (36.7%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 3157 (100.0%)
+  Medical        : Fog: 1944 (61.9%), Cloud: 1195 (38.1%)
+  SmallTextual   : Fog: 2014 (64.5%), Cloud: 1109 (35.5%)
+  Multimedia     : Fog: 1944 (63.1%), Cloud: 1136 (36.9%)
+
+Processing Batch 23 with 1000 tasks (22000/100000 processed)
+
+Batch 23 Summary:
+Tasks: Fog = 354 (35.4%), Cloud = 646 (64.6%)
+Batch Completion Time: 3387.80ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 113       | 2           | 0.79 ms     | 6255.46 ms
+  medium  | 169       | 119         | 1.86 ms     | 12725.68 ms
+  large   | 72        | 525         | 3.47 ms     | 17429.01 ms
+
+Overall Progress: 23000/100000 (23.0%)
+Elapsed Time: 1.0s, Estimated Remaining: 3.3s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 2046 (60.2%), Cloud: 1353 (39.8%)
+  Large          : Fog: 0 (0.0%), Cloud: 3216 (100.0%)
+  LocationBased  : Fog: 2095 (63.0%), Cloud: 1230 (37.0%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 3308 (100.0%)
+  Medical        : Fog: 2005 (61.3%), Cloud: 1266 (38.7%)
+  SmallTextual   : Fog: 2084 (63.9%), Cloud: 1179 (36.1%)
+  Multimedia     : Fog: 2016 (62.6%), Cloud: 1202 (37.4%)
+
+Processing Batch 24 with 1000 tasks (23000/100000 processed)
+
+Batch 24 Summary:
+Tasks: Fog = 466 (46.6%), Cloud = 534 (53.4%)
+Batch Completion Time: 3464.88ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 124       | 2           | 0.78 ms     | 7120.84 ms
+  medium  | 244       | 70          | 2.01 ms     | 13482.60 ms
+  large   | 98        | 462         | 3.94 ms     | 17853.47 ms
+
+Overall Progress: 24000/100000 (24.0%)
+Elapsed Time: 1.0s, Estimated Remaining: 3.2s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 2137 (60.3%), Cloud: 1408 (39.7%)
+  Large          : Fog: 0 (0.0%), Cloud: 3371 (100.0%)
+  LocationBased  : Fog: 2185 (63.3%), Cloud: 1266 (36.7%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 3457 (100.0%)
+  Medical        : Fog: 2102 (61.5%), Cloud: 1316 (38.5%)
+  SmallTextual   : Fog: 2179 (64.1%), Cloud: 1223 (35.9%)
+  Multimedia     : Fog: 2109 (62.8%), Cloud: 1247 (37.2%)
+
+Processing Batch 25 with 1000 tasks (24000/100000 processed)
+
+Batch 25 Summary:
+Tasks: Fog = 398 (39.8%), Cloud = 602 (60.2%)
+Batch Completion Time: 3323.89ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 111       | 4           | 0.77 ms     | 7286.82 ms
+  medium  | 216       | 121         | 1.80 ms     | 12908.33 ms
+  large   | 71        | 477         | 3.56 ms     | 17778.03 ms
+
+Overall Progress: 25000/100000 (25.0%)
+Elapsed Time: 1.1s, Estimated Remaining: 3.2s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 2217 (60.0%), Cloud: 1478 (40.0%)
+  Large          : Fog: 0 (0.0%), Cloud: 3532 (100.0%)
+  LocationBased  : Fog: 2263 (63.2%), Cloud: 1320 (36.8%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 3609 (100.0%)
+  Medical        : Fog: 2175 (61.2%), Cloud: 1381 (38.8%)
+  SmallTextual   : Fog: 2262 (64.0%), Cloud: 1274 (36.0%)
+  Multimedia     : Fog: 2193 (62.9%), Cloud: 1296 (37.1%)
+
+Processing Batch 26 with 1000 tasks (25000/100000 processed)
+
+Batch 26 Summary:
+Tasks: Fog = 443 (44.3%), Cloud = 557 (55.7%)
+Batch Completion Time: 3491.95ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 109       | 5           | 0.77 ms     | 11264.67 ms
+  medium  | 217       | 88          | 1.83 ms     | 12071.14 ms
+  large   | 117       | 464         | 3.91 ms     | 17906.23 ms
+
+Overall Progress: 26000/100000 (26.0%)
+Elapsed Time: 1.1s, Estimated Remaining: 3.1s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 2309 (60.0%), Cloud: 1542 (40.0%)
+  Large          : Fog: 0 (0.0%), Cloud: 3682 (100.0%)
+  LocationBased  : Fog: 2355 (63.3%), Cloud: 1368 (36.7%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 3747 (100.0%)
+  Medical        : Fog: 2254 (61.1%), Cloud: 1437 (38.9%)
+  SmallTextual   : Fog: 2353 (64.0%), Cloud: 1321 (36.0%)
+  Multimedia     : Fog: 2282 (62.8%), Cloud: 1350 (37.2%)
+
+Processing Batch 27 with 1000 tasks (26000/100000 processed)
+
+Batch 27 Summary:
+Tasks: Fog = 441 (44.1%), Cloud = 559 (55.9%)
+Batch Completion Time: 3471.09ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 124       | 1           | 0.72 ms     | 11757.57 ms
+  medium  | 214       | 73          | 1.81 ms     | 13294.62 ms
+  large   | 103       | 485         | 3.70 ms     | 17429.20 ms
+
+Overall Progress: 27000/100000 (27.0%)
+Elapsed Time: 1.1s, Estimated Remaining: 3.1s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 2401 (59.9%), Cloud: 1606 (40.1%)
+  Large          : Fog: 0 (0.0%), Cloud: 3822 (100.0%)
+  LocationBased  : Fog: 2432 (63.1%), Cloud: 1424 (36.9%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 3884 (100.0%)
+  Medical        : Fog: 2341 (61.2%), Cloud: 1486 (38.8%)
+  SmallTextual   : Fog: 2453 (64.2%), Cloud: 1370 (35.8%)
+  Multimedia     : Fog: 2367 (62.6%), Cloud: 1414 (37.4%)
+
+Processing Batch 28 with 1000 tasks (27000/100000 processed)
+
+Batch 28 Summary:
+Tasks: Fog = 479 (47.9%), Cloud = 521 (52.1%)
+Batch Completion Time: 3418.37ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 123       | 2           | 0.84 ms     | 7729.69 ms
+  medium  | 255       | 80          | 1.74 ms     | 12873.50 ms
+  large   | 101       | 439         | 3.74 ms     | 17744.82 ms
+
+Overall Progress: 28000/100000 (28.0%)
+Elapsed Time: 1.2s, Estimated Remaining: 3.0s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 2500 (60.2%), Cloud: 1655 (39.8%)
+  Large          : Fog: 0 (0.0%), Cloud: 3961 (100.0%)
+  LocationBased  : Fog: 2517 (63.1%), Cloud: 1475 (36.9%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 4030 (100.0%)
+  Medical        : Fog: 2447 (61.5%), Cloud: 1533 (38.5%)
+  SmallTextual   : Fog: 2543 (64.2%), Cloud: 1415 (35.8%)
+  Multimedia     : Fog: 2466 (62.8%), Cloud: 1458 (37.2%)
+
+Processing Batch 29 with 1000 tasks (28000/100000 processed)
+
+Batch 29 Summary:
+Tasks: Fog = 408 (40.8%), Cloud = 592 (59.2%)
+Batch Completion Time: 3456.55ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 123       | 4           | 0.85 ms     | 8143.22 ms
+  medium  | 192       | 110         | 1.78 ms     | 12248.61 ms
+  large   | 93        | 478         | 3.79 ms     | 17097.13 ms
+
+Overall Progress: 29000/100000 (29.0%)
+Elapsed Time: 1.2s, Estimated Remaining: 2.9s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 2586 (60.0%), Cloud: 1726 (40.0%)
+  Large          : Fog: 0 (0.0%), Cloud: 4098 (100.0%)
+  LocationBased  : Fog: 2601 (62.9%), Cloud: 1537 (37.1%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 4169 (100.0%)
+  Medical        : Fog: 2524 (61.3%), Cloud: 1592 (38.7%)
+  SmallTextual   : Fog: 2634 (64.0%), Cloud: 1482 (36.0%)
+  Multimedia     : Fog: 2536 (62.6%), Cloud: 1515 (37.4%)
+
+Processing Batch 30 with 1000 tasks (29000/100000 processed)
+
+Batch 30 Summary:
+Tasks: Fog = 487 (48.7%), Cloud = 513 (51.3%)
+Batch Completion Time: 3552.30ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 131       | 1           | 0.79 ms     | 4118.91 ms
+  medium  | 223       | 74          | 1.80 ms     | 12140.81 ms
+  large   | 133       | 438         | 3.97 ms     | 17391.73 ms
+
+Overall Progress: 30000/100000 (30.0%)
+Elapsed Time: 1.2s, Estimated Remaining: 2.9s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 2686 (60.3%), Cloud: 1768 (39.7%)
+  Large          : Fog: 0 (0.0%), Cloud: 4236 (100.0%)
+  LocationBased  : Fog: 2709 (63.2%), Cloud: 1575 (36.8%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 4319 (100.0%)
+  Medical        : Fog: 2613 (61.5%), Cloud: 1638 (38.5%)
+  SmallTextual   : Fog: 2735 (64.2%), Cloud: 1525 (35.8%)
+  Multimedia     : Fog: 2625 (62.6%), Cloud: 1571 (37.4%)
+
+Processing Batch 31 with 1000 tasks (30000/100000 processed)
+
+Batch 31 Summary:
+Tasks: Fog = 465 (46.5%), Cloud = 535 (53.5%)
+Batch Completion Time: 3375.49ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 123       | 1           | 0.82 ms     | 17086.84 ms
+  medium  | 230       | 76          | 1.88 ms     | 12813.12 ms
+  large   | 112       | 458         | 3.71 ms     | 17412.24 ms
+
+Overall Progress: 31000/100000 (31.0%)
+Elapsed Time: 1.3s, Estimated Remaining: 2.8s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 2780 (60.4%), Cloud: 1823 (39.6%)
+  Large          : Fog: 0 (0.0%), Cloud: 4373 (100.0%)
+  LocationBased  : Fog: 2798 (63.1%), Cloud: 1633 (36.9%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 4469 (100.0%)
+  Medical        : Fog: 2703 (61.6%), Cloud: 1686 (38.4%)
+  SmallTextual   : Fog: 2831 (64.3%), Cloud: 1569 (35.7%)
+  Multimedia     : Fog: 2721 (62.8%), Cloud: 1614 (37.2%)
+
+Processing Batch 32 with 1000 tasks (31000/100000 processed)
+
+Batch 32 Summary:
+Tasks: Fog = 469 (46.9%), Cloud = 531 (53.1%)
+Batch Completion Time: 3546.86ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 128       | 6           | 0.72 ms     | 9482.74 ms
+  medium  | 224       | 83          | 1.83 ms     | 11590.55 ms
+  large   | 117       | 442         | 4.02 ms     | 17261.70 ms
+
+Overall Progress: 32000/100000 (32.0%)
+Elapsed Time: 1.3s, Estimated Remaining: 2.8s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 2862 (60.4%), Cloud: 1875 (39.6%)
+  Large          : Fog: 0 (0.0%), Cloud: 4517 (100.0%)
+  LocationBased  : Fog: 2901 (63.3%), Cloud: 1681 (36.7%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 4611 (100.0%)
+  Medical        : Fog: 2795 (61.6%), Cloud: 1740 (38.4%)
+  SmallTextual   : Fog: 2933 (64.5%), Cloud: 1617 (35.5%)
+  Multimedia     : Fog: 2811 (62.9%), Cloud: 1657 (37.1%)
+
+Processing Batch 33 with 1000 tasks (32000/100000 processed)
+
+Batch 33 Summary:
+Tasks: Fog = 465 (46.5%), Cloud = 535 (53.5%)
+Batch Completion Time: 3496.56ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 120       | 5           | 0.83 ms     | 10468.66 ms
+  medium  | 242       | 82          | 1.67 ms     | 14222.40 ms
+  large   | 103       | 448         | 3.90 ms     | 18168.08 ms
+
+Overall Progress: 33000/100000 (33.0%)
+Elapsed Time: 1.3s, Estimated Remaining: 2.7s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 2952 (60.6%), Cloud: 1922 (39.4%)
+  Large          : Fog: 0 (0.0%), Cloud: 4659 (100.0%)
+  LocationBased  : Fog: 3000 (63.3%), Cloud: 1743 (36.7%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 4744 (100.0%)
+  Medical        : Fog: 2881 (61.5%), Cloud: 1801 (38.5%)
+  SmallTextual   : Fog: 3030 (64.6%), Cloud: 1661 (35.4%)
+  Multimedia     : Fog: 2904 (63.0%), Cloud: 1703 (37.0%)
+
+Processing Batch 34 with 1000 tasks (33000/100000 processed)
+
+Batch 34 Summary:
+Tasks: Fog = 467 (46.7%), Cloud = 533 (53.3%)
+Batch Completion Time: 3580.78ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 99        | 6           | 0.86 ms     | 8811.02 ms
+  medium  | 249       | 75          | 1.60 ms     | 13857.98 ms
+  large   | 119       | 452         | 4.15 ms     | 17815.75 ms
+
+Overall Progress: 34000/100000 (34.0%)
+Elapsed Time: 1.4s, Estimated Remaining: 2.7s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 3039 (60.4%), Cloud: 1990 (39.6%)
+  Large          : Fog: 0 (0.0%), Cloud: 4795 (100.0%)
+  LocationBased  : Fog: 3088 (63.2%), Cloud: 1795 (36.8%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 4865 (100.0%)
+  Medical        : Fog: 2986 (61.7%), Cloud: 1855 (38.3%)
+  SmallTextual   : Fog: 3120 (64.6%), Cloud: 1713 (35.4%)
+  Multimedia     : Fog: 3001 (63.1%), Cloud: 1753 (36.9%)
+
+Processing Batch 35 with 1000 tasks (34000/100000 processed)
+
+Batch 35 Summary:
+Tasks: Fog = 446 (44.6%), Cloud = 554 (55.4%)
+Batch Completion Time: 3587.08ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 119       | 3           | 0.85 ms     | 12343.42 ms
+  medium  | 216       | 80          | 1.99 ms     | 13977.41 ms
+  large   | 111       | 471         | 3.68 ms     | 17816.21 ms
+
+Overall Progress: 35000/100000 (35.0%)
+Elapsed Time: 1.4s, Estimated Remaining: 2.6s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 3125 (60.5%), Cloud: 2043 (39.5%)
+  Large          : Fog: 0 (0.0%), Cloud: 4947 (100.0%)
+  LocationBased  : Fog: 3176 (63.4%), Cloud: 1837 (36.6%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 5013 (100.0%)
+  Medical        : Fog: 3075 (61.8%), Cloud: 1902 (38.2%)
+  SmallTextual   : Fog: 3219 (64.5%), Cloud: 1770 (35.5%)
+  Multimedia     : Fog: 3085 (63.0%), Cloud: 1808 (37.0%)
+
+Processing Batch 36 with 1000 tasks (35000/100000 processed)
+
+Batch 36 Summary:
+Tasks: Fog = 453 (45.3%), Cloud = 547 (54.7%)
+Batch Completion Time: 3341.78ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 122       | 3           | 0.86 ms     | 10900.43 ms
+  medium  | 225       | 63          | 1.81 ms     | 13152.17 ms
+  large   | 106       | 481         | 3.39 ms     | 17990.85 ms
+
+Overall Progress: 36000/100000 (36.0%)
+Elapsed Time: 1.4s, Estimated Remaining: 2.6s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 3212 (60.5%), Cloud: 2095 (39.5%)
+  Large          : Fog: 0 (0.0%), Cloud: 5076 (100.0%)
+  LocationBased  : Fog: 3265 (63.2%), Cloud: 1900 (36.8%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 5145 (100.0%)
+  Medical        : Fog: 3169 (61.9%), Cloud: 1951 (38.1%)
+  SmallTextual   : Fog: 3312 (64.3%), Cloud: 1842 (35.7%)
+  Multimedia     : Fog: 3175 (63.1%), Cloud: 1858 (36.9%)
+
+Processing Batch 37 with 1000 tasks (36000/100000 processed)
+
+Batch 37 Summary:
+Tasks: Fog = 477 (47.7%), Cloud = 523 (52.3%)
+Batch Completion Time: 3484.17ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 146       | 2           | 0.78 ms     | 8358.07 ms
+  medium  | 206       | 78          | 1.89 ms     | 12771.23 ms
+  large   | 125       | 443         | 4.22 ms     | 16990.51 ms
+
+Overall Progress: 37000/100000 (37.0%)
+Elapsed Time: 1.5s, Estimated Remaining: 2.5s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 3296 (60.6%), Cloud: 2146 (39.4%)
+  Large          : Fog: 0 (0.0%), Cloud: 5212 (100.0%)
+  LocationBased  : Fog: 3360 (63.3%), Cloud: 1948 (36.7%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 5272 (100.0%)
+  Medical        : Fog: 3265 (62.0%), Cloud: 2005 (38.0%)
+  SmallTextual   : Fog: 3426 (64.4%), Cloud: 1898 (35.6%)
+  Multimedia     : Fog: 3263 (63.1%), Cloud: 1909 (36.9%)
+
+Processing Batch 38 with 1000 tasks (37000/100000 processed)
+
+Batch 38 Summary:
+Tasks: Fog = 456 (45.6%), Cloud = 544 (54.4%)
+Batch Completion Time: 3491.07ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 104       | 0           | 0.76 ms     | 0.00 ms
+  medium  | 225       | 83          | 1.74 ms     | 13530.93 ms
+  large   | 127       | 461         | 3.76 ms     | 17597.67 ms
+
+Overall Progress: 38000/100000 (38.0%)
+Elapsed Time: 1.5s, Estimated Remaining: 2.5s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 3376 (60.5%), Cloud: 2202 (39.5%)
+  Large          : Fog: 0 (0.0%), Cloud: 5358 (100.0%)
+  LocationBased  : Fog: 3460 (63.3%), Cloud: 2003 (36.7%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 5411 (100.0%)
+  Medical        : Fog: 3356 (62.0%), Cloud: 2053 (38.0%)
+  SmallTextual   : Fog: 3527 (64.5%), Cloud: 1944 (35.5%)
+  Multimedia     : Fog: 3347 (63.0%), Cloud: 1963 (37.0%)
+
+Processing Batch 39 with 1000 tasks (38000/100000 processed)
+
+Batch 39 Summary:
+Tasks: Fog = 452 (45.2%), Cloud = 548 (54.8%)
+Batch Completion Time: 3503.35ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 132       | 2           | 0.79 ms     | 5698.64 ms
+  medium  | 224       | 95          | 1.89 ms     | 12554.60 ms
+  large   | 96        | 451         | 3.68 ms     | 17487.99 ms
+
+Overall Progress: 39000/100000 (39.0%)
+Elapsed Time: 1.5s, Estimated Remaining: 2.4s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 3477 (60.7%), Cloud: 2248 (39.3%)
+  Large          : Fog: 0 (0.0%), Cloud: 5509 (100.0%)
+  LocationBased  : Fog: 3542 (63.2%), Cloud: 2062 (36.8%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 5563 (100.0%)
+  Medical        : Fog: 3431 (62.0%), Cloud: 2104 (38.0%)
+  SmallTextual   : Fog: 3615 (64.5%), Cloud: 1989 (35.5%)
+  Multimedia     : Fog: 3453 (63.2%), Cloud: 2007 (36.8%)
+
+Processing Batch 40 with 1000 tasks (39000/100000 processed)
+
+Batch 40 Summary:
+Tasks: Fog = 443 (44.3%), Cloud = 557 (55.7%)
+Batch Completion Time: 3406.10ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 96        | 2           | 0.90 ms     | 7300.23 ms
+  medium  | 240       | 71          | 1.84 ms     | 13764.54 ms
+  large   | 107       | 484         | 4.35 ms     | 17415.99 ms
+
+Overall Progress: 40000/100000 (40.0%)
+Elapsed Time: 1.6s, Estimated Remaining: 2.3s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 3564 (60.7%), Cloud: 2307 (39.3%)
+  Large          : Fog: 0 (0.0%), Cloud: 5659 (100.0%)
+  LocationBased  : Fog: 3631 (63.2%), Cloud: 2112 (36.8%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 5711 (100.0%)
+  Medical        : Fog: 3517 (61.9%), Cloud: 2163 (38.1%)
+  SmallTextual   : Fog: 3712 (64.6%), Cloud: 2031 (35.4%)
+  Multimedia     : Fog: 3537 (63.2%), Cloud: 2056 (36.8%)
+
+Processing Batch 41 with 1000 tasks (40000/100000 processed)
+
+Batch 41 Summary:
+Tasks: Fog = 395 (39.5%), Cloud = 605 (60.5%)
+Batch Completion Time: 3588.13ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 113       | 5           | 0.80 ms     | 9636.39 ms
+  medium  | 198       | 116         | 1.86 ms     | 12460.05 ms
+  large   | 84        | 484         | 3.56 ms     | 16826.15 ms
+
+Overall Progress: 41000/100000 (41.0%)
+Elapsed Time: 1.6s, Estimated Remaining: 2.3s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 3640 (60.5%), Cloud: 2372 (39.5%)
+  Large          : Fog: 0 (0.0%), Cloud: 5802 (100.0%)
+  LocationBased  : Fog: 3708 (63.1%), Cloud: 2167 (36.9%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 5849 (100.0%)
+  Medical        : Fog: 3599 (61.7%), Cloud: 2238 (38.3%)
+  SmallTextual   : Fog: 3798 (64.5%), Cloud: 2090 (35.5%)
+  Multimedia     : Fog: 3611 (62.9%), Cloud: 2126 (37.1%)
+
+Processing Batch 42 with 1000 tasks (41000/100000 processed)
+
+Batch 42 Summary:
+Tasks: Fog = 421 (42.1%), Cloud = 579 (57.9%)
+Batch Completion Time: 3654.87ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 109       | 4           | 0.83 ms     | 7864.31 ms
+  medium  | 225       | 112         | 1.90 ms     | 12950.15 ms
+  large   | 87        | 463         | 3.36 ms     | 17938.62 ms
+
+Overall Progress: 42000/100000 (42.0%)
+Elapsed Time: 1.6s, Estimated Remaining: 2.3s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 3720 (60.5%), Cloud: 2433 (39.5%)
+  Large          : Fog: 0 (0.0%), Cloud: 5938 (100.0%)
+  LocationBased  : Fog: 3786 (63.0%), Cloud: 2227 (37.0%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 6001 (100.0%)
+  Medical        : Fog: 3689 (61.5%), Cloud: 2305 (38.5%)
+  SmallTextual   : Fog: 3880 (64.5%), Cloud: 2139 (35.5%)
+  Multimedia     : Fog: 3702 (62.9%), Cloud: 2180 (37.1%)
+
+Processing Batch 43 with 1000 tasks (42000/100000 processed)
+
+Batch 43 Summary:
+Tasks: Fog = 386 (38.6%), Cloud = 614 (61.4%)
+Batch Completion Time: 3275.67ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 126       | 5           | 0.84 ms     | 9670.43 ms
+  medium  | 184       | 120         | 1.68 ms     | 13114.30 ms
+  large   | 76        | 489         | 4.01 ms     | 17624.61 ms
+
+Overall Progress: 43000/100000 (43.0%)
+Elapsed Time: 1.7s, Estimated Remaining: 2.2s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 3782 (60.3%), Cloud: 2493 (39.7%)
+  Large          : Fog: 0 (0.0%), Cloud: 6099 (100.0%)
+  LocationBased  : Fog: 3865 (62.7%), Cloud: 2297 (37.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 6139 (100.0%)
+  Medical        : Fog: 3773 (61.4%), Cloud: 2372 (38.6%)
+  SmallTextual   : Fog: 3958 (64.3%), Cloud: 2199 (35.7%)
+  Multimedia     : Fog: 3785 (62.8%), Cloud: 2238 (37.2%)
+
+Processing Batch 44 with 1000 tasks (43000/100000 processed)
+
+Batch 44 Summary:
+Tasks: Fog = 464 (46.4%), Cloud = 536 (53.6%)
+Batch Completion Time: 3406.28ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 125       | 1           | 0.71 ms     | 11296.89 ms
+  medium  | 229       | 75          | 1.74 ms     | 12844.26 ms
+  large   | 110       | 460         | 4.17 ms     | 18440.96 ms
+
+Overall Progress: 44000/100000 (44.0%)
+Elapsed Time: 1.7s, Estimated Remaining: 2.2s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 3880 (60.4%), Cloud: 2549 (39.6%)
+  Large          : Fog: 0 (0.0%), Cloud: 6243 (100.0%)
+  LocationBased  : Fog: 3960 (62.8%), Cloud: 2350 (37.2%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 6282 (100.0%)
+  Medical        : Fog: 3871 (61.6%), Cloud: 2418 (38.4%)
+  SmallTextual   : Fog: 4050 (64.3%), Cloud: 2252 (35.7%)
+  Multimedia     : Fog: 3866 (62.9%), Cloud: 2279 (37.1%)
+
+Processing Batch 45 with 1000 tasks (44000/100000 processed)
+
+Batch 45 Summary:
+Tasks: Fog = 441 (44.1%), Cloud = 559 (55.9%)
+Batch Completion Time: 3403.37ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 101       | 3           | 0.83 ms     | 14484.40 ms
+  medium  | 225       | 86          | 1.73 ms     | 12663.02 ms
+  large   | 115       | 470         | 3.86 ms     | 17970.86 ms
+
+Overall Progress: 45000/100000 (45.0%)
+Elapsed Time: 1.8s, Estimated Remaining: 2.2s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 3974 (60.4%), Cloud: 2606 (39.6%)
+  Large          : Fog: 0 (0.0%), Cloud: 6397 (100.0%)
+  LocationBased  : Fog: 4055 (62.9%), Cloud: 2392 (37.1%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 6425 (100.0%)
+  Medical        : Fog: 3956 (61.4%), Cloud: 2482 (38.6%)
+  SmallTextual   : Fog: 4136 (64.3%), Cloud: 2298 (35.7%)
+  Multimedia     : Fog: 3947 (62.9%), Cloud: 2332 (37.1%)
+
+Processing Batch 46 with 1000 tasks (45000/100000 processed)
+
+Batch 46 Summary:
+Tasks: Fog = 450 (45.0%), Cloud = 550 (55.0%)
+Batch Completion Time: 3395.97ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 110       | 5           | 0.78 ms     | 11828.03 ms
+  medium  | 230       | 93          | 1.49 ms     | 12423.08 ms
+  large   | 110       | 452         | 3.57 ms     | 18006.20 ms
+
+Overall Progress: 46000/100000 (46.0%)
+Elapsed Time: 1.8s, Estimated Remaining: 2.2s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 4070 (60.4%), Cloud: 2666 (39.6%)
+  Large          : Fog: 0 (0.0%), Cloud: 6549 (100.0%)
+  LocationBased  : Fog: 4142 (62.9%), Cloud: 2439 (37.1%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 6568 (100.0%)
+  Medical        : Fog: 4041 (61.5%), Cloud: 2530 (38.5%)
+  SmallTextual   : Fog: 4231 (64.3%), Cloud: 2349 (35.7%)
+  Multimedia     : Fog: 4034 (62.9%), Cloud: 2381 (37.1%)
+
+Processing Batch 47 with 1000 tasks (46000/100000 processed)
+
+Batch 47 Summary:
+Tasks: Fog = 376 (37.6%), Cloud = 624 (62.4%)
+Batch Completion Time: 3403.11ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 100       | 2           | 0.83 ms     | 9845.47 ms
+  medium  | 205       | 107         | 1.63 ms     | 13997.54 ms
+  large   | 71        | 515         | 3.65 ms     | 17166.61 ms
+
+Overall Progress: 47000/100000 (47.0%)
+Elapsed Time: 1.9s, Estimated Remaining: 2.1s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 4144 (60.2%), Cloud: 2735 (39.8%)
+  Large          : Fog: 0 (0.0%), Cloud: 6693 (100.0%)
+  LocationBased  : Fog: 4222 (62.7%), Cloud: 2507 (37.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 6706 (100.0%)
+  Medical        : Fog: 4106 (61.2%), Cloud: 2599 (38.8%)
+  SmallTextual   : Fog: 4295 (64.0%), Cloud: 2419 (36.0%)
+  Multimedia     : Fog: 4127 (62.8%), Cloud: 2447 (37.2%)
+
+Processing Batch 48 with 1000 tasks (47000/100000 processed)
+
+Batch 48 Summary:
+Tasks: Fog = 478 (47.8%), Cloud = 522 (52.2%)
+Batch Completion Time: 3649.03ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 125       | 4           | 0.80 ms     | 8668.75 ms
+  medium  | 230       | 71          | 1.77 ms     | 13457.52 ms
+  large   | 123       | 447         | 3.90 ms     | 17804.89 ms
+
+Overall Progress: 48000/100000 (48.0%)
+Elapsed Time: 1.9s, Estimated Remaining: 2.1s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 4243 (60.3%), Cloud: 2790 (39.7%)
+  Large          : Fog: 0 (0.0%), Cloud: 6842 (100.0%)
+  LocationBased  : Fog: 4316 (62.9%), Cloud: 2546 (37.1%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 6849 (100.0%)
+  Medical        : Fog: 4203 (61.4%), Cloud: 2640 (38.6%)
+  SmallTextual   : Fog: 4388 (64.0%), Cloud: 2470 (36.0%)
+  Multimedia     : Fog: 4222 (62.9%), Cloud: 2491 (37.1%)
+
+Processing Batch 49 with 1000 tasks (48000/100000 processed)
+
+Batch 49 Summary:
+Tasks: Fog = 468 (46.8%), Cloud = 532 (53.2%)
+Batch Completion Time: 3559.32ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 104       | 2           | 0.96 ms     | 9243.23 ms
+  medium  | 248       | 77          | 1.72 ms     | 14564.14 ms
+  large   | 116       | 453         | 4.48 ms     | 17173.49 ms
+
+Overall Progress: 49000/100000 (49.0%)
+Elapsed Time: 2.0s, Estimated Remaining: 2.0s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 4328 (60.3%), Cloud: 2847 (39.7%)
+  Large          : Fog: 0 (0.0%), Cloud: 6991 (100.0%)
+  LocationBased  : Fog: 4421 (63.0%), Cloud: 2591 (37.0%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 6993 (100.0%)
+  Medical        : Fog: 4311 (61.6%), Cloud: 2685 (38.4%)
+  SmallTextual   : Fog: 4471 (64.0%), Cloud: 2516 (36.0%)
+  Multimedia     : Fog: 4309 (62.9%), Cloud: 2537 (37.1%)
+
+Processing Batch 50 with 1000 tasks (49000/100000 processed)
+
+Batch 50 Summary:
+Tasks: Fog = 455 (45.5%), Cloud = 545 (54.5%)
+Batch Completion Time: 3422.24ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 132       | 3           | 0.92 ms     | 10708.35 ms
+  medium  | 212       | 64          | 1.76 ms     | 12572.18 ms
+  large   | 111       | 478         | 4.23 ms     | 17531.30 ms
+
+Overall Progress: 50000/100000 (50.0%)
+Elapsed Time: 2.0s, Estimated Remaining: 2.0s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 4407 (60.3%), Cloud: 2901 (39.7%)
+  Large          : Fog: 0 (0.0%), Cloud: 7125 (100.0%)
+  LocationBased  : Fog: 4519 (63.1%), Cloud: 2648 (36.9%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 7123 (100.0%)
+  Medical        : Fog: 4406 (61.6%), Cloud: 2745 (38.4%)
+  SmallTextual   : Fog: 4558 (64.0%), Cloud: 2566 (36.0%)
+  Multimedia     : Fog: 4405 (62.9%), Cloud: 2597 (37.1%)
+
+Processing Batch 51 with 1000 tasks (50000/100000 processed)
+
+Batch 51 Summary:
+Tasks: Fog = 431 (43.1%), Cloud = 569 (56.9%)
+Batch Completion Time: 3305.80ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 112       | 3           | 0.83 ms     | 10806.59 ms
+  medium  | 223       | 80          | 1.78 ms     | 12531.88 ms
+  large   | 96        | 486         | 3.45 ms     | 17733.97 ms
+
+Overall Progress: 51000/100000 (51.0%)
+Elapsed Time: 2.0s, Estimated Remaining: 1.9s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 4492 (60.2%), Cloud: 2966 (39.8%)
+  Large          : Fog: 0 (0.0%), Cloud: 7266 (100.0%)
+  LocationBased  : Fog: 4602 (63.0%), Cloud: 2701 (37.0%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 7258 (100.0%)
+  Medical        : Fog: 4480 (61.5%), Cloud: 2802 (38.5%)
+  SmallTextual   : Fog: 4644 (63.9%), Cloud: 2620 (36.1%)
+  Multimedia     : Fog: 4508 (62.9%), Cloud: 2661 (37.1%)
+
+Processing Batch 52 with 1000 tasks (51000/100000 processed)
+
+Batch 52 Summary:
+Tasks: Fog = 450 (45.0%), Cloud = 550 (55.0%)
+Batch Completion Time: 3447.02ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 111       | 1           | 0.84 ms     | 15281.88 ms
+  medium  | 228       | 75          | 1.87 ms     | 13575.15 ms
+  large   | 111       | 474         | 4.07 ms     | 17755.67 ms
+
+Overall Progress: 52000/100000 (52.0%)
+Elapsed Time: 2.0s, Estimated Remaining: 1.9s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 4576 (60.2%), Cloud: 3025 (39.8%)
+  Large          : Fog: 0 (0.0%), Cloud: 7411 (100.0%)
+  LocationBased  : Fog: 4707 (63.1%), Cloud: 2748 (36.9%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 7395 (100.0%)
+  Medical        : Fog: 4561 (61.5%), Cloud: 2855 (38.5%)
+  SmallTextual   : Fog: 4731 (63.8%), Cloud: 2680 (36.2%)
+  Multimedia     : Fog: 4601 (62.9%), Cloud: 2710 (37.1%)
+
+Processing Batch 53 with 1000 tasks (52000/100000 processed)
+
+Batch 53 Summary:
+Tasks: Fog = 464 (46.4%), Cloud = 536 (53.6%)
+Batch Completion Time: 3539.25ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 121       | 2           | 0.78 ms     | 16092.66 ms
+  medium  | 233       | 74          | 1.83 ms     | 13286.64 ms
+  large   | 110       | 460         | 3.62 ms     | 17866.10 ms
+
+Overall Progress: 53000/100000 (53.0%)
+Elapsed Time: 2.1s, Estimated Remaining: 1.9s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 4668 (60.2%), Cloud: 3092 (39.8%)
+  Large          : Fog: 0 (0.0%), Cloud: 7558 (100.0%)
+  LocationBased  : Fog: 4800 (63.1%), Cloud: 2802 (36.9%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 7527 (100.0%)
+  Medical        : Fog: 4676 (61.7%), Cloud: 2907 (38.3%)
+  SmallTextual   : Fog: 4813 (63.9%), Cloud: 2723 (36.1%)
+  Multimedia     : Fog: 4683 (63.0%), Cloud: 2751 (37.0%)
+
+Processing Batch 54 with 1000 tasks (53000/100000 processed)
+
+Batch 54 Summary:
+Tasks: Fog = 472 (47.2%), Cloud = 528 (52.8%)
+Batch Completion Time: 3558.18ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 120       | 2           | 0.84 ms     | 14681.67 ms
+  medium  | 239       | 73          | 1.77 ms     | 14657.31 ms
+  large   | 113       | 453         | 3.76 ms     | 17658.33 ms
+
+Overall Progress: 54000/100000 (54.0%)
+Elapsed Time: 2.1s, Estimated Remaining: 1.8s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 4770 (60.3%), Cloud: 3137 (39.7%)
+  Large          : Fog: 0 (0.0%), Cloud: 7702 (100.0%)
+  LocationBased  : Fog: 4888 (63.1%), Cloud: 2858 (36.9%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 7661 (100.0%)
+  Medical        : Fog: 4753 (61.6%), Cloud: 2960 (38.4%)
+  SmallTextual   : Fog: 4908 (63.8%), Cloud: 2781 (36.2%)
+  Multimedia     : Fog: 4793 (63.2%), Cloud: 2789 (36.8%)
+
+Processing Batch 55 with 1000 tasks (54000/100000 processed)
+
+Batch 55 Summary:
+Tasks: Fog = 396 (39.6%), Cloud = 604 (60.4%)
+Batch Completion Time: 3443.41ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 118       | 5           | 0.82 ms     | 9502.62 ms
+  medium  | 198       | 106         | 1.68 ms     | 13209.37 ms
+  large   | 80        | 493         | 4.23 ms     | 17182.39 ms
+
+Overall Progress: 55000/100000 (55.0%)
+Elapsed Time: 2.2s, Estimated Remaining: 1.8s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 4845 (60.2%), Cloud: 3203 (39.8%)
+  Large          : Fog: 0 (0.0%), Cloud: 7848 (100.0%)
+  LocationBased  : Fog: 4973 (63.0%), Cloud: 2921 (37.0%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 7800 (100.0%)
+  Medical        : Fog: 4834 (61.5%), Cloud: 3028 (38.5%)
+  SmallTextual   : Fog: 4979 (63.7%), Cloud: 2839 (36.3%)
+  Multimedia     : Fog: 4877 (63.1%), Cloud: 2853 (36.9%)
+
+Processing Batch 56 with 1000 tasks (55000/100000 processed)
+
+Batch 56 Summary:
+Tasks: Fog = 438 (43.8%), Cloud = 562 (56.2%)
+Batch Completion Time: 3515.42ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 109       | 0           | 0.74 ms     | 0.00 ms
+  medium  | 229       | 78          | 1.81 ms     | 12748.26 ms
+  large   | 100       | 484         | 4.00 ms     | 17571.72 ms
+
+Overall Progress: 56000/100000 (56.0%)
+Elapsed Time: 2.2s, Estimated Remaining: 1.7s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 4924 (60.2%), Cloud: 3260 (39.8%)
+  Large          : Fog: 0 (0.0%), Cloud: 7996 (100.0%)
+  LocationBased  : Fog: 5075 (63.1%), Cloud: 2972 (36.9%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 7933 (100.0%)
+  Medical        : Fog: 4916 (61.4%), Cloud: 3090 (38.6%)
+  SmallTextual   : Fog: 5068 (63.6%), Cloud: 2902 (36.4%)
+  Multimedia     : Fog: 4963 (63.1%), Cloud: 2901 (36.9%)
+
+Processing Batch 57 with 1000 tasks (56000/100000 processed)
+
+Batch 57 Summary:
+Tasks: Fog = 441 (44.1%), Cloud = 559 (55.9%)
+Batch Completion Time: 3569.22ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 95        | 4           | 0.83 ms     | 10097.05 ms
+  medium  | 233       | 81          | 1.89 ms     | 12691.21 ms
+  large   | 113       | 474         | 3.92 ms     | 17737.10 ms
+
+Overall Progress: 57000/100000 (57.0%)
+Elapsed Time: 2.2s, Estimated Remaining: 1.7s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 5009 (60.1%), Cloud: 3324 (39.9%)
+  Large          : Fog: 0 (0.0%), Cloud: 8145 (100.0%)
+  LocationBased  : Fog: 5158 (63.1%), Cloud: 3016 (36.9%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 8070 (100.0%)
+  Medical        : Fog: 5004 (61.4%), Cloud: 3146 (38.6%)
+  SmallTextual   : Fog: 5152 (63.5%), Cloud: 2960 (36.5%)
+  Multimedia     : Fog: 5064 (63.2%), Cloud: 2952 (36.8%)
+
+Processing Batch 58 with 1000 tasks (57000/100000 processed)
+
+Batch 58 Summary:
+Tasks: Fog = 366 (36.6%), Cloud = 634 (63.4%)
+Batch Completion Time: 3406.25ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 109       | 4           | 0.80 ms     | 7503.34 ms
+  medium  | 182       | 115         | 1.75 ms     | 12727.93 ms
+  large   | 75        | 515         | 3.58 ms     | 17139.57 ms
+
+Overall Progress: 58000/100000 (58.0%)
+Elapsed Time: 2.3s, Estimated Remaining: 1.6s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 5077 (59.9%), Cloud: 3398 (40.1%)
+  Large          : Fog: 0 (0.0%), Cloud: 8285 (100.0%)
+  LocationBased  : Fog: 5230 (63.0%), Cloud: 3075 (37.0%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 8215 (100.0%)
+  Medical        : Fog: 5076 (61.3%), Cloud: 3210 (38.7%)
+  SmallTextual   : Fog: 5238 (63.3%), Cloud: 3036 (36.7%)
+  Multimedia     : Fog: 5132 (62.9%), Cloud: 3028 (37.1%)
+
+Processing Batch 59 with 1000 tasks (58000/100000 processed)
+
+Batch 59 Summary:
+Tasks: Fog = 363 (36.3%), Cloud = 637 (63.7%)
+Batch Completion Time: 3316.25ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 113       | 1           | 0.76 ms     | 12826.07 ms
+  medium  | 187       | 135         | 1.71 ms     | 13089.33 ms
+  large   | 63        | 501         | 3.95 ms     | 17423.83 ms
+
+Overall Progress: 59000/100000 (59.0%)
+Elapsed Time: 2.3s, Estimated Remaining: 1.6s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 5137 (59.7%), Cloud: 3469 (40.3%)
+  Large          : Fog: 0 (0.0%), Cloud: 8442 (100.0%)
+  LocationBased  : Fog: 5298 (62.7%), Cloud: 3152 (37.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 8363 (100.0%)
+  Medical        : Fog: 5146 (61.1%), Cloud: 3271 (38.9%)
+  SmallTextual   : Fog: 5313 (63.2%), Cloud: 3095 (36.8%)
+  Multimedia     : Fog: 5222 (62.8%), Cloud: 3092 (37.2%)
+
+Processing Batch 60 with 1000 tasks (59000/100000 processed)
+
+Batch 60 Summary:
+Tasks: Fog = 457 (45.7%), Cloud = 543 (54.3%)
+Batch Completion Time: 3367.15ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 111       | 5           | 0.77 ms     | 7728.56 ms
+  medium  | 235       | 70          | 1.71 ms     | 13500.64 ms
+  large   | 111       | 468         | 3.97 ms     | 18459.92 ms
+
+Overall Progress: 60000/100000 (60.0%)
+Elapsed Time: 2.3s, Estimated Remaining: 1.6s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 5224 (59.7%), Cloud: 3527 (40.3%)
+  Large          : Fog: 0 (0.0%), Cloud: 8602 (100.0%)
+  LocationBased  : Fog: 5396 (62.7%), Cloud: 3209 (37.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 8485 (100.0%)
+  Medical        : Fog: 5240 (61.1%), Cloud: 3335 (38.9%)
+  SmallTextual   : Fog: 5397 (63.2%), Cloud: 3142 (36.8%)
+  Multimedia     : Fog: 5316 (63.0%), Cloud: 3127 (37.0%)
+
+Processing Batch 61 with 1000 tasks (60000/100000 processed)
+
+Batch 61 Summary:
+Tasks: Fog = 442 (44.2%), Cloud = 558 (55.8%)
+Batch Completion Time: 3493.96ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 110       | 0           | 0.70 ms     | 0.00 ms
+  medium  | 240       | 73          | 2.00 ms     | 13331.68 ms
+  large   | 92        | 485         | 3.76 ms     | 17317.61 ms
+
+Overall Progress: 61000/100000 (61.0%)
+Elapsed Time: 2.4s, Estimated Remaining: 1.5s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 5311 (59.8%), Cloud: 3569 (40.2%)
+  Large          : Fog: 0 (0.0%), Cloud: 8754 (100.0%)
+  LocationBased  : Fog: 5490 (62.7%), Cloud: 3265 (37.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 8623 (100.0%)
+  Medical        : Fog: 5328 (61.1%), Cloud: 3398 (38.9%)
+  SmallTextual   : Fog: 5482 (63.2%), Cloud: 3194 (36.8%)
+  Multimedia     : Fog: 5404 (62.9%), Cloud: 3182 (37.1%)
+
+Processing Batch 62 with 1000 tasks (61000/100000 processed)
+
+Batch 62 Summary:
+Tasks: Fog = 455 (45.5%), Cloud = 545 (54.5%)
+Batch Completion Time: 3592.63ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 119       | 1           | 0.81 ms     | 9797.86 ms
+  medium  | 205       | 103         | 1.90 ms     | 12773.79 ms
+  large   | 131       | 441         | 3.67 ms     | 16792.60 ms
+
+Overall Progress: 62000/100000 (62.0%)
+Elapsed Time: 2.4s, Estimated Remaining: 1.5s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 5395 (59.8%), Cloud: 3630 (40.2%)
+  Large          : Fog: 0 (0.0%), Cloud: 8902 (100.0%)
+  LocationBased  : Fog: 5563 (62.6%), Cloud: 3319 (37.4%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 8763 (100.0%)
+  Medical        : Fog: 5421 (61.2%), Cloud: 3442 (38.8%)
+  SmallTextual   : Fog: 5590 (63.3%), Cloud: 3240 (36.7%)
+  Multimedia     : Fog: 5501 (63.0%), Cloud: 3234 (37.0%)
+
+Processing Batch 63 with 1000 tasks (62000/100000 processed)
+
+Batch 63 Summary:
+Tasks: Fog = 407 (40.7%), Cloud = 593 (59.3%)
+Batch Completion Time: 3479.79ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 117       | 5           | 0.71 ms     | 10949.20 ms
+  medium  | 212       | 103         | 1.70 ms     | 12486.71 ms
+  large   | 78        | 485         | 4.24 ms     | 17774.06 ms
+
+Overall Progress: 63000/100000 (63.0%)
+Elapsed Time: 2.4s, Estimated Remaining: 1.4s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 5485 (59.8%), Cloud: 3692 (40.2%)
+  Large          : Fog: 0 (0.0%), Cloud: 9054 (100.0%)
+  LocationBased  : Fog: 5647 (62.6%), Cloud: 3371 (37.4%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 8912 (100.0%)
+  Medical        : Fog: 5499 (61.1%), Cloud: 3507 (38.9%)
+  SmallTextual   : Fog: 5673 (63.2%), Cloud: 3300 (36.8%)
+  Multimedia     : Fog: 5573 (62.9%), Cloud: 3287 (37.1%)
+
+Processing Batch 64 with 1000 tasks (63000/100000 processed)
+
+Batch 64 Summary:
+Tasks: Fog = 462 (46.2%), Cloud = 538 (53.8%)
+Batch Completion Time: 3352.46ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 120       | 1           | 0.83 ms     | 8662.43 ms
+  medium  | 239       | 85          | 1.73 ms     | 12559.32 ms
+  large   | 103       | 452         | 3.93 ms     | 17235.73 ms
+
+Overall Progress: 64000/100000 (64.0%)
+Elapsed Time: 2.5s, Estimated Remaining: 1.4s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 5575 (59.8%), Cloud: 3742 (40.2%)
+  Large          : Fog: 0 (0.0%), Cloud: 9184 (100.0%)
+  LocationBased  : Fog: 5741 (62.7%), Cloud: 3409 (37.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 9071 (100.0%)
+  Medical        : Fog: 5597 (61.0%), Cloud: 3572 (39.0%)
+  SmallTextual   : Fog: 5764 (63.3%), Cloud: 3338 (36.7%)
+  Multimedia     : Fog: 5662 (62.9%), Cloud: 3345 (37.1%)
+
+Processing Batch 65 with 1000 tasks (64000/100000 processed)
+
+Batch 65 Summary:
+Tasks: Fog = 449 (44.9%), Cloud = 551 (55.1%)
+Batch Completion Time: 3406.21ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 118       | 1           | 0.68 ms     | 15871.09 ms
+  medium  | 217       | 83          | 1.80 ms     | 12888.98 ms
+  large   | 114       | 467         | 3.61 ms     | 17954.14 ms
+
+Overall Progress: 65000/100000 (65.0%)
+Elapsed Time: 2.5s, Estimated Remaining: 1.3s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 5664 (59.9%), Cloud: 3789 (40.1%)
+  Large          : Fog: 0 (0.0%), Cloud: 9329 (100.0%)
+  LocationBased  : Fog: 5842 (62.9%), Cloud: 3452 (37.1%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 9232 (100.0%)
+  Medical        : Fog: 5683 (61.1%), Cloud: 3617 (38.9%)
+  SmallTextual   : Fog: 5838 (63.2%), Cloud: 3399 (36.8%)
+  Multimedia     : Fog: 5761 (62.9%), Cloud: 3394 (37.1%)
+
+Processing Batch 66 with 1000 tasks (65000/100000 processed)
+
+Batch 66 Summary:
+Tasks: Fog = 443 (44.3%), Cloud = 557 (55.7%)
+Batch Completion Time: 3293.04ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 109       | 1           | 0.79 ms     | 7296.84 ms
+  medium  | 231       | 62          | 1.66 ms     | 12122.25 ms
+  large   | 103       | 494         | 3.31 ms     | 18028.15 ms
+
+Overall Progress: 66000/100000 (66.0%)
+Elapsed Time: 2.5s, Estimated Remaining: 1.3s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 5749 (59.9%), Cloud: 3845 (40.1%)
+  Large          : Fog: 0 (0.0%), Cloud: 9467 (100.0%)
+  LocationBased  : Fog: 5927 (62.9%), Cloud: 3494 (37.1%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 9379 (100.0%)
+  Medical        : Fog: 5795 (61.1%), Cloud: 3690 (38.9%)
+  SmallTextual   : Fog: 5922 (63.2%), Cloud: 3447 (36.8%)
+  Multimedia     : Fog: 5838 (62.9%), Cloud: 3447 (37.1%)
+
+Processing Batch 67 with 1000 tasks (66000/100000 processed)
+
+Batch 67 Summary:
+Tasks: Fog = 358 (35.8%), Cloud = 642 (64.2%)
+Batch Completion Time: 3415.17ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 103       | 3           | 0.85 ms     | 10469.64 ms
+  medium  | 178       | 123         | 1.83 ms     | 13631.96 ms
+  large   | 77        | 516         | 3.68 ms     | 17655.55 ms
+
+Overall Progress: 67000/100000 (67.0%)
+Elapsed Time: 2.6s, Estimated Remaining: 1.3s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 5831 (59.8%), Cloud: 3919 (40.2%)
+  Large          : Fog: 0 (0.0%), Cloud: 9611 (100.0%)
+  LocationBased  : Fog: 5979 (62.5%), Cloud: 3580 (37.5%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 9509 (100.0%)
+  Medical        : Fog: 5869 (60.9%), Cloud: 3762 (39.1%)
+  SmallTextual   : Fog: 5999 (63.1%), Cloud: 3510 (36.9%)
+  Multimedia     : Fog: 5911 (62.7%), Cloud: 3520 (37.3%)
+
+Processing Batch 68 with 1000 tasks (67000/100000 processed)
+
+Batch 68 Summary:
+Tasks: Fog = 436 (43.6%), Cloud = 564 (56.4%)
+Batch Completion Time: 3426.64ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 111       | 3           | 0.83 ms     | 10481.05 ms
+  medium  | 232       | 94          | 2.06 ms     | 13966.91 ms
+  large   | 93        | 467         | 3.70 ms     | 17252.00 ms
+
+Overall Progress: 68000/100000 (68.0%)
+Elapsed Time: 2.6s, Estimated Remaining: 1.2s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 5913 (59.8%), Cloud: 3968 (40.2%)
+  Large          : Fog: 0 (0.0%), Cloud: 9760 (100.0%)
+  LocationBased  : Fog: 6086 (62.6%), Cloud: 3634 (37.4%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 9662 (100.0%)
+  Medical        : Fog: 5960 (60.9%), Cloud: 3828 (39.1%)
+  SmallTextual   : Fog: 6075 (63.2%), Cloud: 3544 (36.8%)
+  Multimedia     : Fog: 5991 (62.6%), Cloud: 3579 (37.4%)
+
+Processing Batch 69 with 1000 tasks (68000/100000 processed)
+
+Batch 69 Summary:
+Tasks: Fog = 465 (46.5%), Cloud = 535 (53.5%)
+Batch Completion Time: 3638.74ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 115       | 4           | 0.86 ms     | 9072.70 ms
+  medium  | 218       | 70          | 1.57 ms     | 12431.83 ms
+  large   | 132       | 461         | 3.63 ms     | 17007.20 ms
+
+Overall Progress: 69000/100000 (69.0%)
+Elapsed Time: 2.6s, Estimated Remaining: 1.2s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 6003 (59.9%), Cloud: 4018 (40.1%)
+  Large          : Fog: 0 (0.0%), Cloud: 9907 (100.0%)
+  LocationBased  : Fog: 6181 (62.7%), Cloud: 3675 (37.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 9786 (100.0%)
+  Medical        : Fog: 6049 (60.9%), Cloud: 3886 (39.1%)
+  SmallTextual   : Fog: 6159 (63.1%), Cloud: 3598 (36.9%)
+  Multimedia     : Fog: 6098 (62.6%), Cloud: 3640 (37.4%)
+
+Processing Batch 70 with 1000 tasks (69000/100000 processed)
+
+Batch 70 Summary:
+Tasks: Fog = 452 (45.2%), Cloud = 548 (54.8%)
+Batch Completion Time: 3385.52ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 107       | 1           | 0.76 ms     | 12345.58 ms
+  medium  | 234       | 63          | 1.84 ms     | 13439.37 ms
+  large   | 111       | 484         | 3.59 ms     | 17831.25 ms
+
+Overall Progress: 70000/100000 (70.0%)
+Elapsed Time: 2.7s, Estimated Remaining: 1.1s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 6102 (59.9%), Cloud: 4085 (40.1%)
+  Large          : Fog: 0 (0.0%), Cloud: 10024 (100.0%)
+  LocationBased  : Fog: 6271 (62.7%), Cloud: 3724 (37.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 9942 (100.0%)
+  Medical        : Fog: 6129 (60.9%), Cloud: 3941 (39.1%)
+  SmallTextual   : Fog: 6246 (63.1%), Cloud: 3650 (36.9%)
+  Multimedia     : Fog: 6194 (62.7%), Cloud: 3692 (37.3%)
+
+Processing Batch 71 with 1000 tasks (70000/100000 processed)
+
+Batch 71 Summary:
+Tasks: Fog = 370 (37.0%), Cloud = 630 (63.0%)
+Batch Completion Time: 3202.68ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 116       | 0           | 0.81 ms     | 0.00 ms
+  medium  | 179       | 115         | 1.64 ms     | 12975.18 ms
+  large   | 75        | 515         | 3.55 ms     | 17504.74 ms
+
+Overall Progress: 71000/100000 (71.0%)
+Elapsed Time: 2.7s, Estimated Remaining: 1.1s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 6185 (59.9%), Cloud: 4144 (40.1%)
+  Large          : Fog: 0 (0.0%), Cloud: 10171 (100.0%)
+  LocationBased  : Fog: 6338 (62.5%), Cloud: 3799 (37.5%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 10082 (100.0%)
+  Medical        : Fog: 6196 (60.7%), Cloud: 4012 (39.3%)
+  SmallTextual   : Fog: 6316 (62.9%), Cloud: 3724 (37.1%)
+  Multimedia     : Fog: 6277 (62.6%), Cloud: 3756 (37.4%)
+
+Processing Batch 72 with 1000 tasks (71000/100000 processed)
+
+Batch 72 Summary:
+Tasks: Fog = 446 (44.6%), Cloud = 554 (55.4%)
+Batch Completion Time: 3585.46ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 108       | 2           | 0.87 ms     | 8283.53 ms
+  medium  | 240       | 96          | 1.77 ms     | 12351.90 ms
+  large   | 98        | 456         | 3.87 ms     | 17336.25 ms
+
+Overall Progress: 72000/100000 (72.0%)
+Elapsed Time: 2.7s, Estimated Remaining: 1.1s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 6270 (59.9%), Cloud: 4205 (40.1%)
+  Large          : Fog: 0 (0.0%), Cloud: 10301 (100.0%)
+  LocationBased  : Fog: 6437 (62.5%), Cloud: 3854 (37.5%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 10213 (100.0%)
+  Medical        : Fog: 6281 (60.7%), Cloud: 4072 (39.3%)
+  SmallTextual   : Fog: 6410 (62.9%), Cloud: 3781 (37.1%)
+  Multimedia     : Fog: 6360 (62.5%), Cloud: 3816 (37.5%)
+
+Processing Batch 73 with 1000 tasks (72000/100000 processed)
+
+Batch 73 Summary:
+Tasks: Fog = 457 (45.7%), Cloud = 543 (54.3%)
+Batch Completion Time: 3413.75ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 104       | 2           | 0.73 ms     | 15779.40 ms
+  medium  | 239       | 85          | 1.86 ms     | 12788.90 ms
+  large   | 114       | 456         | 3.67 ms     | 18618.91 ms
+
+Overall Progress: 73000/100000 (73.0%)
+Elapsed Time: 2.8s, Estimated Remaining: 1.0s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 6354 (59.9%), Cloud: 4249 (40.1%)
+  Large          : Fog: 0 (0.0%), Cloud: 10460 (100.0%)
+  LocationBased  : Fog: 6521 (62.6%), Cloud: 3894 (37.4%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 10374 (100.0%)
+  Medical        : Fog: 6393 (60.8%), Cloud: 4117 (39.2%)
+  SmallTextual   : Fog: 6501 (62.9%), Cloud: 3840 (37.1%)
+  Multimedia     : Fog: 6446 (62.6%), Cloud: 3851 (37.4%)
+
+Processing Batch 74 with 1000 tasks (73000/100000 processed)
+
+Batch 74 Summary:
+Tasks: Fog = 472 (47.2%), Cloud = 528 (52.8%)
+Batch Completion Time: 3515.40ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 130       | 0           | 0.74 ms     | 0.00 ms
+  medium  | 234       | 69          | 1.76 ms     | 12604.63 ms
+  large   | 108       | 459         | 3.74 ms     | 17641.17 ms
+
+Overall Progress: 74000/100000 (74.0%)
+Elapsed Time: 2.8s, Estimated Remaining: 1.0s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 6441 (60.0%), Cloud: 4300 (40.0%)
+  Large          : Fog: 0 (0.0%), Cloud: 10595 (100.0%)
+  LocationBased  : Fog: 6627 (62.7%), Cloud: 3944 (37.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 10503 (100.0%)
+  Medical        : Fog: 6481 (60.8%), Cloud: 4182 (39.2%)
+  SmallTextual   : Fog: 6596 (62.9%), Cloud: 3893 (37.1%)
+  Multimedia     : Fog: 6542 (62.7%), Cloud: 3896 (37.3%)
+
+Processing Batch 75 with 1000 tasks (74000/100000 processed)
+
+Batch 75 Summary:
+Tasks: Fog = 457 (45.7%), Cloud = 543 (54.3%)
+Batch Completion Time: 3615.55ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 100       | 4           | 0.77 ms     | 10936.52 ms
+  medium  | 254       | 63          | 1.69 ms     | 14301.19 ms
+  large   | 103       | 476         | 3.62 ms     | 17794.75 ms
+
+Overall Progress: 75000/100000 (75.0%)
+Elapsed Time: 2.8s, Estimated Remaining: 0.9s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 6524 (60.0%), Cloud: 4349 (40.0%)
+  Large          : Fog: 0 (0.0%), Cloud: 10727 (100.0%)
+  LocationBased  : Fog: 6715 (62.7%), Cloud: 3996 (37.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 10670 (100.0%)
+  Medical        : Fog: 6575 (60.8%), Cloud: 4234 (39.2%)
+  SmallTextual   : Fog: 6684 (62.9%), Cloud: 3939 (37.1%)
+  Multimedia     : Fog: 6646 (62.8%), Cloud: 3941 (37.2%)
+
+Processing Batch 76 with 1000 tasks (75000/100000 processed)
+
+Batch 76 Summary:
+Tasks: Fog = 385 (38.5%), Cloud = 615 (61.5%)
+Batch Completion Time: 3341.76ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 107       | 5           | 0.76 ms     | 6829.69 ms
+  medium  | 199       | 128         | 1.81 ms     | 12558.17 ms
+  large   | 79        | 482         | 3.52 ms     | 17292.57 ms
+
+Overall Progress: 76000/100000 (76.0%)
+Elapsed Time: 2.9s, Estimated Remaining: 0.9s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 6598 (59.8%), Cloud: 4433 (40.2%)
+  Large          : Fog: 0 (0.0%), Cloud: 10862 (100.0%)
+  LocationBased  : Fog: 6787 (62.6%), Cloud: 4058 (37.4%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 10809 (100.0%)
+  Medical        : Fog: 6650 (60.7%), Cloud: 4299 (39.3%)
+  SmallTextual   : Fog: 6759 (62.8%), Cloud: 4009 (37.2%)
+  Multimedia     : Fog: 6735 (62.7%), Cloud: 4001 (37.3%)
+
+Processing Batch 77 with 1000 tasks (76000/100000 processed)
+
+Batch 77 Summary:
+Tasks: Fog = 426 (42.6%), Cloud = 574 (57.4%)
+Batch Completion Time: 3442.95ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 128       | 1           | 0.84 ms     | 13697.16 ms
+  medium  | 208       | 100         | 1.70 ms     | 12759.89 ms
+  large   | 90        | 473         | 3.84 ms     | 16825.81 ms
+
+Overall Progress: 77000/100000 (77.0%)
+Elapsed Time: 2.9s, Estimated Remaining: 0.9s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 6681 (59.8%), Cloud: 4484 (40.2%)
+  Large          : Fog: 0 (0.0%), Cloud: 10989 (100.0%)
+  LocationBased  : Fog: 6860 (62.5%), Cloud: 4116 (37.5%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 10959 (100.0%)
+  Medical        : Fog: 6727 (60.6%), Cloud: 4365 (39.4%)
+  SmallTextual   : Fog: 6862 (62.8%), Cloud: 4072 (37.2%)
+  Multimedia     : Fog: 6825 (62.7%), Cloud: 4060 (37.3%)
+
+Processing Batch 78 with 1000 tasks (77000/100000 processed)
+
+Batch 78 Summary:
+Tasks: Fog = 445 (44.5%), Cloud = 555 (55.5%)
+Batch Completion Time: 3556.21ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 124       | 5           | 0.81 ms     | 9201.18 ms
+  medium  | 215       | 107         | 1.87 ms     | 12545.99 ms
+  large   | 106       | 443         | 4.05 ms     | 17575.72 ms
+
+Overall Progress: 78000/100000 (78.0%)
+Elapsed Time: 2.9s, Estimated Remaining: 0.8s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 6783 (59.9%), Cloud: 4541 (40.1%)
+  Large          : Fog: 0 (0.0%), Cloud: 11119 (100.0%)
+  LocationBased  : Fog: 6938 (62.4%), Cloud: 4173 (37.6%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 11105 (100.0%)
+  Medical        : Fog: 6804 (60.6%), Cloud: 4427 (39.4%)
+  SmallTextual   : Fog: 6964 (62.8%), Cloud: 4122 (37.2%)
+  Multimedia     : Fog: 6911 (62.7%), Cloud: 4113 (37.3%)
+
+Processing Batch 79 with 1000 tasks (78000/100000 processed)
+
+Batch 79 Summary:
+Tasks: Fog = 288 (28.8%), Cloud = 712 (71.2%)
+Batch Completion Time: 3128.26ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 104       | 2           | 0.88 ms     | 9423.90 ms
+  medium  | 158       | 154         | 1.35 ms     | 13244.53 ms
+  large   | 26        | 556         | 3.99 ms     | 17054.78 ms
+
+Overall Progress: 79000/100000 (79.0%)
+Elapsed Time: 3.0s, Estimated Remaining: 0.8s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 6833 (59.6%), Cloud: 4636 (40.4%)
+  Large          : Fog: 0 (0.0%), Cloud: 11278 (100.0%)
+  LocationBased  : Fog: 7010 (62.2%), Cloud: 4258 (37.8%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 11251 (100.0%)
+  Medical        : Fog: 6852 (60.3%), Cloud: 4506 (39.7%)
+  SmallTextual   : Fog: 7015 (62.6%), Cloud: 4197 (37.4%)
+  Multimedia     : Fog: 6978 (62.5%), Cloud: 4186 (37.5%)
+
+Processing Batch 80 with 1000 tasks (79000/100000 processed)
+
+Batch 80 Summary:
+Tasks: Fog = 443 (44.3%), Cloud = 557 (55.7%)
+Batch Completion Time: 3526.37ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 110       | 1           | 0.84 ms     | 11544.66 ms
+  medium  | 220       | 87          | 1.67 ms     | 12723.06 ms
+  large   | 113       | 469         | 4.26 ms     | 17571.86 ms
+
+Overall Progress: 80000/100000 (80.0%)
+Elapsed Time: 3.0s, Estimated Remaining: 0.8s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 6937 (59.7%), Cloud: 4692 (40.3%)
+  Large          : Fog: 0 (0.0%), Cloud: 11443 (100.0%)
+  LocationBased  : Fog: 7098 (62.2%), Cloud: 4309 (37.8%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 11391 (100.0%)
+  Medical        : Fog: 6943 (60.4%), Cloud: 4554 (39.6%)
+  SmallTextual   : Fog: 7100 (62.6%), Cloud: 4244 (37.4%)
+  Multimedia     : Fog: 7053 (62.5%), Cloud: 4236 (37.5%)
+
+Processing Batch 81 with 1000 tasks (80000/100000 processed)
+
+Batch 81 Summary:
+Tasks: Fog = 459 (45.9%), Cloud = 541 (54.1%)
+Batch Completion Time: 3390.63ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 125       | 2           | 0.80 ms     | 9552.51 ms
+  medium  | 224       | 79          | 1.94 ms     | 13522.83 ms
+  large   | 110       | 460         | 3.71 ms     | 17441.07 ms
+
+Overall Progress: 81000/100000 (81.0%)
+Elapsed Time: 3.0s, Estimated Remaining: 0.7s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 7043 (59.7%), Cloud: 4747 (40.3%)
+  Large          : Fog: 0 (0.0%), Cloud: 11579 (100.0%)
+  LocationBased  : Fog: 7188 (62.2%), Cloud: 4359 (37.8%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 11527 (100.0%)
+  Medical        : Fog: 7030 (60.4%), Cloud: 4602 (39.6%)
+  SmallTextual   : Fog: 7197 (62.6%), Cloud: 4304 (37.4%)
+  Multimedia     : Fog: 7132 (62.4%), Cloud: 4292 (37.6%)
+
+Processing Batch 82 with 1000 tasks (81000/100000 processed)
+
+Batch 82 Summary:
+Tasks: Fog = 466 (46.6%), Cloud = 534 (53.4%)
+Batch Completion Time: 3589.45ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 121       | 3           | 0.80 ms     | 7090.06 ms
+  medium  | 238       | 72          | 1.63 ms     | 12531.46 ms
+  large   | 107       | 459         | 3.69 ms     | 17279.39 ms
+
+Overall Progress: 82000/100000 (82.0%)
+Elapsed Time: 3.1s, Estimated Remaining: 0.7s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 7128 (59.7%), Cloud: 4805 (40.3%)
+  Large          : Fog: 0 (0.0%), Cloud: 11721 (100.0%)
+  LocationBased  : Fog: 7287 (62.3%), Cloud: 4409 (37.7%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 11665 (100.0%)
+  Medical        : Fog: 7111 (60.5%), Cloud: 4650 (39.5%)
+  SmallTextual   : Fog: 7292 (62.6%), Cloud: 4354 (37.4%)
+  Multimedia     : Fog: 7238 (62.5%), Cloud: 4340 (37.5%)
+
+Processing Batch 83 with 1000 tasks (82000/100000 processed)
+
+Batch 83 Summary:
+Tasks: Fog = 468 (46.8%), Cloud = 532 (53.2%)
+Batch Completion Time: 3557.23ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 131       | 0           | 0.79 ms     | 0.00 ms
+  medium  | 222       | 66          | 1.73 ms     | 13128.62 ms
+  large   | 115       | 466         | 3.71 ms     | 17603.92 ms
+
+Overall Progress: 83000/100000 (83.0%)
+Elapsed Time: 3.1s, Estimated Remaining: 0.6s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 7217 (59.7%), Cloud: 4873 (40.3%)
+  Large          : Fog: 0 (0.0%), Cloud: 11854 (100.0%)
+  LocationBased  : Fog: 7383 (62.4%), Cloud: 4455 (37.6%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 11797 (100.0%)
+  Medical        : Fog: 7199 (60.5%), Cloud: 4710 (39.5%)
+  SmallTextual   : Fog: 7392 (62.7%), Cloud: 4399 (37.3%)
+  Multimedia     : Fog: 7333 (62.6%), Cloud: 4388 (37.4%)
+
+Processing Batch 84 with 1000 tasks (83000/100000 processed)
+
+Batch 84 Summary:
+Tasks: Fog = 443 (44.3%), Cloud = 557 (55.7%)
+Batch Completion Time: 3350.96ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 120       | 0           | 0.83 ms     | 0.00 ms
+  medium  | 222       | 76          | 1.39 ms     | 13494.61 ms
+  large   | 101       | 481         | 2.99 ms     | 18143.52 ms
+
+Overall Progress: 84000/100000 (84.0%)
+Elapsed Time: 3.1s, Estimated Remaining: 0.6s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 7296 (59.7%), Cloud: 4932 (40.3%)
+  Large          : Fog: 0 (0.0%), Cloud: 11996 (100.0%)
+  LocationBased  : Fog: 7475 (62.4%), Cloud: 4498 (37.6%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 11942 (100.0%)
+  Medical        : Fog: 7280 (60.4%), Cloud: 4767 (39.6%)
+  SmallTextual   : Fog: 7490 (62.7%), Cloud: 4459 (37.3%)
+  Multimedia     : Fog: 7426 (62.6%), Cloud: 4439 (37.4%)
+
+Processing Batch 85 with 1000 tasks (84000/100000 processed)
+
+Batch 85 Summary:
+Tasks: Fog = 410 (41.0%), Cloud = 590 (59.0%)
+Batch Completion Time: 3513.60ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 100       | 4           | 0.75 ms     | 7395.69 ms
+  medium  | 206       | 82          | 1.91 ms     | 13281.82 ms
+  large   | 104       | 504         | 3.82 ms     | 18135.21 ms
+
+Overall Progress: 85000/100000 (85.0%)
+Elapsed Time: 3.2s, Estimated Remaining: 0.6s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 7383 (59.7%), Cloud: 4980 (40.3%)
+  Large          : Fog: 0 (0.0%), Cloud: 12164 (100.0%)
+  LocationBased  : Fog: 7553 (62.4%), Cloud: 4554 (37.6%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 12089 (100.0%)
+  Medical        : Fog: 7346 (60.3%), Cloud: 4829 (39.7%)
+  SmallTextual   : Fog: 7576 (62.7%), Cloud: 4515 (37.3%)
+  Multimedia     : Fog: 7519 (62.6%), Cloud: 4492 (37.4%)
+
+Processing Batch 86 with 1000 tasks (85000/100000 processed)
+
+Batch 86 Summary:
+Tasks: Fog = 354 (35.4%), Cloud = 646 (64.6%)
+Batch Completion Time: 3375.04ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 79        | 1           | 0.86 ms     | 17339.94 ms
+  medium  | 196       | 124         | 1.82 ms     | 12173.34 ms
+  large   | 79        | 521         | 3.57 ms     | 16998.74 ms
+
+Overall Progress: 86000/100000 (86.0%)
+Elapsed Time: 3.2s, Estimated Remaining: 0.5s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 7465 (59.6%), Cloud: 5064 (40.4%)
+  Large          : Fog: 0 (0.0%), Cloud: 12318 (100.0%)
+  LocationBased  : Fog: 7631 (62.3%), Cloud: 4627 (37.7%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 12242 (100.0%)
+  Medical        : Fog: 7402 (60.2%), Cloud: 4894 (39.8%)
+  SmallTextual   : Fog: 7636 (62.5%), Cloud: 4579 (37.5%)
+  Multimedia     : Fog: 7597 (62.6%), Cloud: 4545 (37.4%)
+
+Processing Batch 87 with 1000 tasks (86000/100000 processed)
+
+Batch 87 Summary:
+Tasks: Fog = 312 (31.2%), Cloud = 688 (68.8%)
+Batch Completion Time: 3311.42ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 105       | 2           | 0.83 ms     | 8053.18 ms
+  medium  | 141       | 136         | 1.49 ms     | 13248.23 ms
+  large   | 66        | 550         | 3.44 ms     | 17352.52 ms
+
+Overall Progress: 87000/100000 (87.0%)
+Elapsed Time: 3.2s, Estimated Remaining: 0.5s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 7538 (59.5%), Cloud: 5135 (40.5%)
+  Large          : Fog: 0 (0.0%), Cloud: 12479 (100.0%)
+  LocationBased  : Fog: 7697 (62.1%), Cloud: 4707 (37.9%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 12383 (100.0%)
+  Medical        : Fog: 7457 (60.0%), Cloud: 4980 (40.0%)
+  SmallTextual   : Fog: 7695 (62.3%), Cloud: 4660 (37.7%)
+  Multimedia     : Fog: 7656 (62.4%), Cloud: 4613 (37.6%)
+
+Processing Batch 88 with 1000 tasks (87000/100000 processed)
+
+Batch 88 Summary:
+Tasks: Fog = 426 (42.6%), Cloud = 574 (57.4%)
+Batch Completion Time: 3529.32ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 119       | 1           | 0.80 ms     | 4138.80 ms
+  medium  | 218       | 83          | 1.69 ms     | 13186.41 ms
+  large   | 89        | 490         | 3.78 ms     | 17661.47 ms
+
+Overall Progress: 88000/100000 (88.0%)
+Elapsed Time: 3.3s, Estimated Remaining: 0.5s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 7614 (59.4%), Cloud: 5196 (40.6%)
+  Large          : Fog: 0 (0.0%), Cloud: 12613 (100.0%)
+  LocationBased  : Fog: 7781 (62.0%), Cloud: 4768 (38.0%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 12533 (100.0%)
+  Medical        : Fog: 7540 (60.0%), Cloud: 5034 (40.0%)
+  SmallTextual   : Fog: 7782 (62.3%), Cloud: 4715 (37.7%)
+  Multimedia     : Fog: 7752 (62.4%), Cloud: 4672 (37.6%)
+
+Processing Batch 89 with 1000 tasks (88000/100000 processed)
+
+Batch 89 Summary:
+Tasks: Fog = 259 (25.9%), Cloud = 741 (74.1%)
+Batch Completion Time: 3058.87ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 106       | 2           | 0.82 ms     | 8945.50 ms
+  medium  | 137       | 169         | 1.69 ms     | 13058.08 ms
+  large   | 16        | 570         | 4.61 ms     | 17277.62 ms
+
+Overall Progress: 89000/100000 (89.0%)
+Elapsed Time: 3.4s, Estimated Remaining: 0.4s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 7668 (59.2%), Cloud: 5279 (40.8%)
+  Large          : Fog: 0 (0.0%), Cloud: 12772 (100.0%)
+  LocationBased  : Fog: 7833 (61.8%), Cloud: 4848 (38.2%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 12683 (100.0%)
+  Medical        : Fog: 7583 (59.7%), Cloud: 5123 (40.3%)
+  SmallTextual   : Fog: 7843 (62.0%), Cloud: 4804 (38.0%)
+  Multimedia     : Fog: 7801 (62.1%), Cloud: 4763 (37.9%)
+
+Processing Batch 90 with 1000 tasks (89000/100000 processed)
+
+Batch 90 Summary:
+Tasks: Fog = 455 (45.5%), Cloud = 545 (54.5%)
+Batch Completion Time: 3568.08ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 119       | 3           | 0.87 ms     | 8328.69 ms
+  medium  | 237       | 89          | 1.74 ms     | 12713.74 ms
+  large   | 99        | 453         | 4.08 ms     | 17293.06 ms
+
+Overall Progress: 90000/100000 (90.0%)
+Elapsed Time: 3.4s, Estimated Remaining: 0.4s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 7760 (59.2%), Cloud: 5342 (40.8%)
+  Large          : Fog: 0 (0.0%), Cloud: 12920 (100.0%)
+  LocationBased  : Fog: 7918 (61.7%), Cloud: 4905 (38.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 12824 (100.0%)
+  Medical        : Fog: 7678 (59.7%), Cloud: 5175 (40.3%)
+  SmallTextual   : Fog: 7950 (62.1%), Cloud: 4844 (37.9%)
+  Multimedia     : Fog: 7877 (62.1%), Cloud: 4807 (37.9%)
+
+Processing Batch 91 with 1000 tasks (90000/100000 processed)
+
+Batch 91 Summary:
+Tasks: Fog = 443 (44.3%), Cloud = 557 (55.7%)
+Batch Completion Time: 3474.67ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 131       | 0           | 0.82 ms     | 0.00 ms
+  medium  | 211       | 97          | 1.77 ms     | 13314.60 ms
+  large   | 101       | 460         | 4.07 ms     | 18550.15 ms
+
+Overall Progress: 91000/100000 (91.0%)
+Elapsed Time: 3.4s, Estimated Remaining: 0.3s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 7847 (59.3%), Cloud: 5396 (40.7%)
+  Large          : Fog: 0 (0.0%), Cloud: 13075 (100.0%)
+  LocationBased  : Fog: 8013 (61.8%), Cloud: 4962 (38.2%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 12948 (100.0%)
+  Medical        : Fog: 7766 (59.8%), Cloud: 5225 (40.2%)
+  SmallTextual   : Fog: 8034 (62.1%), Cloud: 4897 (37.9%)
+  Multimedia     : Fog: 7966 (62.1%), Cloud: 4871 (37.9%)
+
+Processing Batch 92 with 1000 tasks (91000/100000 processed)
+
+Batch 92 Summary:
+Tasks: Fog = 437 (43.7%), Cloud = 563 (56.3%)
+Batch Completion Time: 3697.72ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 104       | 1           | 0.68 ms     | 6335.66 ms
+  medium  | 219       | 82          | 1.87 ms     | 13319.98 ms
+  large   | 114       | 480         | 3.68 ms     | 17158.18 ms
+
+Overall Progress: 92000/100000 (92.0%)
+Elapsed Time: 3.5s, Estimated Remaining: 0.3s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 7946 (59.3%), Cloud: 5459 (40.7%)
+  Large          : Fog: 0 (0.0%), Cloud: 13216 (100.0%)
+  LocationBased  : Fog: 8100 (61.7%), Cloud: 5027 (38.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 13090 (100.0%)
+  Medical        : Fog: 7839 (59.7%), Cloud: 5281 (40.3%)
+  SmallTextual   : Fog: 8114 (62.1%), Cloud: 4956 (37.9%)
+  Multimedia     : Fog: 8064 (62.2%), Cloud: 4908 (37.8%)
+
+Processing Batch 93 with 1000 tasks (92000/100000 processed)
+
+Batch 93 Summary:
+Tasks: Fog = 446 (44.6%), Cloud = 554 (55.4%)
+Batch Completion Time: 3316.98ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 107       | 3           | 0.91 ms     | 10059.98 ms
+  medium  | 227       | 55          | 1.83 ms     | 13268.06 ms
+  large   | 112       | 496         | 3.79 ms     | 16988.62 ms
+
+Overall Progress: 93000/100000 (93.0%)
+Elapsed Time: 3.5s, Estimated Remaining: 0.3s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 8044 (59.3%), Cloud: 5511 (40.7%)
+  Large          : Fog: 0 (0.0%), Cloud: 13357 (100.0%)
+  LocationBased  : Fog: 8194 (61.7%), Cloud: 5077 (38.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 13229 (100.0%)
+  Medical        : Fog: 7926 (59.7%), Cloud: 5343 (40.3%)
+  SmallTextual   : Fog: 8200 (62.1%), Cloud: 5011 (37.9%)
+  Multimedia     : Fog: 8145 (62.1%), Cloud: 4963 (37.9%)
+
+Processing Batch 94 with 1000 tasks (93000/100000 processed)
+
+Batch 94 Summary:
+Tasks: Fog = 364 (36.4%), Cloud = 636 (63.6%)
+Batch Completion Time: 3293.58ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 120       | 3           | 0.78 ms     | 10703.05 ms
+  medium  | 191       | 122         | 2.01 ms     | 12680.15 ms
+  large   | 53        | 511         | 3.88 ms     | 17216.32 ms
+
+Overall Progress: 94000/100000 (94.0%)
+Elapsed Time: 3.5s, Estimated Remaining: 0.2s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 8122 (59.3%), Cloud: 5580 (40.7%)
+  Large          : Fog: 0 (0.0%), Cloud: 13489 (100.0%)
+  LocationBased  : Fog: 8279 (61.7%), Cloud: 5148 (38.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 13374 (100.0%)
+  Medical        : Fog: 7987 (59.6%), Cloud: 5423 (40.4%)
+  SmallTextual   : Fog: 8272 (62.0%), Cloud: 5071 (38.0%)
+  Multimedia     : Fog: 8213 (62.0%), Cloud: 5042 (38.0%)
+
+Processing Batch 95 with 1000 tasks (94000/100000 processed)
+
+Batch 95 Summary:
+Tasks: Fog = 465 (46.5%), Cloud = 535 (53.5%)
+Batch Completion Time: 3369.42ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 125       | 1           | 0.75 ms     | 8743.69 ms
+  medium  | 237       | 75          | 1.81 ms     | 12782.35 ms
+  large   | 103       | 459         | 3.48 ms     | 18292.53 ms
+
+Overall Progress: 95000/100000 (95.0%)
+Elapsed Time: 3.6s, Estimated Remaining: 0.2s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 8210 (59.4%), Cloud: 5621 (40.6%)
+  Large          : Fog: 0 (0.0%), Cloud: 13632 (100.0%)
+  LocationBased  : Fog: 8379 (61.7%), Cloud: 5203 (38.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 13521 (100.0%)
+  Medical        : Fog: 8072 (59.6%), Cloud: 5467 (40.4%)
+  SmallTextual   : Fog: 8370 (62.1%), Cloud: 5117 (37.9%)
+  Multimedia     : Fog: 8307 (62.0%), Cloud: 5101 (38.0%)
+
+Processing Batch 96 with 1000 tasks (95000/100000 processed)
+
+Batch 96 Summary:
+Tasks: Fog = 468 (46.8%), Cloud = 532 (53.2%)
+Batch Completion Time: 3481.26ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 103       | 1           | 0.78 ms     | 6416.72 ms
+  medium  | 251       | 81          | 1.88 ms     | 13083.22 ms
+  large   | 114       | 450         | 3.92 ms     | 17439.43 ms
+
+Overall Progress: 96000/100000 (96.0%)
+Elapsed Time: 3.6s, Estimated Remaining: 0.1s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 8311 (59.5%), Cloud: 5668 (40.5%)
+  Large          : Fog: 0 (0.0%), Cloud: 13776 (100.0%)
+  LocationBased  : Fog: 8452 (61.7%), Cloud: 5245 (38.3%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 13678 (100.0%)
+  Medical        : Fog: 8170 (59.7%), Cloud: 5511 (40.3%)
+  SmallTextual   : Fog: 8466 (62.1%), Cloud: 5168 (37.9%)
+  Multimedia     : Fog: 8407 (62.0%), Cloud: 5148 (38.0%)
+
+Processing Batch 97 with 1000 tasks (96000/100000 processed)
+
+Batch 97 Summary:
+Tasks: Fog = 489 (48.9%), Cloud = 511 (51.1%)
+Batch Completion Time: 3646.47ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 119       | 2           | 0.85 ms     | 11890.76 ms
+  medium  | 239       | 77          | 1.68 ms     | 12899.39 ms
+  large   | 131       | 432         | 4.20 ms     | 18215.77 ms
+
+Overall Progress: 97000/100000 (97.0%)
+Elapsed Time: 3.6s, Estimated Remaining: 0.1s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 8395 (59.5%), Cloud: 5715 (40.5%)
+  Large          : Fog: 0 (0.0%), Cloud: 13921 (100.0%)
+  LocationBased  : Fog: 8559 (61.8%), Cloud: 5290 (38.2%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 13814 (100.0%)
+  Medical        : Fog: 8267 (59.8%), Cloud: 5555 (40.2%)
+  SmallTextual   : Fog: 8564 (62.1%), Cloud: 5219 (37.9%)
+  Multimedia     : Fog: 8510 (62.1%), Cloud: 5191 (37.9%)
+
+Processing Batch 98 with 1000 tasks (97000/100000 processed)
+
+Batch 98 Summary:
+Tasks: Fog = 450 (45.0%), Cloud = 550 (55.0%)
+Batch Completion Time: 3469.85ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 115       | 3           | 0.81 ms     | 10769.04 ms
+  medium  | 221       | 79          | 1.92 ms     | 12275.56 ms
+  large   | 114       | 468         | 3.60 ms     | 17685.05 ms
+
+Overall Progress: 98000/100000 (98.0%)
+Elapsed Time: 3.7s, Estimated Remaining: 0.1s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 8482 (59.6%), Cloud: 5756 (40.4%)
+  Large          : Fog: 0 (0.0%), Cloud: 14065 (100.0%)
+  LocationBased  : Fog: 8654 (61.9%), Cloud: 5335 (38.1%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 13959 (100.0%)
+  Medical        : Fog: 8352 (59.7%), Cloud: 5627 (40.3%)
+  SmallTextual   : Fog: 8649 (62.2%), Cloud: 5265 (37.8%)
+  Multimedia     : Fog: 8608 (62.1%), Cloud: 5248 (37.9%)
+
+Processing Batch 99 with 1000 tasks (98000/100000 processed)
+
+Batch 99 Summary:
+Tasks: Fog = 436 (43.6%), Cloud = 564 (56.4%)
+Batch Completion Time: 3501.89ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 99        | 1           | 0.83 ms     | 13858.55 ms
+  medium  | 227       | 72          | 1.90 ms     | 13880.97 ms
+  large   | 110       | 491         | 3.72 ms     | 17331.48 ms
+
+Overall Progress: 99000/100000 (99.0%)
+Elapsed Time: 3.7s, Estimated Remaining: 0.0s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 8572 (59.6%), Cloud: 5820 (40.4%)
+  Large          : Fog: 0 (0.0%), Cloud: 14222 (100.0%)
+  LocationBased  : Fog: 8742 (61.9%), Cloud: 5383 (38.1%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 14091 (100.0%)
+  Medical        : Fog: 8436 (59.8%), Cloud: 5681 (40.2%)
+  SmallTextual   : Fog: 8734 (62.2%), Cloud: 5313 (37.8%)
+  Multimedia     : Fog: 8697 (62.1%), Cloud: 5309 (37.9%)
+
+Processing Batch 100 with 1000 tasks (99000/100000 processed)
+
+Batch 100 Summary:
+Tasks: Fog = 467 (46.7%), Cloud = 533 (53.3%)
+Batch Completion Time: 3362.59ms
+
+Task Size Distribution for this Batch:
+  Size    | Fog Count | Cloud Count | Avg Fog Time | Avg Cloud Time
+  --------|-----------|-------------|--------------|---------------
+  small   | 108       | 2           | 0.83 ms     | 7559.14 ms
+  medium  | 244       | 82          | 1.44 ms     | 13617.36 ms
+  large   | 115       | 449         | 3.12 ms     | 18116.49 ms
+
+Overall Progress: 100000/100000 (100.0%)
+Elapsed Time: 3.7s, Estimated Remaining: 0.0s
+
+Data Type Distribution (So Far):
+  Abrupt         : Fog: 8669 (59.7%), Cloud: 5863 (40.3%)
+  Large          : Fog: 0 (0.0%), Cloud: 14364 (100.0%)
+  LocationBased  : Fog: 8846 (62.0%), Cloud: 5426 (38.0%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 14252 (100.0%)
+  Medical        : Fog: 8524 (59.8%), Cloud: 5724 (40.2%)
+  SmallTextual   : Fog: 8831 (62.2%), Cloud: 5363 (37.8%)
+  Multimedia     : Fog: 8778 (62.1%), Cloud: 5360 (37.9%)
+
+=== Final Processing Summary ===
+Total Tasks Processed: 100000
+Fog Tasks: 43648 (43.6%)
+Cloud Tasks: 56352 (56.4%)
+
+Average Processing Times:
+Fog: 4.57ms
+Cloud: 16808.55ms
+
+Fog Node Processing Statistics:
+Edge-Fog-01: Processed 22792 tasks, Final Utilization: 4.87%
+Edge-Fog-02: Processed 20856 tasks, Final Utilization: 10.27%
+
+Task Size-Based Statistics (By Fog Node):
+  Size    | Total Count | Fog1 % | Fog2 % | Cloud % | Avg Fog1 Time | Avg Fog2 Time | Avg Cloud Time
+  --------|-------------|--------|--------|---------|---------------|---------------|---------------
+  small   | 11773      | 11.2% | 10.1% | 1.2% | 0.80 ms | 0.65 ms | 9534.61 ms
+  medium  | 30811      | 8.5% | 7.1% | 16.1% | 1.80 ms | 1.42 ms | 12976.67 ms
+  large   | 57416      | 2.2% | 1.7% | 46.4% | 3.79 ms | 3.04 ms | 17560.98 ms
+
+Size Impact Analysis:
+  - Small tasks (<100): Processed faster with minimal transmission overhead
+  - Medium tasks (100-200): Network conditions have moderate impact on processing
+  - Large tasks (>200): Significantly affected by network congestion and node utilization
+
+Total processing time: 3.76s (26564.14 tasks/second)
+
+Resource Commitment Duration Statistics:
+  Size Category | Average Duration | Min Duration | Max Duration | Tasks
+  --------------|------------------|--------------|--------------|-------
+  Small          | N/A              | N/A          | N/A          | 0
+  Medium-small   | N/A              | N/A          | N/A          | 0
+  Medium         | N/A              | N/A          | N/A          | 0
+  Medium-large   | N/A              | N/A          | N/A          | 0
+  Large          | N/A              | N/A          | N/A          | 0
+
+Final Data Type Distribution:
+  Abrupt         : Fog: 8669 (59.7%), Cloud: 5863 (40.3%)
+  Large          : Fog: 0 (0.0%), Cloud: 14364 (100.0%)
+  LocationBased  : Fog: 8846 (62.0%), Cloud: 5426 (38.0%)
+  Bulk           : Fog: 0 (0.0%), Cloud: 14252 (100.0%)
+  Medical        : Fog: 8524 (59.8%), Cloud: 5724 (40.2%)
+  SmallTextual   : Fog: 8831 (62.2%), Cloud: 5363 (37.8%)
+  Multimedia     : Fog: 8778 (62.1%), Cloud: 5360 (37.9%)
+
+=== Performance Metrics ===
+=== Average Processing Times (ms) ===
+FCFSCooperation: Total = 16813.12, Fog = 4.57, Cloud = 16808.55
+
+=== Average Power Consumption per Node (W) ===
+FCFSCooperation: ['100.00', '100.00']
+
+=== Average Queue Delays (ms) ===
+FCFSCooperation: 799.99
+
+=== Task Distribution ===
+FCFSCooperation: Fog = 43648 (43.6%), Cloud = 56352 (56.4%)
+
+=== Data Type Distribution ===
+Data Type       | Fog Count  | Cloud Count | Total      | Fog %     
+----------------------------------------------------------------------
+Abrupt          | 8669       | 5863       | 14532      | 59.7      %
+Bulk            | 0          | 14252      | 14252      | 0.0       %
+Large           | 0          | 14364      | 14364      | 0.0       %
+LocationBased   | 8846       | 5426       | 14272      | 62.0      %
+Medical         | 8524       | 5724       | 14248      | 59.8      %
+Multimedia      | 8778       | 5360       | 14138      | 62.1      %
+SmallTextual    | 8831       | 5363       | 14194      | 62.2      %

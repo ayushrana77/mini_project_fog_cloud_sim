@@ -411,7 +411,7 @@ def main():
         print("  3: RandomCooperation")
         print("  4: RandomNoCooperation")
         print("  5: All algorithms")
-        print("  6: Generate graphs only (uses cached results if available)")
+        print("  6: Generate graphs (will recompute all results)")
         sys.exit(1)
     
     algorithm_arg = sys.argv[1]
@@ -429,27 +429,12 @@ def main():
     
     outputs = {}
     
-    # Check if we're just generating graphs from cached results
+    # Option 6 now recomputes all results instead of using cached files
     if algorithm_arg == "6":
-        # Look for cached results
-        cached_files = ["fcfs_c_output.txt", "fcfs_nc_output.txt", "random_c_output.txt", "random_nc_output.txt"]
-        alg_map = {
-            "fcfs_c_output.txt": "FCFSCooperation",
-            "fcfs_nc_output.txt": "FCFSNoCooperation", 
-            "random_c_output.txt": "RandomCooperation",
-            "random_nc_output.txt": "RandomNoCooperation"
-        }
-        
-        for file in cached_files:
-            if os.path.exists(file):
-                with open(file, "r") as f:
-                    content = f.read()
-                    outputs[alg_map[file]] = content
-        
-        if not outputs:
-            print("No cached results found. Run algorithms first.")
-            sys.exit(1)
-        
+        print("Recomputing all results...")
+        for num, name in algorithm_names.items():
+            outputs[name] = run_algorithm(num)
+            
         # Parse results and generate graphs
         metrics = parse_results(outputs)
         generate_all_graphs(metrics)
@@ -459,39 +444,11 @@ def main():
     if algorithm_arg == "5":
         for num, name in algorithm_names.items():
             outputs[name] = run_algorithm(num)
-            
-            # Save output to cache file
-            if name == "FCFSCooperation" and outputs[name]:
-                with open("fcfs_c_output.txt", "w") as f:
-                    f.write(outputs[name])
-            elif name == "FCFSNoCooperation" and outputs[name]:
-                with open("fcfs_nc_output.txt", "w") as f:
-                    f.write(outputs[name])
-            elif name == "RandomCooperation" and outputs[name]:
-                with open("random_c_output.txt", "w") as f:
-                    f.write(outputs[name])
-            elif name == "RandomNoCooperation" and outputs[name]:
-                with open("random_nc_output.txt", "w") as f:
-                    f.write(outputs[name])
     else:
         # Run a specific algorithm
         if algorithm_arg in algorithm_names:
             name = algorithm_names[algorithm_arg]
             outputs[name] = run_algorithm(algorithm_arg)
-            
-            # Save output to cache file
-            if name == "FCFSCooperation" and outputs[name]:
-                with open("fcfs_c_output.txt", "w") as f:
-                    f.write(outputs[name])
-            elif name == "FCFSNoCooperation" and outputs[name]:
-                with open("fcfs_nc_output.txt", "w") as f:
-                    f.write(outputs[name])
-            elif name == "RandomCooperation" and outputs[name]:
-                with open("random_c_output.txt", "w") as f:
-                    f.write(outputs[name])
-            elif name == "RandomNoCooperation" and outputs[name]:
-                with open("random_nc_output.txt", "w") as f:
-                    f.write(outputs[name])
         else:
             print(f"Unknown algorithm: {algorithm_arg}")
             sys.exit(1)
