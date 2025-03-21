@@ -13,13 +13,15 @@ def run_algorithm(algorithm_name):
     # Map algorithm name to file
     algorithm_files = {
         "1": "FCFSC.py",
-        "2": "FCFSN.py",
+        "2": "FCFS_NO_Co.py",
         "3": "RANDOMC.py",
         "4": "RANDOMN.py",
         "FCFSC": "FCFSC.py",
-        "FCFSN": "FCFSN.py",
-        "RANDOMC": "RANDOMC.py",
-        "RANDOMN": "RANDOMN.py"
+        "FCFSN": "FCFS_NO_Co.py",
+        "FCFSCooperation": "FCFSC.py",
+        "FCFSNoCooperation": "FCFS_NO_Co.py",
+        "RandomCooperation": "RANDOMC.py",
+        "RandomNoCooperation": "RANDOMN.py"
     }
     
     if algorithm_name not in algorithm_files:
@@ -28,8 +30,12 @@ def run_algorithm(algorithm_name):
     
     # Run the algorithm script
     try:
+        algorithm_file = algorithm_files[algorithm_name]
+        algorithm_path = os.path.join(os.path.dirname(__file__), algorithm_file)
+        print(f"Executing: {algorithm_path}")
+        
         result = subprocess.run(
-            ["python", algorithm_files[algorithm_name]],
+            ["python", algorithm_path],
             capture_output=True,
             text=True,
             check=True
@@ -38,6 +44,8 @@ def run_algorithm(algorithm_name):
     except subprocess.CalledProcessError as e:
         print(f"Error running {algorithm_files[algorithm_name]}: {e}")
         print(f"Error output: {e.stderr}")
+        print(f"Error code: {e.returncode}")
+        print(f"Command: {e.cmd}")
         return None
 
 
@@ -140,6 +148,12 @@ def display_comparative_analysis(metrics):
         print(f"{algorithm}: Node = {times['node']:.4f}, Alt Node = {times['alt_node']:.4f}, Cloud = {times['cloud']:.4f}")
 
 
+def save_to_final_code_folder(filename):
+    """Return a full path to save in the final_code folder"""
+    final_code_dir = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(final_code_dir, filename)
+
+
 def plot_processing_times(metrics):
     """Plot processing times comparison"""
     algorithms = list(metrics["processing_times"].keys())
@@ -184,8 +198,9 @@ def plot_processing_times(metrics):
     plt.xticks([r + barWidth for r in range(len(labels))], labels)
     plt.legend()
     
-    plt.savefig('processing_times.png')
-    print("Processing times plot saved as 'processing_times.png'")
+    save_path = save_to_final_code_folder('processing_times.png')
+    plt.savefig(save_path)
+    print(f"Processing times plot saved as '{save_path}'")
 
 
 def plot_task_distribution(metrics):
@@ -217,11 +232,12 @@ def plot_task_distribution(metrics):
     
     plt.xlabel('Algorithm', fontweight='bold')
     plt.ylabel('Percentage of Tasks (%)', fontweight='bold')
-    plt.title('Task Distribution Between Fog and Cloud')
+    plt.title('Task Distribution between Fog and Cloud by Algorithm')
     plt.legend()
     
-    plt.savefig('task_distribution.png')
-    print("Task distribution plot saved as 'task_distribution.png'")
+    save_path = save_to_final_code_folder('task_distribution.png')
+    plt.savefig(save_path)
+    print(f"Task distribution plot saved as '{save_path}'")
 
 
 def plot_queue_delays(metrics):
@@ -253,8 +269,9 @@ def plot_queue_delays(metrics):
     plt.ylabel('Queue Delay (ms)', fontweight='bold')
     plt.title('Average Queue Delays by Algorithm')
     
-    plt.savefig('queue_delays.png')
-    print("Queue delays plot saved as 'queue_delays.png'")
+    save_path = save_to_final_code_folder('queue_delays.png')
+    plt.savefig(save_path)
+    print(f"Queue delays plot saved as '{save_path}'")
 
 
 def plot_total_time_comparison(metrics):
@@ -280,21 +297,19 @@ def plot_total_time_comparison(metrics):
     
     # Create bar chart
     plt.figure(figsize=(10, 6))
-    bars = plt.bar(labels, total_times)
+    plt.bar(labels, total_times)
     
-    # Add values on top of the bars
-    for bar in bars:
-        height = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width()/2., height,
-                f'{height:.2f}',
-                ha='center', va='bottom')
+    # Add values on top of bars
+    for i, v in enumerate(total_times):
+        plt.text(i, v + 0.1, f"{v:.2f}", ha='center')
     
     plt.xlabel('Algorithm', fontweight='bold')
     plt.ylabel('Total Processing Time (ms)', fontweight='bold')
     plt.title('Total Processing Time Comparison')
     
-    plt.savefig('total_time_comparison.png')
-    print("Total time comparison plot saved as 'total_time_comparison.png'")
+    save_path = save_to_final_code_folder('total_time_comparison.png')
+    plt.savefig(save_path)
+    print(f"Total time comparison plot saved as '{save_path}'")
 
 
 def plot_power_consumption(metrics):
@@ -315,35 +330,43 @@ def plot_power_consumption(metrics):
         else:
             labels.append(alg)
     
-    # Calculate average power per algorithm
-    avg_power = []
-    for alg in algorithms:
-        power_values = metrics["power_consumption"][alg]
-        avg = sum(power_values) / len(power_values) if power_values else 0
-        avg_power.append(avg)
-    
-    # Create bar chart
+    # Create a single bar chart showing average power per algorithm
     plt.figure(figsize=(10, 6))
-    bars = plt.bar(labels, avg_power)
     
-    # Add values on top of the bars
-    for bar in bars:
-        height = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width()/2., height,
-                f'{height:.2f}',
-                ha='center', va='bottom')
+    for i, alg in enumerate(algorithms):
+        power_values = metrics["power_consumption"][alg]
+        # Plot each node as a separate bar with slight offset
+        for j, power in enumerate(power_values):
+            plt.bar(
+                i + (j - len(power_values)/2 + 0.5) * 0.2,
+                power,
+                width=0.15,
+                label=f'Node {j+1} ({alg})' if i == 0 else "_nolegend_"
+            )
     
     plt.xlabel('Algorithm', fontweight='bold')
-    plt.ylabel('Average Power Consumption (W)', fontweight='bold')
-    plt.title('Power Consumption Comparison')
+    plt.ylabel('Power Consumption (W)', fontweight='bold')
+    plt.title('Power Consumption by Node and Algorithm')
+    plt.xticks(range(len(labels)), labels)
     
-    plt.savefig('power_consumption.png')
-    print("Power consumption plot saved as 'power_consumption.png'")
+    # Add a legend but remove duplicates
+    handles, labels = plt.gca().get_legend_handles_labels()
+    by_label = dict(zip(labels, handles))
+    plt.legend(by_label.values(), by_label.keys())
+    
+    save_path = save_to_final_code_folder('power_consumption.png')
+    plt.savefig(save_path)
+    print(f"Power consumption plot saved as '{save_path}'")
 
 
 def plot_total_power_consumption(metrics):
-    """Plot total power consumption (power × nodes)"""
+    """Plot total power consumption for each algorithm"""
     algorithms = list(metrics["power_consumption"].keys())
+    
+    # Calculate total power consumption (sum of all nodes)
+    total_power = []
+    for alg in algorithms:
+        total_power.append(sum(metrics["power_consumption"][alg]))
     
     # Create labels with algorithm names
     labels = []
@@ -359,62 +382,48 @@ def plot_total_power_consumption(metrics):
         else:
             labels.append(alg)
     
-    # Calculate total power per algorithm
-    total_power = []
-    for alg in algorithms:
-        power_values = metrics["power_consumption"][alg]
-        total = sum(power_values) if power_values else 0
-        total_power.append(total)
-    
     # Create bar chart
     plt.figure(figsize=(10, 6))
-    bars = plt.bar(labels, total_power)
+    plt.bar(labels, total_power)
     
-    # Add values on top of the bars
-    for bar in bars:
-        height = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width()/2., height,
-                f'{height:.2f}',
-                ha='center', va='bottom')
+    # Add values on top of bars
+    for i, v in enumerate(total_power):
+        plt.text(i, v + 0.1, f"{v:.2f}", ha='center')
     
     plt.xlabel('Algorithm', fontweight='bold')
     plt.ylabel('Total Power Consumption (W)', fontweight='bold')
-    plt.title('Total Power Consumption Across All Nodes')
+    plt.title('Total Power Consumption Comparison')
     
-    plt.savefig('total_power_consumption.png')
-    print("Total power consumption plot saved as 'total_power_consumption.png'")
+    save_path = save_to_final_code_folder('total_power_consumption.png')
+    plt.savefig(save_path)
+    print(f"Total power consumption plot saved as '{save_path}'")
 
 
 def generate_all_graphs(metrics):
     """Generate all available graphs from metrics"""
-    if len(metrics["processing_times"]) > 0:
-        plot_processing_times(metrics)
-        plot_total_time_comparison(metrics)
+    # Plot processing times comparison
+    plot_processing_times(metrics)
     
-    if len(metrics["task_distribution"]) > 0:
-        plot_task_distribution(metrics)
+    # Plot total processing time comparison
+    plot_total_time_comparison(metrics)
     
-    if len(metrics["queue_delays"]) > 0:
-        plot_queue_delays(metrics)
+    # Plot task distribution between fog and cloud
+    plot_task_distribution(metrics)
     
-    if len(metrics["power_consumption"]) > 0:
-        plot_power_consumption(metrics)
-        plot_total_power_consumption(metrics)
+    # Plot queue delays comparison
+    plot_queue_delays(metrics)
+    
+    # Plot power consumption comparison
+    plot_power_consumption(metrics)
+    
+    # Plot total power consumption (power × nodes)
+    plot_total_power_consumption(metrics)
 
 
 def main():
-    # Parse command-line arguments
-    if len(sys.argv) < 2:
-        print("Usage: python display_results.py <algorithm_number>")
-        print("  1: FCFSCooperation")
-        print("  2: FCFSNoCooperation")
-        print("  3: RandomCooperation")
-        print("  4: RandomNoCooperation")
-        print("  5: All algorithms")
-        print("  6: Generate graphs (will recompute all results)")
-        sys.exit(1)
-    
-    algorithm_arg = sys.argv[1]
+    """Main function to handle user input and execute requested tasks"""
+    # Print header
+    print("=== Fog-Cloud Task Allocation Results Viewer ===\n")
     
     # Map numeric inputs to algorithm names
     algorithm_names = {
@@ -424,45 +433,131 @@ def main():
         "4": "RandomNoCooperation"
     }
     
-    # Print header
-    print("=== Fog-Cloud Task Allocation Results Viewer ===\n")
-    
-    outputs = {}
-    
-    # Option 6 now recomputes all results instead of using cached files
-    if algorithm_arg == "6":
-        print("Recomputing all results...")
-        for num, name in algorithm_names.items():
-            outputs[name] = run_algorithm(num)
+    # Check if command-line arguments were provided
+    if len(sys.argv) > 1:
+        # Handle command-line mode
+        algorithm_arg = sys.argv[1]
+        
+        outputs = {}
+        
+        # Option 6 recomputes all results
+        if algorithm_arg == "6":
+            print("Recomputing all results...")
+            for num, name in algorithm_names.items():
+                outputs[name] = run_algorithm(num)
+                
+            # Parse results and generate graphs
+            metrics = parse_results(outputs)
+            generate_all_graphs(metrics)
+            return
+        
+        # Run all algorithms or a specific one
+        if algorithm_arg == "5":
+            for num, name in algorithm_names.items():
+                outputs[name] = run_algorithm(num)
+                
+            # Parse results
+            metrics = parse_results(outputs)
             
-        # Parse results and generate graphs
-        metrics = parse_results(outputs)
-        generate_all_graphs(metrics)
-        sys.exit(0)
-    
-    # Run all algorithms or a specific one
-    if algorithm_arg == "5":
-        for num, name in algorithm_names.items():
-            outputs[name] = run_algorithm(num)
-    else:
-        # Run a specific algorithm
-        if algorithm_arg in algorithm_names:
-            name = algorithm_names[algorithm_arg]
-            outputs[name] = run_algorithm(algorithm_arg)
+            # Display comparative analysis
+            print("\n=== Comparative Analysis ===")
+            display_comparative_analysis(metrics)
+            
+            # Generate graphs
+            generate_all_graphs(metrics)
         else:
-            print(f"Unknown algorithm: {algorithm_arg}")
-            sys.exit(1)
+            # Run a specific algorithm
+            if algorithm_arg in algorithm_names:
+                name = algorithm_names[algorithm_arg]
+                outputs[name] = run_algorithm(algorithm_arg)
+                
+                # Parse results
+                metrics = parse_results(outputs)
+                
+                # Display analysis for this algorithm only
+                print(f"\n=== Analysis for {name} ===")
+                display_comparative_analysis(metrics)
+            else:
+                print(f"Unknown algorithm: {algorithm_arg}")
+                print("Usage: python display_results.py <algorithm_number>")
+                print("  1: FCFSCooperation")
+                print("  2: FCFSNoCooperation")
+                print("  3: RandomCooperation")
+                print("  4: RandomNoCooperation")
+                print("  5: All algorithms")
+                print("  6: Generate graphs (will recompute all results)")
+                return
+        
+        return
     
-    # Parse the results
-    metrics = parse_results(outputs)
-    
-    # Display comparative analysis
-    print("\n=== Comparative Analysis ===")
-    display_comparative_analysis(metrics)
-    
-    # Generate graphs
-    if algorithm_arg == "5":
-        generate_all_graphs(metrics)
+    # Interactive menu mode
+    try:
+        while True:
+            print("\nChoose an option:")
+            print("  1: FCFSCooperation")
+            print("  2: FCFSNoCooperation")
+            print("  3: RandomCooperation")
+            print("  4: RandomNoCooperation")
+            print("  5: Run all algorithms and generate graphs")
+            print("  6: Exit")
+            
+            # Get user choice
+            choice = input("Enter your choice (1-6): ")
+            
+            # Exit option
+            if choice == "6":
+                print("Exiting program.")
+                break
+            
+            outputs = {}
+            
+            # Run all algorithms and generate graphs
+            if choice == "5":
+                print("\nRunning all algorithms and generating graphs...")
+                for num, name in algorithm_names.items():
+                    outputs[name] = run_algorithm(num)
+                
+                # Parse results
+                metrics = parse_results(outputs)
+                
+                # Display comparative analysis
+                print("\n=== Comparative Analysis ===")
+                display_comparative_analysis(metrics)
+                
+                # Generate all graphs
+                generate_all_graphs(metrics)
+                print("\nAll tasks completed. Graphs saved in the final_code folder.")
+                
+            # Run a specific algorithm
+            elif choice in algorithm_names:
+                name = algorithm_names[choice]
+                outputs[name] = run_algorithm(choice)
+                
+                # Parse results
+                metrics = parse_results(outputs)
+                
+                # Display analysis for this algorithm only
+                print(f"\n=== Analysis for {name} ===")
+                display_comparative_analysis(metrics)
+                
+                # Ask if user wants to generate graphs for this algorithm
+                graph_choice = input("\nGenerate graphs for this algorithm? (y/n): ")
+                if graph_choice.lower() == 'y':
+                    generate_all_graphs(metrics)
+                    print(f"\nGraphs for {name} saved in the final_code folder.")
+                    
+            else:
+                print(f"Invalid choice: {choice}. Please try again.")
+    except EOFError:
+        # Handle non-interactive environments
+        print("\nNon-interactive environment detected. Please provide command-line arguments:")
+        print("Usage: python display_results.py <algorithm_number>")
+        print("  1: FCFSCooperation")
+        print("  2: FCFSNoCooperation")
+        print("  3: RandomCooperation")
+        print("  4: RandomNoCooperation")
+        print("  5: All algorithms")
+        print("  6: Generate graphs (will recompute all results)")
 
 
 if __name__ == '__main__':
