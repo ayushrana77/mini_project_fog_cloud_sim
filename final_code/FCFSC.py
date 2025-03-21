@@ -213,7 +213,7 @@ class FogNode:
         self.used_storage = 0
         self.queue = []
         self.utilization = 0
-        self.power_log = [100]
+        self.power_log = [50]
         self.busy_until = 0.0
         self.num_devices = config['num_devices']
         self.available_ram = config['ram']
@@ -233,7 +233,7 @@ class FogNode:
 
     def calculate_power(self):
         """Calculate power consumption based on utilization"""
-        return 100 + (self.utilization * 0.5)
+        return 50 + (self.utilization * 0.3)
 
     def update_network_congestion(self, current_time):
         """Simulate real-world network congestion that changes over time"""
@@ -380,7 +380,7 @@ class FogNode:
         self.used_storage = 0
         self.queue = []
         self.utilization = 0  # Reset batch utilization
-        self.power_log = [100]
+        self.power_log = [50]
         self.busy_until = 0.0
         self.available_ram = self.ram
         self.available_mips = self.mips
@@ -451,7 +451,7 @@ class CloudService:
         
         # Add baseline randomness for each task
         base_randomness = 1.0 + random.uniform(-BASE_VARIATION_FACTOR, BASE_VARIATION_FACTOR)
-        base_processing *= base_randomness
+        base_processing *= base_randomness * 0.6  # Reduced cloud processing time by 40%
         
         # Apply load factor with more realistic variations and stronger impact
         load_factor = 1.0 + (self.current_load / 100) * 0.8  # More impact from cloud load (up from 0.5)
@@ -469,7 +469,7 @@ class CloudService:
         
         # Calculate variable transmission time directly proportional to task size
         # Cloud requires uploading the entire task data with more significant randomness
-        base_transmission = (task.size / self.bw) * 10 + geo_latency  # Size-dependent transmission
+        base_transmission = (task.size / self.bw) * 5 + geo_latency  # Reduced multiplier from 10 to 5
         transmission_randomness = 1.0 + random.uniform(-0.3, 0.4)  # More transmission randomness than fog
         transmission_time = base_transmission * self.network_latency * transmission_randomness
         
@@ -855,105 +855,91 @@ class FCFSCooperationGateway(BaseGateway):
         # Step 3: Search for a valid fog node (FCFS order), with added real-world considerations
         fog_processed = False
             
-        # Initialize round-robin counter in init method if it doesn't exist
-        if not hasattr(self, 'rr_counter'):
-            self.rr_counter = 0
-
-        # Track high congestion and utilization for decision making
-        high_network_congestion = False
-        high_fog_utilization = False
+        # Remove round-robin logic and always try the first fog node first
+        if len(self.fog_nodes) > 0:
+            # Always try the first fog node
+            primary_fog = self.fog_nodes[0]
             
-        # Reset the fog node order for each task to ensure true round-robin
-        # Get current fog nodes in round-robin order
-        fog_index = self.rr_counter % len(self.fog_nodes)
-        primary_fog = self.fog_nodes[fog_index]
+            self.sim_clock += NODE_CHECK_DELAY
+            selection_time += NODE_CHECK_DELAY
             
-        # Try the primary fog node first (determined by round-robin)
-        self.sim_clock += NODE_CHECK_DELAY
-        selection_time += NODE_CHECK_DELAY
-            
-        # Check if primary node can accept the task
-        if self.is_fog_available(primary_fog, task, self.current_batch):
-            # Check for network congestion at this specific node
-            if primary_fog.network_congestion <= NETWORK_CONGESTION_THRESHOLD or task.size <= 150:
-                # Process the task on this fog node
-                q_delay, p_time, completion_time = primary_fog.process(task, self.sim_clock)
-                self.sim_clock = completion_time
-                self.metrics['fog_times'].append(p_time)
-                self.metrics['node_selection_time'].append(selection_time)
-                fog_processed = True
-                    
-                # Set task metadata
-                task.processor_node = primary_fog.name
-                allocation = f"Fog ({primary_fog.name})"
-                    
-                # Increment the round-robin counter for next task
-                self.rr_counter += 1
-                    
-                # Track fog allocation for this data type
-                if task_type in self.data_type_counts:
-                    self.data_type_counts[task_type]['fog'] += 1
-                    
-                # Track metrics for this task execution
-                if q_delay > 0:
-                    self.metrics['queue_delays'].append(q_delay)
-                    
-                # Log execution details if in verbose mode
-                if self.verbose_output:
-                    print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, " 
-                          f"Congestion: {primary_fog.network_congestion:.2f}, Utilization: {primary_fog.utilization:.1f}%, "
-                          f"Queue delay: {q_delay:.2f}ms, Lifetime: {p_time:.2f}ms")
-                    
-                return 0
+            # Check if primary node can accept the task
+            if self.is_fog_available(primary_fog, task, self.current_batch):
+                # Check for network congestion at this specific node
+                if primary_fog.network_congestion <= NETWORK_CONGESTION_THRESHOLD or task.size <= 150:
+                    # Process the task on this fog node
+                    q_delay, p_time, completion_time = primary_fog.process(task, self.sim_clock)
+                    self.sim_clock = completion_time
+                    self.metrics['fog_times'].append(p_time)
+                    self.metrics['node_selection_time'].append(selection_time)
+                    fog_processed = True
+                        
+                    # Set task metadata
+                    task.processor_node = primary_fog.name
+                    allocation = f"Fog ({primary_fog.name})"
+                        
+                    # Track fog allocation for this data type
+                    if task_type in self.data_type_counts:
+                        self.data_type_counts[task_type]['fog'] += 1
+                        
+                    # Track metrics for this task execution
+                    if q_delay > 0:
+                        self.metrics['queue_delays'].append(q_delay)
+                        
+                    # Log execution details if in verbose mode
+                    if self.verbose_output:
+                        print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, " 
+                              f"Congestion: {primary_fog.network_congestion:.2f}, Utilization: {primary_fog.utilization:.1f}%, "
+                              f"Queue delay: {q_delay:.2f}ms, Lifetime: {p_time:.2f}ms")
+                        
+                    return 0
+                else:
+                    high_network_congestion = True
             else:
-                high_network_congestion = True
-        else:
-            high_fog_utilization = True
+                high_fog_utilization = True
                 
-        # If primary fog node couldn't process the task, try the secondary fog node
-        secondary_fog = self.fog_nodes[(fog_index + 1) % len(self.fog_nodes)]
-            
-        self.sim_clock += NODE_CHECK_DELAY
-        selection_time += NODE_CHECK_DELAY
-            
-        # Check if secondary node can accept the task
-        if self.is_fog_available(secondary_fog, task, self.current_batch):
-            # Check for network congestion at this specific node
-            if secondary_fog.network_congestion <= NETWORK_CONGESTION_THRESHOLD or task.size <= 150:
-                # Process the task on this fog node
-                q_delay, p_time, completion_time = secondary_fog.process(task, self.sim_clock)
-                self.sim_clock = completion_time
-                self.metrics['fog_times'].append(p_time)
-                self.metrics['node_selection_time'].append(selection_time)
-                fog_processed = True
+            # Only check other fog nodes if the primary node failed due to lack of resources
+            if high_fog_utilization and len(self.fog_nodes) > 1:
+                # Try other fog nodes in sequence
+                for i in range(1, len(self.fog_nodes)):
+                    secondary_fog = self.fog_nodes[i]
                     
-                # Set task metadata
-                task.processor_node = secondary_fog.name
-                allocation = f"Fog ({secondary_fog.name})"
+                    self.sim_clock += NODE_CHECK_DELAY
+                    selection_time += NODE_CHECK_DELAY
                     
-                # Increment the round-robin counter for next task
-                self.rr_counter += 1
-                    
-                # Track fog allocation for this data type
-                if task_type in self.data_type_counts:
-                    self.data_type_counts[task_type]['fog'] += 1
-                    
-                # Track metrics for this task execution
-                if q_delay > 0:
-                    self.metrics['queue_delays'].append(q_delay)
-                    
-                # Log execution details if in verbose mode
-                if self.verbose_output:
-                    print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, " 
-                          f"Congestion: {secondary_fog.network_congestion:.2f}, Utilization: {secondary_fog.utilization:.1f}%, "
-                          f"Queue delay: {q_delay:.2f}ms, Lifetime: {p_time:.2f}ms")
-                    
-                return 0
-            else:
-                high_network_congestion = True
-        else:
-            high_fog_utilization = True
-                
+                    # Check if secondary node can accept the task
+                    if self.is_fog_available(secondary_fog, task, self.current_batch):
+                        # Check for network congestion at this specific node
+                        if secondary_fog.network_congestion <= NETWORK_CONGESTION_THRESHOLD or task.size <= 150:
+                            # Process the task on this fog node
+                            q_delay, p_time, completion_time = secondary_fog.process(task, self.sim_clock)
+                            self.sim_clock = completion_time
+                            self.metrics['fog_times'].append(p_time)
+                            self.metrics['node_selection_time'].append(selection_time)
+                            fog_processed = True
+                                
+                            # Set task metadata
+                            task.processor_node = secondary_fog.name
+                            allocation = f"Fog ({secondary_fog.name})"
+                                
+                            # Track fog allocation for this data type
+                            if task_type in self.data_type_counts:
+                                self.data_type_counts[task_type]['fog'] += 1
+                                
+                            # Track metrics for this task execution
+                            if q_delay > 0:
+                                self.metrics['queue_delays'].append(q_delay)
+                                
+                            # Log execution details if in verbose mode
+                            if self.verbose_output:
+                                print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, " 
+                                      f"Congestion: {secondary_fog.network_congestion:.2f}, Utilization: {secondary_fog.utilization:.1f}%, "
+                                      f"Queue delay: {q_delay:.2f}ms, Lifetime: {p_time:.2f}ms")
+                                
+                            return 0
+                    else:
+                        high_fog_utilization = True
+                        
         # If we reach here, both fog nodes couldn't process the task
         # Process in cloud as a fallback
         self.metrics['node_selection_time'].append(selection_time)

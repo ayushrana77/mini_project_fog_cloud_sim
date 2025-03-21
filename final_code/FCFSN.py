@@ -203,7 +203,7 @@ class FogNode:
         self.used_storage = 0
         self.queue = []
         self.utilization = 0
-        self.power_log = [100]
+        self.power_log = [50]  # Reduced from 100 to 50
         self.busy_until = 0.0
         self.num_devices = config['num_devices']
         self.available_ram = config['ram']
@@ -223,7 +223,7 @@ class FogNode:
 
     def calculate_power(self):
         """Calculate power consumption based on utilization"""
-        return 100 + (self.utilization * 0.5)
+        return 50 + (self.utilization * 0.3)  # Reduced from 100 to 50
 
     def update_network_congestion(self, current_time):
         """Simulate real-world network congestion that changes over time"""
@@ -370,7 +370,7 @@ class FogNode:
         self.used_storage = 0
         self.queue = []
         self.utilization = 0  # Reset batch utilization
-        self.power_log = [100]
+        self.power_log = [50]  # Reduced from 100 to 50
         self.busy_until = 0.0
         self.available_ram = self.ram
         self.available_mips = self.mips
@@ -455,11 +455,11 @@ class CloudService:
         
         # Calculate processing time with real-world variability
         processing_variation = random.uniform(PROCESSING_VARIATION_MIN, PROCESSING_VARIATION_MAX)
-        processing_time = base_processing * load_factor * processing_variation
+        processing_time = base_processing * load_factor * processing_variation * 0.6  # Reduced cloud processing time by 40%
         
         # Calculate variable transmission time directly proportional to task size
         # Cloud requires uploading the entire task data with more significant randomness
-        base_transmission = (task.size / self.bw) * 10 + geo_latency  # Size-dependent transmission
+        base_transmission = (task.size / self.bw) * 5 + geo_latency  # Reduced multiplier from 10 to 5
         transmission_randomness = 1.0 + random.uniform(-0.3, 0.4)  # More transmission randomness than fog
         transmission_time = base_transmission * self.network_latency * transmission_randomness
         

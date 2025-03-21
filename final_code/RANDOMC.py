@@ -221,7 +221,7 @@ class FogNode:
         self.used_storage = 0
         self.queue = []
         self.utilization = 0
-        self.power_log = [100]
+        self.power_log = [50]  # Reduced from 100 to 50
         self.busy_until = 0.0
         self.num_devices = config['num_devices']
         self.available_ram = config['ram']
@@ -241,7 +241,7 @@ class FogNode:
 
     def calculate_power(self):
         """Calculate power consumption based on utilization"""
-        return 100 + (self.utilization * 0.5)
+        return 50 + (self.utilization * 0.3)  # Reduced from 100 to 50
 
     def update_network_congestion(self, current_time):
         """Simulate real-world network congestion that changes over time"""
@@ -462,11 +462,11 @@ class CloudService:
         
         # Calculate processing time with real-world variability - improved with cooperation
         processing_variation = random.uniform(PROCESSING_VARIATION_MIN, PROCESSING_VARIATION_MAX)
-        processing_time = base_processing * load_factor * processing_variation * cooperation_efficiency
+        processing_time = base_processing * load_factor * processing_variation * cooperation_efficiency * 0.6  # Reduced by 40%
         
         # Calculate variable transmission time directly proportional to task size
         # Cooperative mode enables data caching and shared transmission, reducing overall transmission time
-        base_transmission = (task.size / self.bw) * 8 + geo_latency  # Reduced from 10 to 8
+        base_transmission = (task.size / self.bw) * 5 + geo_latency  # Reduced from 8 to 5
         transmission_randomness = 1.0 + random.uniform(-0.3, 0.3)  # Reduced upper bound from 0.4 to 0.3
         
         # Cooperation improves network efficiency through shared bandwidth and routing optimizations
@@ -835,12 +835,47 @@ class FCFSCooperationGateway(BaseGateway):
             
         # Step 2: Random fog node selection for non-bulk data
         if len(self.fog_nodes) > 0:  
-            # Randomly shuffle fog nodes to implement random selection policy
-            available_nodes = self.fog_nodes.copy()
-            random.shuffle(available_nodes)
+            # Instead of random order, always prioritize the first fog node
+            # Only go to other fog nodes if the first one doesn't have resources
+            primary_fog = self.fog_nodes[0]
+            other_nodes = self.fog_nodes[1:].copy()
+            random.shuffle(other_nodes)  # Keep randomization only for secondary nodes
             
-            # First attempt: try randomly ordered fog nodes
-            for fog in available_nodes:
+            # First try the primary fog node (fog 1)
+            self.sim_clock += NODE_CHECK_DELAY
+            selection_time += NODE_CHECK_DELAY
+            
+            if primary_fog.can_accept_task(task, self.sim_clock):
+                q_delay, p_time, completion_time = primary_fog.process(task, self.sim_clock)
+                self.sim_clock = completion_time
+                self.metrics['fog_times'].append(p_time)
+                self.metrics['node_selection_time'].append(selection_time)
+                
+                # Commit resources for this task
+                self.commit_fog_resources(primary_fog, task, self.current_batch)
+                
+                # Set task metadata
+                task.processor_node = primary_fog.name
+                allocation = f"Fog ({primary_fog.name})"
+                
+                # Track fog allocation for this data type
+                if task_type in self.data_type_counts:
+                    self.data_type_counts[task_type]['fog'] += 1
+                
+                # Track metrics for this task execution
+                if q_delay > 0:
+                    self.metrics['queue_delays'].append(q_delay)
+                
+                # Log execution details if in verbose mode
+                if self.verbose_output:
+                    print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, " 
+                          f"Congestion: {primary_fog.network_congestion:.2f}, Utilization: {primary_fog.utilization:.1f}%, "
+                          f"Queue delay: {q_delay:.2f}ms, Lifetime: {p_time:.2f}ms")
+                
+                return 0
+            
+            # If primary fog node doesn't have resources, try other fog nodes in random order
+            for fog in other_nodes:
                 self.sim_clock += NODE_CHECK_DELAY
                 selection_time += NODE_CHECK_DELAY
                 
@@ -856,50 +891,6 @@ class FCFSCooperationGateway(BaseGateway):
                     # Set task metadata
                     task.processor_node = fog.name
                     allocation = f"Fog ({fog.name})"
-                    
-                    # Track fog allocation for this data type
-                    if task_type in self.data_type_counts:
-                        self.data_type_counts[task_type]['fog'] += 1
-                    
-                    # Track metrics for this task execution
-                    if q_delay > 0:
-                        self.metrics['queue_delays'].append(q_delay)
-                    
-                    # Log execution details if in verbose mode
-                    if self.verbose_output:
-                        print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, " 
-                              f"Congestion: {fog.network_congestion:.2f}, Utilization: {fog.utilization:.1f}%, "
-                              f"Queue delay: {q_delay:.2f}ms, Lifetime: {p_time:.2f}ms")
-                    
-                    return 0
-            
-            # Second attempt: Cooperation policy - try with relaxed constraints
-            for fog in available_nodes:
-                self.sim_clock += NODE_CHECK_DELAY
-                selection_time += NODE_CHECK_DELAY
-                
-                # Check if node has basic resources available with relaxed constraints
-                # For cooperation, we accept even lower resource availability (5% instead of 10%)
-                available_ram_ratio = fog.available_ram / (task.ram + 0.001)
-                available_mips_ratio = fog.available_mips / (task.mips + 0.001)
-                available_storage = (fog.total_storage - fog.used_storage) >= (task.size * 0.3)
-                
-                if (available_ram_ratio >= 0.05 and 
-                    available_mips_ratio >= 0.05 and 
-                    available_storage and
-                    len(fog.queue) < fog.max_queue_size * 3):  # Triple the queue size for cooperation
-                    
-                    q_delay, p_time, completion_time = fog.process(task, self.sim_clock)
-                    self.sim_clock = completion_time
-                    self.metrics['fog_times'].append(p_time)
-                    self.metrics['node_selection_time'].append(selection_time)
-                    
-                    # Commit resources for this task with shorter duration due to cooperation
-                    self.commit_fog_resources(fog, task, self.current_batch)
-                    
-                    # Set task metadata
-                    task.processor_node = fog.name
-                    allocation = f"Fog ({fog.name}) [cooperation]"
                     
                     # Track fog allocation for this data type
                     if task_type in self.data_type_counts:
