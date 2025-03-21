@@ -13,13 +13,13 @@ def run_algorithm(algorithm_name):
     # Map algorithm name to file
     algorithm_files = {
         "1": "FCFSC.py",
-        "2": "FCFS_NO_Co.py",
+        "2": "FCFSN.py",
         "3": "RANDOMC.py",
         "4": "RANDOMN.py",
         "FCFSC": "FCFSC.py",
-        "FCFSN": "FCFS_NO_Co.py",
+        "FCFSN": "FCFSN.py",
         "FCFSCooperation": "FCFSC.py",
-        "FCFSNoCooperation": "FCFS_NO_Co.py",
+        "FCFSNoCooperation": "FCFSN.py",
         "RandomCooperation": "RANDOMC.py",
         "RandomNoCooperation": "RANDOMN.py"
     }
