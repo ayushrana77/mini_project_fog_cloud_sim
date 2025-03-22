@@ -638,7 +638,7 @@ class BaseGateway:
         return task.data_type in ['Bulk', 'Large']
         
     def get_next_batch(self, all_tasks):
-        """Get next batch of tasks based on FCFS scheduling policy"""
+        """Get next batch of tasks based on random scheduling policy"""
         self.current_batch += 1
         
         # Initialize tracking for this batch if needed
@@ -647,9 +647,9 @@ class BaseGateway:
             for fog in self.fog_nodes:
                 self.batch_assignments[self.current_batch][fog.name] = []
         
-            # FCFS: Get next batch_size tasks in arrival order
-            sorted_tasks = sorted(all_tasks, key=lambda t: t.arrival_time)
-        return sorted_tasks[:self.batch_size]
+        # Random: Get batch_size tasks in random order
+        random_tasks = random.sample(all_tasks, min(self.batch_size, len(all_tasks)))
+        return random_tasks
             
     def process_batch(self, tasks):
         """Process a batch of tasks"""

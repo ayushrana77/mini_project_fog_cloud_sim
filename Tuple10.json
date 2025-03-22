@@ -79,7 +79,7 @@
         "ID": "cb061c3c-fc7b-4ea2-8de3-bd31a19ac169",
         "Size": 300,
         "Name": "Tuple-3",
-        "MIPS": 250.0,
+        "MIPS": 120.0,
         "NumberOfPes": 1,
         "RAM": 1024,
         "BW": 150,
@@ -153,7 +153,7 @@
     },
     {
         "ID": "e2cb58f1-ffeb-4949-be03-da019f6b4ea6",
-        "Size": 270,
+        "Size": 130,
         "Name": "Tuple-5",
         "MIPS": 200.0,
         "NumberOfPes": 1,
@@ -191,7 +191,7 @@
     },
     {
         "ID": "c65b0962-f60b-4c97-9eae-8eacf5d6d973",
-        "Size": 270,
+        "Size": 126,
         "Name": "Tuple-9",
         "MIPS": 200.0,
         "NumberOfPes": 1,
