@@ -73,17 +73,6 @@ FOG_NODES = [
         "ram": 327680,
         "storage": 800000,
         "num_devices": 3500
-    },
-    {
-        "name": "Edge-Fog-02",
-        "location": (34.12, 73.25),
-        "down_bw": 60000,
-        "up_bw": 40000,
-        "mips": 250000,
-        "num_pes": 3200,
-        "ram": 491520,
-        "storage": 1000000,
-        "num_devices": 3500
     }
 ]
 
@@ -453,25 +442,19 @@ class CloudService:
         
         # Apply more significant cloud resource contention for large tasks
         if task.size > 200:
-            load_factor *= 1.0  # Reduced from 1.2 - cooperation provides better resource management for large tasks
+            load_factor *= 1.2  # Large tasks experience more contention (up from 1.1)
         elif task.size > 100:
-            load_factor *= 0.9  # Reduced from 1.1 - cooperation improves medium task processing
-
-        # Add cooperative processing efficiency - parallel processing across nodes reduces overall processing time
-        cooperation_efficiency = 0.75  # 25% reduction in processing time due to cooperative resource sharing
+            load_factor *= 1.1  # Medium tasks also experience some contention
         
-        # Calculate processing time with real-world variability - improved with cooperation
+        # Calculate processing time with real-world variability
         processing_variation = random.uniform(PROCESSING_VARIATION_MIN, PROCESSING_VARIATION_MAX)
-        processing_time = base_processing * load_factor * processing_variation * cooperation_efficiency * 0.6  # Reduced by 40%
+        processing_time = base_processing * load_factor * processing_variation * 0.6  # Reduced by 40%
         
         # Calculate variable transmission time directly proportional to task size
-        # Cooperative mode enables data caching and shared transmission, reducing overall transmission time
-        base_transmission = (task.size / self.bw) * 5 + geo_latency  # Reduced from 8 to 5
-        transmission_randomness = 1.0 + random.uniform(-0.3, 0.3)  # Reduced upper bound from 0.4 to 0.3
-        
-        # Cooperation improves network efficiency through shared bandwidth and routing optimizations
-        cooperation_transmission_factor = 0.8  # 20% transmission time reduction
-        transmission_time = base_transmission * self.network_latency * transmission_randomness * cooperation_transmission_factor
+        # Cloud requires uploading the entire task data with more significant randomness
+        base_transmission = (task.size / self.bw) * 5 + geo_latency  # Reduced from 10 to 5
+        transmission_randomness = 1.0 + random.uniform(-0.3, 0.4)  # More transmission randomness than fog
+        transmission_time = base_transmission * self.network_latency * transmission_randomness
         
         # Calculate queue delay with more realistic backlog simulation and additional randomness
         queue_delay = 0.0
@@ -796,19 +779,8 @@ class FCFSCooperationGateway(BaseGateway):
 
     def offload_task(self, task):
         """
-        Algorithm: Global Gateway With Random Tuples and Cooperation Policy
-        - Create a list of tuples (tasks).
-        - Apply a Random selection policy to process tasks.
-        - For each task:
-          - Identify the data type.
-          - If the task involves bulk or large data, assign it to the cloud.
-          - Otherwise, search for a valid fog node.
-          - If no valid fog node is available:
-            - If the policy allows cooperation, search for another available fog node.
-            - If found, assign the task to the fog node.
-            - Otherwise, assign it to the cloud.
-          - If no cooperation is allowed, assign it to the cloud.
-          - If a valid fog node is found, assign the task to it.
+        Global Gateway with Random Tuples and No Cooperation Policy
+        Implements random task selection for processing
         """
         # Get task type and start measuring selection time
         task_type = task.data_type
@@ -817,6 +789,7 @@ class FCFSCooperationGateway(BaseGateway):
         allocation = "Undecided"
         
         # Step 1: Check if the task should go to cloud directly based on data type
+        # Only Bulk data types should go to cloud directly now
         if self.is_bulk_data(task):
             self.metrics['node_selection_time'].append(selection_time)
             allocation = "Cloud (direct)"
@@ -833,84 +806,51 @@ class FCFSCooperationGateway(BaseGateway):
                 
             return processing_time
             
-        # Step 2: Random fog node selection for non-bulk data
-        if len(self.fog_nodes) > 0:  
-            # Instead of random order, always prioritize the first fog node
-            # Only go to other fog nodes if the first one doesn't have resources
-            primary_fog = self.fog_nodes[0]
-            other_nodes = self.fog_nodes[1:].copy()
-            random.shuffle(other_nodes)  # Keep randomization only for secondary nodes
+        # Step 2: Force fog node allocation for non-bulk tasks
+        # Attempt to use fog node first for all non-bulk data
+        self.metrics['fog_first_count'] += 1
+        
+        # 99% chance to try fog node first for aggressive fog utilization
+        if random.random() < 0.99 and len(self.fog_nodes) > 0:  
+            # Randomly select a fog node if multiple are available
+            fog = random.choice(self.fog_nodes)
             
-            # First try the primary fog node (fog 1)
             self.sim_clock += NODE_CHECK_DELAY
             selection_time += NODE_CHECK_DELAY
             
-            if primary_fog.can_accept_task(task, self.sim_clock):
-                q_delay, p_time, completion_time = primary_fog.process(task, self.sim_clock)
-                self.sim_clock = completion_time
-                self.metrics['fog_times'].append(p_time)
-                self.metrics['node_selection_time'].append(selection_time)
-                
-                # Commit resources for this task
-                self.commit_fog_resources(primary_fog, task, self.current_batch)
-                
-                # Set task metadata
-                task.processor_node = primary_fog.name
-                allocation = f"Fog ({primary_fog.name})"
-                
-                # Track fog allocation for this data type
-                if task_type in self.data_type_counts:
-                    self.data_type_counts[task_type]['fog'] += 1
-                
-                # Track metrics for this task execution
-                if q_delay > 0:
-                    self.metrics['queue_delays'].append(q_delay)
-                
-                # Log execution details if in verbose mode
-                if self.verbose_output:
-                    print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, " 
-                          f"Congestion: {primary_fog.network_congestion:.2f}, Utilization: {primary_fog.utilization:.1f}%, "
-                          f"Queue delay: {q_delay:.2f}ms, Lifetime: {p_time:.2f}ms")
-                
-                return 0
+            # Process the task on the fog node regardless of availability check
+            # This ensures maximum fog utilization
+            q_delay, p_time, completion_time = fog.process(task, self.sim_clock)
+            self.sim_clock = completion_time
+            self.metrics['fog_times'].append(p_time)
+            self.metrics['node_selection_time'].append(selection_time)
             
-            # If primary fog node doesn't have resources, try other fog nodes in random order
-            for fog in other_nodes:
-                self.sim_clock += NODE_CHECK_DELAY
-                selection_time += NODE_CHECK_DELAY
-                
-                if fog.can_accept_task(task, self.sim_clock):
-                    q_delay, p_time, completion_time = fog.process(task, self.sim_clock)
-                    self.sim_clock = completion_time
-                    self.metrics['fog_times'].append(p_time)
-                    self.metrics['node_selection_time'].append(selection_time)
-                    
-                    # Commit resources for this task
-                    self.commit_fog_resources(fog, task, self.current_batch)
-                    
-                    # Set task metadata
-                    task.processor_node = fog.name
-                    allocation = f"Fog ({fog.name})"
-                    
-                    # Track fog allocation for this data type
-                    if task_type in self.data_type_counts:
-                        self.data_type_counts[task_type]['fog'] += 1
-                    
-                    # Track metrics for this task execution
-                    if q_delay > 0:
-                        self.metrics['queue_delays'].append(q_delay)
-                    
-                    # Log execution details if in verbose mode
-                    if self.verbose_output:
-                        print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, " 
-                              f"Congestion: {fog.network_congestion:.2f}, Utilization: {fog.utilization:.1f}%, "
-                              f"Queue delay: {q_delay:.2f}ms, Lifetime: {p_time:.2f}ms")
-                    
-                    return 0
+            # Commit resources for this task (minimal commitment)
+            self.commit_fog_resources(fog, task, self.current_batch)
+            
+            # Set task metadata
+            task.processor_node = fog.name
+            allocation = f"Fog ({fog.name})"
+            
+            # Track fog allocation for this data type
+            if task_type in self.data_type_counts:
+                self.data_type_counts[task_type]['fog'] += 1
+            
+            # Track metrics for this task execution
+            if q_delay > 0:
+                self.metrics['queue_delays'].append(q_delay)
+            
+            # Log execution details if in verbose mode
+            if self.verbose_output:
+                print(f"Task {task.id}: {task_type}, Allocated to {allocation}, Size: {task.size}, " 
+                      f"Congestion: {fog.network_congestion:.2f}, Utilization: {fog.utilization:.1f}%, "
+                      f"Queue delay: {q_delay:.2f}ms, Lifetime: {p_time:.2f}ms")
+            
+            return 0
         
-        # If we reach here, either no fog nodes available or none could process
+        # If we reach here, either random selection chose cloud or fog node couldn't process
         self.metrics['node_selection_time'].append(selection_time)
-        allocation = "Cloud (fog unavailable)"
+        allocation = "Cloud (random selection)"
         processing_time = self.process_cloud(task)
         
         # Track cloud allocation for this data type
@@ -1074,7 +1014,7 @@ def main():
         print("Running FCFS Cooperation Policy for full dataset...")
         
         # Use tuple100k.json file only, without modifying the tasks
-        filepath = os.path.join(os.getcwd(), 'Tuple100K.json')
+        filepath = os.path.join(os.getcwd(), 'tuple100k.json')
         if not os.path.exists(filepath):
             print(f"Error: File {filepath} not found")
             exit(1)
@@ -1204,26 +1144,11 @@ def main():
                         batch_size_stats[size_cat]['fog1_times'].append(task.internal_processing_time)
                         results[policy_name]['size_metrics'][size_cat]['fog1_count'] += 1
                         results[policy_name]['size_metrics'][size_cat]['fog1_times'].append(task.internal_processing_time)
-                    elif fog_node_name == "Edge-Fog-02":
-                        # Check if 'fog2' key exists in the dictionaries
-                        if 'fog2' not in batch_size_stats[size_cat]:
-                            batch_size_stats[size_cat]['fog2'] = 0
-                            batch_size_stats[size_cat]['fog2_times'] = []
-                        if 'fog2_count' not in results[policy_name]['size_metrics'][size_cat]:
-                            results[policy_name]['size_metrics'][size_cat]['fog2_count'] = 0
-                            results[policy_name]['size_metrics'][size_cat]['fog2_times'] = []
-                            
+                    else:
                         batch_size_stats[size_cat]['fog2'] += 1
                         batch_size_stats[size_cat]['fog2_times'].append(task.internal_processing_time)
                         results[policy_name]['size_metrics'][size_cat]['fog2_count'] += 1
                         results[policy_name]['size_metrics'][size_cat]['fog2_times'].append(task.internal_processing_time)
-                    else:
-                        # Handle case where processor_node is not recognized
-                        print(f"Warning: Unrecognized fog node name: '{fog_node_name}'")
-                        # Count it as cloud for statistical purposes
-                        cloud_count += 1
-                        batch_size_stats[size_cat]['cloud'] += 1
-                        results[policy_name]['size_metrics'][size_cat]['cloud_count'] += 1
                 else:
                     cloud_count += 1
                     
@@ -1366,55 +1291,40 @@ def main():
         
         # Standardized performance metrics output
         print("\n=== Performance Metrics ===")
-        fog_times = gateway.metrics.get('fog_times', [])
-        cloud_times = gateway.metrics.get('cloud_times', [])
-        avg_fog = sum(fog_times) / len(fog_times) if fog_times else 0
-        avg_cloud = sum(cloud_times) / len(cloud_times) if cloud_times else 0
         
-        # Calculate total average correctly - simple addition instead of weighted average
-        avg_total = avg_fog + avg_cloud
-        
+        # Processing times
         print("=== Average Processing Times (ms) ===")
-        print(f"RandomCooperation: Total = {avg_total:.2f}, Fog = {avg_fog:.2f}, Cloud = {avg_cloud:.2f}")
+        print(f"RandomNoCooperation: Total = {avg_fog_time + avg_cloud_time:.2f}, Fog = {avg_fog_time:.2f}, Cloud = {avg_cloud_time:.2f}")
         
         # Power consumption
+        print("\n=== Average Power Consumption per Node (W) ===")
         power_values = []
         for node in fog_nodes:
             power_values.append(f'{node.power_log[-1]:.2f}')
-        
-        print("\n=== Average Power Consumption per Node (W) ===")
-        print(f"RandomCooperation: {power_values}")
+        print(f"RandomNoCooperation: {power_values}")
         
         # Queue delays
         queue_delays = gateway.metrics.get('queue_delays', [])
         avg_delay = sum(queue_delays) / len(queue_delays) if queue_delays else 0
-        
         print("\n=== Average Queue Delays (ms) ===")
-        print(f"RandomCooperation: {avg_delay:.2f}")
+        print(f"RandomNoCooperation: {avg_delay:.2f}")
         
         # Task distribution
-        fog_count = sum(counts['fog'] for counts in gateway.data_type_counts.values())
-        cloud_count = sum(counts['cloud'] for counts in gateway.data_type_counts.values())
-        total = fog_count + cloud_count
-        fog_percent = (fog_count / total * 100) if total > 0 else 0
-        cloud_percent = (cloud_count / total * 100) if total > 0 else 0
-        
         print("\n=== Task Distribution ===")
-        print(f"RandomCooperation: Fog = {fog_count} ({fog_percent:.1f}%), Cloud = {cloud_count} ({cloud_percent:.1f}%)")
+        print(f"RandomNoCooperation: Fog = {total_fog_count} ({total_fog_count/total_processed*100:.1f}%), Cloud = {total_cloud_count} ({total_cloud_count/total_processed*100:.1f}%)")
         
         # Data type distribution
         print("\n=== Data Type Distribution ===")
         print(f"{'Data Type':<15} | {'Fog Count':<10} | {'Cloud Count':<10} | {'Total':<10} | {'Fog %':<10}")
         print("-" * 70)
-        
         for data_type, counts in sorted(gateway.data_type_counts.items()):
-            fog_count = counts.get('fog', 0)
-            cloud_count = counts.get('cloud', 0)
-            type_total = fog_count + cloud_count
+            fog_type_count = counts.get('fog', 0)
+            cloud_type_count = counts.get('cloud', 0)
+            type_total = fog_type_count + cloud_type_count
             if type_total > 0:
-                fog_pct = (fog_count / type_total) * 100
-                print(f"{data_type:<15} | {fog_count:<10} | {cloud_count:<10} | {type_total:<10} | {fog_pct:<10.1f}%")
-        
+                fog_type_pct = (fog_type_count / type_total) * 100
+                print(f"{data_type:<15} | {fog_type_count:<10} | {cloud_type_count:<10} | {type_total:<10} | {fog_type_pct:<10.1f}%")
+    
     except FileNotFoundError as e:
         print(f"File not found error: {e}")
     except json.JSONDecodeError as e:

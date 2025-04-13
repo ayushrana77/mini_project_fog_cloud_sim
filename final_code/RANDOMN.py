@@ -635,8 +635,25 @@ class BaseGateway:
             
     def is_bulk_data(self, task):
         """Check if the task involves bulk data to go directly to cloud."""
-        return task.data_type in ['Bulk', 'Large']
-        
+        # Send fewer tasks to the cloud to achieve ~50% fog utilization
+        if task.data_type in ['Bulk']:
+            return True  # Always send Bulk data to cloud
+        # For Large data type, only send very large ones to cloud
+        elif task.data_type in ['Large']:
+            return task.size > 220
+        # Only send larger tasks of these types to cloud
+        elif task.data_type in ['Abrupt', 'LocationBased', 'Multimedia']:
+            return task.size > 240  # Higher threshold to keep more in fog
+        # Only send larger medical data to cloud
+        elif task.data_type in ['Medical']:
+            return task.size > 230  # Higher threshold to keep more in fog
+        # Only send larger textual data to cloud
+        elif task.data_type in ['SmallTextual']:
+            return task.size > 250 or random.random() < 0.10  # 10% chance to send to cloud
+        # Add smaller randomness factor to keep more tasks in fog
+        else:
+            return random.random() < 0.05  # Only 5% of remaining tasks go to cloud randomly
+
     def get_next_batch(self, all_tasks):
         """Get next batch of tasks based on random scheduling policy"""
         self.current_batch += 1
@@ -1013,8 +1030,8 @@ def main():
     try:
         print("Running FCFS Cooperation Policy for full dataset...")
         
-        # Use tuple100k.json file only, without modifying the tasks
-        filepath = os.path.join(os.getcwd(), 'tuple100k.json')
+        # Use Tuple100K.json file only, without modifying the tasks
+        filepath = os.path.join(os.getcwd(), 'Tuple100K.json')
         if not os.path.exists(filepath):
             print(f"Error: File {filepath} not found")
             exit(1)

@@ -191,18 +191,6 @@ def plot_processing_times(metrics):
     plt.bar(r2, fog_times, width=barWidth, edgecolor='grey', label='Fog')
     plt.bar(r3, cloud_times, width=barWidth, edgecolor='grey', label='Cloud')
     
-    # Add value labels on top of bars
-    for bars in [plt.bar(r1, total_times, width=barWidth, edgecolor='grey', label='Total'), 
-                 plt.bar(r2, fog_times, width=barWidth, edgecolor='grey', label='Fog'), 
-                 plt.bar(r3, cloud_times, width=barWidth, edgecolor='grey', label='Cloud')]:
-        for bar in bars:
-            height = bar.get_height()
-            plt.annotate(f'{height:.1f}',
-                        xy=(bar.get_x() + bar.get_width() / 2, height),
-                        xytext=(15, 0),  # 15 points horizontal offset (to the right)
-                        textcoords="offset points",
-                        ha='left', va='center', fontsize=9)
-            
     # Add labels
     plt.xlabel('Algorithm', fontweight='bold')
     plt.ylabel('Processing Time (ms)', fontweight='bold')
@@ -242,12 +230,6 @@ def plot_task_distribution(metrics):
     plt.bar(labels, fog_percents, label='Fog')
     plt.bar(labels, cloud_percents, bottom=fog_percents, label='Cloud')
     
-    # Add value labels on top of bars
-    for i, v in enumerate(fog_percents):
-        plt.text(i, v + 0.1, f"{v:.1f}%", ha='center')
-    for i, v in enumerate(cloud_percents):
-        plt.text(i, fog_percents[i] + v + 0.1, f"{v:.1f}%", ha='center')
-    
     plt.xlabel('Algorithm', fontweight='bold')
     plt.ylabel('Percentage of Tasks (%)', fontweight='bold')
     plt.title('Task Distribution between Fog and Cloud by Algorithm')
@@ -283,10 +265,6 @@ def plot_queue_delays(metrics):
     plt.figure(figsize=(10, 6))
     plt.bar(labels, delays)
     
-    # Add value labels on the side of bars
-    for i, v in enumerate(delays):
-        plt.text(i + 0.1, v, f"{v:.1f}", ha='left', va='center')
-    
     plt.xlabel('Algorithm', fontweight='bold')
     plt.ylabel('Queue Delay (ms)', fontweight='bold')
     plt.title('Average Queue Delays by Algorithm')
@@ -321,9 +299,9 @@ def plot_total_time_comparison(metrics):
     plt.figure(figsize=(10, 6))
     plt.bar(labels, total_times)
     
-    # Add value labels on top of bars
+    # Add values on top of bars
     for i, v in enumerate(total_times):
-        plt.text(i, v + 0.1, f"{v:.1f}", ha='center')
+        plt.text(i, v + 0.1, f"{v:.2f}", ha='center')
     
     plt.xlabel('Algorithm', fontweight='bold')
     plt.ylabel('Total Processing Time (ms)', fontweight='bold')
@@ -365,10 +343,6 @@ def plot_power_consumption(metrics):
                 width=0.15,
                 label=f'Node {j+1} ({alg})' if i == 0 else "_nolegend_"
             )
-        
-        # Add value labels on top of bars
-        for j, power in enumerate(power_values):
-            plt.text(i + (j - len(power_values)/2 + 0.5) * 0.2 + 0.1, power, f"{power:.1f}", ha='left', va='center')
     
     plt.xlabel('Algorithm', fontweight='bold')
     plt.ylabel('Power Consumption (W)', fontweight='bold')
@@ -412,9 +386,9 @@ def plot_total_power_consumption(metrics):
     plt.figure(figsize=(10, 6))
     plt.bar(labels, total_power)
     
-    # Add value labels on top of bars
+    # Add values on top of bars
     for i, v in enumerate(total_power):
-        plt.text(i, v + 0.1, f"{v:.1f}", ha='center')
+        plt.text(i, v + 0.1, f"{v:.2f}", ha='center')
     
     plt.xlabel('Algorithm', fontweight='bold')
     plt.ylabel('Total Power Consumption (W)', fontweight='bold')
@@ -423,198 +397,6 @@ def plot_total_power_consumption(metrics):
     save_path = save_to_final_code_folder('total_power_consumption.png')
     plt.savefig(save_path)
     print(f"Total power consumption plot saved as '{save_path}'")
-
-
-def plot_fcfs_comparison(metrics):
-    """Plot comparison between FCFS with and without cooperation"""
-    algorithms = ["FCFSCooperation", "FCFSNoCooperation"]
-    
-    # Check if the required algorithms are available in metrics
-    available_algs = []
-    for alg in algorithms:
-        if alg in metrics["processing_times"] and alg in metrics["queue_delays"] and alg in metrics["power_consumption"]:
-            available_algs.append(alg)
-    
-    if len(available_algs) < 2:
-        print("Not enough data to compare FCFS algorithms. Run both FCFS algorithms first.")
-        return
-    
-    # Extract data
-    total_times = [metrics["processing_times"][alg]["total"] for alg in algorithms]
-    fog_times = [metrics["processing_times"][alg]["fog"] for alg in algorithms]
-    cloud_times = [metrics["processing_times"][alg]["cloud"] for alg in algorithms]
-    queue_delays = [metrics["queue_delays"][alg] for alg in algorithms]
-    
-    # Calculate total power consumption
-    total_power = []
-    for alg in algorithms:
-        total_power.append(sum(metrics["power_consumption"][alg]))
-    
-    # Create labels
-    labels = ["FCFS-C", "FCFS-NC"]
-    
-    # Set up the figure with 3 subplots (processing times, queue delays, power)
-    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 5))
-    
-    # Plot 1: Processing Times
-    width = 0.25
-    x = np.arange(len(labels))
-    total_bars = ax1.bar(x - width, total_times, width=width, label='Total')
-    fog_bars = ax1.bar(x, fog_times, width=width, label='Fog')
-    cloud_bars = ax1.bar(x + width, cloud_times, width=width, label='Cloud')
-    
-    # Add value labels on top of bars
-    for bars in [total_bars, fog_bars, cloud_bars]:
-        for bar in bars:
-            height = bar.get_height()
-            ax1.annotate(f'{height:.1f}',
-                        xy=(bar.get_x() + bar.get_width() / 2, height),
-                        xytext=(0, 3),  # 3 points vertical offset
-                        textcoords="offset points",
-                        ha='center', va='bottom', fontsize=8)
-            
-    ax1.set_xlabel('Algorithm')
-    ax1.set_ylabel('Processing Time (ms)')
-    ax1.set_title('Processing Times')
-    ax1.set_xticks(x)
-    ax1.set_xticklabels(labels)
-    ax1.legend()
-    
-    # Plot 2: Queue Delays
-    bars2 = ax2.bar(labels, queue_delays)
-    
-    # Add value labels on top of bars
-    for bar in bars2:
-        height = bar.get_height()
-        ax2.text(bar.get_x() + bar.get_width(), height, f"{height:.1f}", ha='left', va='center')
-                    
-    ax2.set_xlabel('Algorithm')
-    ax2.set_ylabel('Queue Delay (ms)')
-    ax2.set_title('Queue Delays')
-    
-    # Plot 3: Power Consumption
-    bars3 = ax3.bar(labels, total_power)
-    
-    # Add value labels on the side of bars
-    for bar in bars3:
-        height = bar.get_height()
-        ax3.text(bar.get_x() + bar.get_width(), height, f"{height:.1f}", ha='left', va='center')
-                    
-    ax3.set_xlabel('Algorithm')
-    ax3.set_ylabel('Power Consumption (W)')
-    ax3.set_title('Total Power Consumption')
-    
-    plt.tight_layout()
-    
-    save_path = save_to_final_code_folder('fcfs_comparison.png')
-    plt.savefig(save_path)
-    print(f"FCFS comparison plot saved as '{save_path}'")
-    
-    # Generate standard plots for these algorithms as well to match "Run all" output
-    subset_metrics = {key: {alg: metrics[key][alg] for alg in algorithms if alg in metrics[key]} 
-                     for key in metrics.keys()}
-    
-    # Generate individual plots
-    plot_processing_times(subset_metrics)
-    plot_total_time_comparison(subset_metrics)
-    plot_task_distribution(subset_metrics)
-    plot_queue_delays(subset_metrics)
-    plot_power_consumption(subset_metrics)
-    plot_total_power_consumption(subset_metrics)
-
-
-def plot_random_comparison(metrics):
-    """Plot comparison between Random with and without cooperation"""
-    algorithms = ["RandomCooperation", "RandomNoCooperation"]
-    
-    # Check if the required algorithms are available in metrics
-    available_algs = []
-    for alg in algorithms:
-        if alg in metrics["processing_times"] and alg in metrics["queue_delays"] and alg in metrics["power_consumption"]:
-            available_algs.append(alg)
-    
-    if len(available_algs) < 2:
-        print("Not enough data to compare Random algorithms. Run both Random algorithms first.")
-        return
-    
-    # Extract data
-    total_times = [metrics["processing_times"][alg]["total"] for alg in algorithms]
-    fog_times = [metrics["processing_times"][alg]["fog"] for alg in algorithms]
-    cloud_times = [metrics["processing_times"][alg]["cloud"] for alg in algorithms]
-    queue_delays = [metrics["queue_delays"][alg] for alg in algorithms]
-    
-    # Calculate total power consumption
-    total_power = []
-    for alg in algorithms:
-        total_power.append(sum(metrics["power_consumption"][alg]))
-    
-    # Create labels
-    labels = ["Random-C", "Random-NC"]
-    
-    # Set up the figure with 3 subplots (processing times, queue delays, power)
-    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 5))
-    
-    # Plot 1: Processing Times
-    width = 0.25
-    x = np.arange(len(labels))
-    total_bars = ax1.bar(x - width, total_times, width=width, label='Total')
-    fog_bars = ax1.bar(x, fog_times, width=width, label='Fog')
-    cloud_bars = ax1.bar(x + width, cloud_times, width=width, label='Cloud')
-    
-    # Add value labels on the side of bars
-    for bars in [total_bars, fog_bars, cloud_bars]:
-        for bar in bars:
-            height = bar.get_height()
-            ax1.text(bar.get_x() + bar.get_width(), height, f"{height:.1f}", ha='left', va='center')
-            
-    ax1.set_xlabel('Algorithm')
-    ax1.set_ylabel('Processing Time (ms)')
-    ax1.set_title('Processing Times')
-    ax1.set_xticks(x)
-    ax1.set_xticklabels(labels)
-    ax1.legend()
-    
-    # Plot 2: Queue Delays
-    bars2 = ax2.bar(labels, queue_delays)
-    
-    # Add value labels on the side of bars
-    for bar in bars2:
-        height = bar.get_height()
-        ax2.text(bar.get_x() + bar.get_width(), height, f"{height:.1f}", ha='left', va='center')
-                    
-    ax2.set_xlabel('Algorithm')
-    ax2.set_ylabel('Queue Delay (ms)')
-    ax2.set_title('Queue Delays')
-    
-    # Plot 3: Power Consumption
-    bars3 = ax3.bar(labels, total_power)
-    
-    # Add value labels on the side of bars
-    for bar in bars3:
-        height = bar.get_height()
-        ax3.text(bar.get_x() + bar.get_width(), height, f"{height:.1f}", ha='left', va='center')
-                    
-    ax3.set_xlabel('Algorithm')
-    ax3.set_ylabel('Power Consumption (W)')
-    ax3.set_title('Total Power Consumption')
-    
-    plt.tight_layout()
-    
-    save_path = save_to_final_code_folder('random_comparison.png')
-    plt.savefig(save_path)
-    print(f"Random comparison plot saved as '{save_path}'")
-    
-    # Generate standard plots for these algorithms as well to match "Run all" output
-    subset_metrics = {key: {alg: metrics[key][alg] for alg in algorithms if alg in metrics[key]} 
-                     for key in metrics.keys()}
-    
-    # Generate individual plots
-    plot_processing_times(subset_metrics)
-    plot_total_time_comparison(subset_metrics)
-    plot_task_distribution(subset_metrics)
-    plot_queue_delays(subset_metrics)
-    plot_power_consumption(subset_metrics)
-    plot_total_power_consumption(subset_metrics)
 
 
 def generate_all_graphs(metrics):
@@ -636,12 +418,6 @@ def generate_all_graphs(metrics):
     
     # Plot total power consumption (power × nodes)
     plot_total_power_consumption(metrics)
-    
-    # Plot FCFS comparison (cooperative vs non-cooperative)
-    plot_fcfs_comparison(metrics)
-    
-    # Plot Random comparison (cooperative vs non-cooperative)
-    plot_random_comparison(metrics)
 
 
 def main():
@@ -689,38 +465,6 @@ def main():
             
             # Generate graphs
             generate_all_graphs(metrics)
-        # FCFS comparison (cooperative vs non-cooperative)
-        elif algorithm_arg == "7":
-            print("Running FCFS algorithms (cooperative and non-cooperative)...")
-            outputs["FCFSCooperation"] = run_algorithm("1")
-            outputs["FCFSNoCooperation"] = run_algorithm("2")
-            
-            # Parse results
-            metrics = parse_results(outputs)
-            
-            # Display comparative analysis
-            print("\n=== FCFS Cooperative vs Non-Cooperative Analysis ===")
-            display_comparative_analysis(metrics)
-            
-            # Generate FCFS comparison graph plus standard plots
-            plot_fcfs_comparison(metrics)
-            print("\nFCFS comparison completed. Graphs saved in the final_code folder.")
-        # Random comparison (cooperative vs non-cooperative)
-        elif algorithm_arg == "8":
-            print("Running Random algorithms (cooperative and non-cooperative)...")
-            outputs["RandomCooperation"] = run_algorithm("3")
-            outputs["RandomNoCooperation"] = run_algorithm("4")
-            
-            # Parse results
-            metrics = parse_results(outputs)
-            
-            # Display comparative analysis
-            print("\n=== Random Cooperative vs Non-Cooperative Analysis ===")
-            display_comparative_analysis(metrics)
-            
-            # Generate Random comparison graph plus standard plots
-            plot_random_comparison(metrics)
-            print("\nRandom comparison completed. Graphs saved in the final_code folder.")
         else:
             # Run a specific algorithm
             if algorithm_arg in algorithm_names:
@@ -742,8 +486,6 @@ def main():
                 print("  4: RandomNoCooperation")
                 print("  5: All algorithms")
                 print("  6: Generate graphs (will recompute all results)")
-                print("  7: FCFS Cooperative vs Non-Cooperative comparison")
-                print("  8: Random Cooperative vs Non-Cooperative comparison")
                 return
         
         return
@@ -757,15 +499,13 @@ def main():
             print("  3: RandomCooperation")
             print("  4: RandomNoCooperation")
             print("  5: Run all algorithms and generate graphs")
-            print("  6: FCFS Cooperative vs Non-Cooperative comparison")
-            print("  7: Random Cooperative vs Non-Cooperative comparison")
-            print("  8: Exit")
+            print("  6: Exit")
             
             # Get user choice
-            choice = input("Enter your choice (1-8): ")
+            choice = input("Enter your choice (1-6): ")
             
             # Exit option
-            if choice == "8":
+            if choice == "6":
                 print("Exiting program.")
                 break
             
@@ -787,40 +527,6 @@ def main():
                 # Generate all graphs
                 generate_all_graphs(metrics)
                 print("\nAll tasks completed. Graphs saved in the final_code folder.")
-            
-            # FCFS comparison (cooperative vs non-cooperative)
-            elif choice == "6":
-                print("\nRunning FCFS algorithms (cooperative and non-cooperative)...")
-                outputs["FCFSCooperation"] = run_algorithm("1")
-                outputs["FCFSNoCooperation"] = run_algorithm("2")
-                
-                # Parse results
-                metrics = parse_results(outputs)
-                
-                # Display comparative analysis
-                print("\n=== FCFS Cooperative vs Non-Cooperative Analysis ===")
-                display_comparative_analysis(metrics)
-                
-                # Generate FCFS comparison graph plus standard plots
-                plot_fcfs_comparison(metrics)
-                print("\nFCFS comparison completed. Graphs saved in the final_code folder.")
-            
-            # Random comparison (cooperative vs non-cooperative)
-            elif choice == "7":
-                print("\nRunning Random algorithms (cooperative and non-cooperative)...")
-                outputs["RandomCooperation"] = run_algorithm("3")
-                outputs["RandomNoCooperation"] = run_algorithm("4")
-                
-                # Parse results
-                metrics = parse_results(outputs)
-                
-                # Display comparative analysis
-                print("\n=== Random Cooperative vs Non-Cooperative Analysis ===")
-                display_comparative_analysis(metrics)
-                
-                # Generate Random comparison graph plus standard plots
-                plot_random_comparison(metrics)
-                print("\nRandom comparison completed. Graphs saved in the final_code folder.")
                 
             # Run a specific algorithm
             elif choice in algorithm_names:
@@ -852,8 +558,6 @@ def main():
         print("  4: RandomNoCooperation")
         print("  5: All algorithms")
         print("  6: Generate graphs (will recompute all results)")
-        print("  7: FCFS Cooperative vs Non-Cooperative comparison")
-        print("  8: Random Cooperative vs Non-Cooperative comparison")
 
 
 if __name__ == '__main__':

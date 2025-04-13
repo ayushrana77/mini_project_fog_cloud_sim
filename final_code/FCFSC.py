@@ -660,11 +660,11 @@ class BaseGateway:
 
     def is_bulk_data(self, task):
         """Determine if a task involves bulk data processing."""
-        # Send all Large and Bulk tasks directly to cloud
+        # Only send very large 'Large' and 'Bulk' tasks directly to cloud
         if task.data_type in ['Large', 'Bulk']:
-            return True  # All Large and Bulk tasks go to cloud
+            return task.size > 250  # Increased threshold to keep more in fog
         elif task.data_type in ['Abrupt', 'LocationBased', 'Medical', 'SmallTextual', 'Multimedia']:
-            return task.size > 230  # Higher than avg (194)
+            return task.size > 275  # Increased threshold to process more in fog
         return False
 
     def get_next_batch(self, all_tasks):
@@ -842,7 +842,7 @@ class FCFSCooperationGateway(BaseGateway):
             current_network_saturation = random.uniform(1.1, 1.5)  # Higher during congestion events
         
         # Force cloud migration for sensitive tasks during system-wide congestion
-        if system_wide_congestion and (task.data_type in ['Medical', 'Abrupt'] or task.size > 180):
+        if system_wide_congestion and (task.data_type in ['Medical', 'Abrupt'] and task.size > 220):
             self.metrics['node_selection_time'].append(selection_time)
             allocation = "Cloud (network congestion)"
             processing_time = self.process_cloud(task)
@@ -1116,7 +1116,7 @@ def main():
         print("Running FCFS Cooperation Policy for full dataset...")
         
         # Use tuple100k.json file only, without modifying the tasks
-        filepath = os.path.join(os.getcwd(), 'tuple100k.json')
+        filepath = os.path.join(os.getcwd(), 'Tuple50K.json')
         if not os.path.exists(filepath):
             print(f"Error: File {filepath} not found")
             exit(1)
